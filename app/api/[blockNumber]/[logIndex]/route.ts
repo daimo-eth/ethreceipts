@@ -2,14 +2,16 @@ import { erc20Abi } from "@/app/utils/abi";
 import { publicClient } from "@/app/utils/client";
 import { NextRequest } from "next/server";
 import { Block, Log, decodeEventLog } from "viem";
-import "@/app/utils/serialization";
+import "@/app/utils/serialization"; // Note: needed for BigInt serialization.
 import { ERC20Transfer, EventLog } from "@/app/utils/types";
-
 
 /**
  * Handle GET requests to /api/[blockNumber]/[logIndex]
- * @param params Contains block number and log index for desired log.
- * @returns 
+ * 
+ * @param {Object} params - The request parameters.
+ * @param {string} params.blockNumber - The block number for the desired log.
+ * @param {string} params.logIndex - The log index of the desired log.
+ * @returns {Object} The log data in the form: { ERC20TransferData, eventLogData }.
  */
 export async function GET(req: NextRequest, { params }: { params: { blockNumber: string, logIndex: string} }) {
     const blockNumber = BigInt(params.blockNumber);

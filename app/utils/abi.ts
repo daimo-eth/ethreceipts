@@ -1,4 +1,7 @@
-/* ERC20 ABI */
+/**
+ * ABI for ERC20 Transfers 
+ * Reference: https://viem.sh/docs/contract/parseEventLogs
+ */
 export const erc20Abi = [
     {
       type: 'event',
