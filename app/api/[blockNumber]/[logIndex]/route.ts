@@ -1,9 +1,11 @@
-import { erc20Abi } from '@/app/utils/abi';
-import { publicClient } from '@/app/utils/client';
+import { erc20Abi } from '@/app/utils/viem/abi';
+import { publicClient } from '@/app/utils/viem/client';
 import { NextRequest } from 'next/server';
-import { Block, Log, decodeEventLog } from 'viem';
+import { Address, Block, Log, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { ERC20Transfer, EventLog } from '@/app/utils/types';
+import { AddressProfile } from '@/app/utils/types';
+import { resolveAccountForAddress } from './getProfile';
 
 /**
  * Handle GET requests to /api/[blockNumber]/[logIndex]
@@ -55,23 +57,31 @@ export async function GET(
 
   // Decode ERC20 transfer event data.
   // Reference: https://viem.sh/docs/contract/decodeEventLog.html.
-  const ERC20EventLogData = decodeEventLog({
+  const erc20EventLogData = decodeEventLog({
     abi: erc20Abi,
     data: log.data,
     topics: log.topics,
   });
 
   // Ensure log is an ERC20 transfer event.
-  if (ERC20EventLogData.eventName !== 'Transfer') {
+  if (erc20EventLogData.eventName !== 'Transfer') {
     return Response.json('Log not an ERC20 transfer event', { status: 404 });
   }
 
   // Format ERC20 transfer event data.
-  const ERC20TransferData: ERC20Transfer = {
-    from: ERC20EventLogData.args.from,
-    to: ERC20EventLogData.args.to,
-    value: ERC20EventLogData.args.value,
+  const erc20TransferData: ERC20Transfer = {
+    from: erc20EventLogData.args.from,
+    to: erc20EventLogData.args.to,
+    value: erc20EventLogData.args.value,
   };
 
-  return Response.json({ ERC20TransferData: ERC20TransferData, eventLogData: eventLogData });
+  const fromAccount: AddressProfile = await resolveAccountForAddress(erc20TransferData.from);
+  const toAccount: AddressProfile = await resolveAccountForAddress(erc20TransferData.to);
+
+  return Response.json({
+    erc20TransferData: erc20TransferData,
+    eventLogData: eventLogData,
+    fromAccount: fromAccount,
+    toAccount: toAccount,
+  });
 }

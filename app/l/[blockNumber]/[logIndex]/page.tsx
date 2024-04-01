@@ -9,7 +9,7 @@ import EventLogCard from '@/app/components/EventLogCard';
  * @returns {Object} The result from API fetch.
  */
 async function getLogData(blockNumber: string, logIndex: string) {
-  const res = await fetch(`${process.env.HOST_URL}/api/${blockNumber}/${logIndex}`, {
+  const res = await fetch(`${process.env.ETH_RECEIPTS_DOMAIN}/api/${blockNumber}/${logIndex}`, {
     cache: 'force-cache',
   });
   if (!res.ok) {
@@ -35,7 +35,7 @@ export default async function Page({
   const logData = await getLogData(blockNumber, logIndex);
   return (
     <div>
-      <ERC20Card ERC20TransferData={logData.ERC20TransferData} />
+      <ERC20Card erc20TransferData={logData.erc20TransferData} />
       <br />
       <EventLogCard eventLogData={logData.eventLogData} />
     </div>
