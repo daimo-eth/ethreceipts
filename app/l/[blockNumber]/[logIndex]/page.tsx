@@ -1,6 +1,8 @@
 import ERC20Card from '@/app/components/ERC20Card';
 import EventLogCard from '@/app/components/EventLogCard';
 
+// const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
+
 /**
  * Fetch log data from API.
  *
@@ -9,9 +11,7 @@ import EventLogCard from '@/app/components/EventLogCard';
  * @returns {Object} The result from API fetch.
  */
 async function getLogData(blockNumber: string, logIndex: string) {
-  const res = await fetch(`${process.env.ETH_RECEIPTS_DOMAIN}/api/${blockNumber}/${logIndex}`, {
-    cache: 'force-cache',
-  });
+  const res = await fetch(`http://localhost:3000/api/${blockNumber}/${logIndex}`);
   if (!res.ok) {
     throw new Error('Failed to fetch log');
   }

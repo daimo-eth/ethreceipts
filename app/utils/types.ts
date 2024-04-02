@@ -18,7 +18,6 @@ export type EventLog = {
 /* Address Profile */
 export type AddressProfile = {
   accountAddress: string;
-  homeChainId: number;
   accountType: AccountType;
 };
 
@@ -27,15 +26,17 @@ export enum AccountTypeStr {
   ENS = 'ENS',
   DAIMO = 'DAIMO',
 }
+export const BASE_MAINNNET_CHAIN_ID = 8453;
+export const ETH_MAINNET_CHAIN_ID = 1;
 
 /* ENS Account */
 export type EnsAccount = {
-  ensName: string | null;
-  ensAvatar: string | null;
+  name: string | null;
+  avatar: string | null;
 };
 
 /* Daimo Account */
 export type DaimoAccount = {
-  daimoName: string | null;
-  daimoAvatar: string | null;
+  name: string | null;
+  avatar: string | null;
 };
