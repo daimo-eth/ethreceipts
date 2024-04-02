@@ -1,3 +1,4 @@
+import AddressBubble from '@/app/components/AddressBubble';
 import ERC20Card from '@/app/components/ERC20Card';
 import EventLogCard from '@/app/components/EventLogCard';
 
@@ -38,6 +39,10 @@ export default async function Page({
       <ERC20Card erc20TransferData={logData.erc20TransferData} />
       <br />
       <EventLogCard eventLogData={logData.eventLogData} />
+      <br />
+      <AddressBubble addressProfile={logData.fromAccountProfile} />
+      <br />
+      <AddressBubble addressProfile={logData.toAccountProfile} />
     </div>
   );
 }

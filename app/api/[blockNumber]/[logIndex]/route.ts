@@ -80,7 +80,7 @@ export async function GET(
   return Response.json({
     erc20TransferData: erc20TransferData,
     eventLogData: eventLogData,
-    fromAccount: fromAccount,
-    toAccount: toAccount,
+    fromAccountProfile: fromAccount,
+    toAccountProfile: toAccount,
   });
 }

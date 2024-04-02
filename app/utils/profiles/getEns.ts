@@ -1,6 +1,6 @@
 import { Address, isAddress } from 'viem';
 import { normalize } from 'viem/ens';
-import { EnsAccount } from '../types';
+import { AccountTypeStr, EnsAccount } from '../types';
 import { publicClient } from '../viem/client';
 
 /** Get ENS name */
@@ -43,6 +43,7 @@ export async function tryGetEnsProfile(accountAddress: Address): Promise<EnsAcco
   const ensAvatar = await tryGetEnsAvatar(ensName);
 
   const ensProfile: EnsAccount = {
+    type: AccountTypeStr.ENS,
     name: ensName,
     avatar: ensAvatar,
   };

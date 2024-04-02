@@ -5,6 +5,7 @@
 body {
   color: black;
   background: white;
+  padding: 20px;
 }
 
 @layer utilities {
