@@ -36,13 +36,13 @@ export default async function Page({
   const logData = await getLogData(blockNumber, logIndex);
   return (
     <div>
-      <ERC20Card erc20TransferData={logData.erc20TransferData} />
+      <ERC20Card
+        erc20TransferData={logData.erc20TransferData}
+        addressProfileFrom={logData.fromAccountProfile}
+        addressProfileTo={logData.toAccountProfile}
+      />
       <br />
       <EventLogCard eventLogData={logData.eventLogData} />
-      <br />
-      <AddressBubble addressProfile={logData.fromAccountProfile} />
-      <br />
-      <AddressBubble addressProfile={logData.toAccountProfile} />
     </div>
   );
 }
