@@ -1,21 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 body {
+  font-family: 'Inter';
+  background-color: #e6e7e8;
   color: black;
-  background: white;
-  padding: 20px;
 }
 
 a {
   color: gray;
-}
-
-.card {
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 @layer utilities {

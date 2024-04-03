@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { getDateDifference } from '../utils/formatting';
+import { getDateDifference, truncateAddress } from '../utils/formatting';
 import { EventLog } from '../utils/types';
 
 /**
@@ -13,8 +12,11 @@ import { EventLog } from '../utils/types';
 export default function EventLogCard(props: Readonly<{ eventLogData: EventLog }>) {
   const time = new Date(Number(props.eventLogData.timestamp) * 1000);
   const dateDifferenceStr = getDateDifference(time);
+
   const chain = process.env.DAIMO_CHAIN || 'Ethereum';
   const chainFormatted = chain[0].toUpperCase() + chain.slice(1);
+
+  const transactionHashFormatted = truncateAddress(props.eventLogData.transactionHash);
 
   return (
     <div className='card'>
@@ -23,7 +25,7 @@ export default function EventLogCard(props: Readonly<{ eventLogData: EventLog }>
         <p>Chain: {chainFormatted}</p>
         <p>Block: {props.eventLogData.blockNumber.toString()}</p>
         <p>Log: {props.eventLogData.logIndex}</p>
-        <p>Transaction Hash: {props.eventLogData.transactionHash}</p>
+        <p>Transaction Hash: {transactionHashFormatted}</p>
         <p>Timestamp: {`${time.toUTCString()} (${dateDifferenceStr})`}</p>
         <a href={`basescan.org/tx/${props.eventLogData.transactionHash}`}> tx details </a>
       </div>
