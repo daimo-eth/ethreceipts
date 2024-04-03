@@ -1,6 +1,5 @@
 import { erc20Abi } from '@/app/utils/viem/abi';
 import { publicClient } from '@/app/utils/viem/client';
-import { NextRequest } from 'next/server';
 import { Address, Block, Log, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { ERC20Transfer, EventLog } from '@/app/utils/types';
@@ -16,7 +15,7 @@ import { resolveAccountForAddress } from './getProfile';
  * @returns {Object} The log data in the form: { ERC20TransferData, eventLogData }.
  */
 export async function GET(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { blockNumber: string; logIndex: string } },
 ) {
   const blockNumber = BigInt(params.blockNumber);
@@ -73,6 +72,7 @@ export async function GET(
     from: erc20EventLogData.args.from,
     to: erc20EventLogData.args.to,
     value: erc20EventLogData.args.value,
+    contractAddress: log.address,
   };
 
   const fromAccount: AddressProfile = await resolveAccountForAddress(erc20TransferData.from);
@@ -81,7 +81,7 @@ export async function GET(
   return Response.json({
     erc20TransferData: erc20TransferData,
     eventLogData: eventLogData,
-    fromAccount: fromAccount,
-    toAccount: toAccount,
+    fromAccountProfile: fromAccount,
+    toAccountProfile: toAccount,
   });
 }

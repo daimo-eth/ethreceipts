@@ -1,10 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 body {
-  color: black;
-  background: white;
+  font-family: 'Inter';
+  background-color: #e6e7e8;
+  color: #231f20;
+}
+
+a {
+  color: gray;
+}
+.pfpImage {
+  border-radius: 50%;
 }
 
 @layer utilities {

@@ -1,28 +1,39 @@
 {
-    "name": "eth-receipts",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "next": "14.1.4",
-        "react": "^18",
-        "react-dom": "^18",
-        "viem": "^2.9.5"
-    },
-    "devDependencies": {
-        "@types/node": "^20",
-        "@types/react": "^18",
-        "@types/react-dom": "^18",
-        "autoprefixer": "^10.0.1",
-        "eslint": "^8",
-        "eslint-config-next": "14.1.4",
-        "postcss": "^8",
-        "tailwindcss": "^3.3.0",
-        "typescript": "^5"
-    }
+  "name": "eth-receipts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@daimo/api": "link:/Users/kayleegeorge/code/daimo/packages/daimo-api/src",
+    "@daimo/contract": "link:/Users/kayleegeorge/code/daimo/packages/daimo-contract/src",
+    "@phosphor-icons/react": "^2.1.4",
+    "@tanstack/react-query": "^5.28.14",
+    "@trpc/client": "11.0.0-rc.330",
+    "@trpc/next": "11.0.0-rc.330",
+    "@trpc/react-query": "11.0.0-rc.330",
+    "@trpc/server": "11.0.0-rc.330",
+    "add": "^2.0.6",
+    "next": "14.1.4",
+    "pnpm": "^8.15.6",
+    "react": "^18",
+    "react-dom": "^18",
+    "viem": "^2.9.5",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
 }

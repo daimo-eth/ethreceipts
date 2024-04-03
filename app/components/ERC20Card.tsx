@@ -1,4 +1,17 @@
-import { ERC20Transfer } from '../utils/types';
+import { truncateAddress } from '../utils/formatting';
+import { AddressProfile, ERC20Transfer } from '../utils/types';
+import AddressBubble from './AddressBubble';
+import {
+  TextBold,
+  TextH1,
+  TextH3,
+  TextHeader,
+  TextLight,
+  TextLightSmall,
+  TextMedium,
+  TextMediumLarge,
+  TextSemiBold,
+} from './typography';
 
 /* Unit of ERC20 token */
 const ERC20_DECIMAL = BigInt(10 ** 6);
@@ -11,16 +24,44 @@ const ERC20_DECIMAL = BigInt(10 ** 6);
  * @param {ERC20Transfer} props.ERC20TransferData - The ERC20 transfer data.
  * @returns {React.ReactElement} An ERC20 Transfer card component.
  */
-export default function ERC20Card(props: Readonly<{ erc20TransferData: ERC20Transfer }>) {
-  const value = BigInt(props.erc20TransferData.value) / ERC20_DECIMAL;
+export default function ERC20Card(
+  props: Readonly<{
+    erc20TransferData: ERC20Transfer;
+    addressProfileFrom: AddressProfile;
+    addressProfileTo: AddressProfile;
+  }>,
+) {
+  const value = Number(BigInt(props.erc20TransferData.value) / ERC20_DECIMAL).toFixed(2);
+
+  const contractAddress = truncateAddress(props.erc20TransferData.contractAddress, 4);
 
   return (
-    <div className='card'>
-      <div className='card-header'>ERC20 TRANSFER</div>
-      <div className='card-body'>
-        <p>From: {props.erc20TransferData.from}</p>
-        <p>To: {props.erc20TransferData.to}</p>
-        <p>Value: {value.toString()}</p>
+    <div className='rounded-lg flex flex-col px-10 py-6 bg-white w-full m-auto gap-y-6'>
+      <TextBold>ERC20 TRANSFER</TextBold>
+      <div className='flex flex-row gap-x-10 mt-2'>
+        <div className='w-fit min-w-24'>
+          <TextHeader>From: </TextHeader>
+        </div>
+        <div className='w-fit'>
+          <AddressBubble addressProfile={props.addressProfileFrom} />
+        </div>
+      </div>
+      <div className='flex flex-row gap-x-10'>
+        <div className='w-fit min-w-24'>
+          <TextHeader>To: </TextHeader>
+        </div>
+        <div className='w-fit'>
+          <AddressBubble addressProfile={props.addressProfileTo} />
+        </div>
+      </div>
+      <div className='flex flex-row gap-x-10 mt-6'>
+        <div className='w-fit min-w-24'>
+          <TextHeader>Value: </TextHeader>
+        </div>
+        <div className='flex flex-col ml-16 gap-y-1'>
+          <TextMediumLarge>{`$${value.toString()} USDC`}</TextMediumLarge>
+          <TextLightSmall>{`Native USDC ${contractAddress}`}</TextLightSmall>
+        </div>
       </div>
     </div>
   );
