@@ -5,11 +5,14 @@
 body {
   font-family: 'Inter';
   background-color: #e6e7e8;
-  color: black;
+  color: #231f20;
 }
 
 a {
   color: gray;
+}
+.pfpImage {
+  border-radius: 50%;
 }
 
 @layer utilities {

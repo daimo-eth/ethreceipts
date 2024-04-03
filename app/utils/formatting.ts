@@ -12,6 +12,8 @@ export function getDateDifference(date: Date): string {
 }
 
 /** Truncates address hash */
-export function truncateAddress(address: string): string {
-  return address.substring(0, 6) + '...' + address.substring(address.length - 2, address.length);
+export function truncateAddress(address: string, startSize: number = 6): string {
+  return (
+    address.substring(0, startSize) + '...' + address.substring(address.length - 2, address.length)
+  );
 }

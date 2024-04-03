@@ -5,6 +5,7 @@ export type ERC20Transfer = {
   from: Address;
   to: Address;
   value: bigint;
+  contractAddress: Address;
 };
 
 /* Event Log Data */

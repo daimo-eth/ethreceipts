@@ -1,17 +1,27 @@
 import { AddressProfile } from '@/app/utils/types';
 import Image from 'next/image';
 import { truncateAddress } from '../utils/formatting';
+import { TextLightMedium } from './typography';
+import { AddressField } from './fields';
 
 export default function AddressBubble(props: Readonly<{ addressProfile: AddressProfile }>) {
   const address = truncateAddress(props.addressProfile.accountAddress);
+  const pfp = props.addressProfile.account?.avatar ?? null;
   return (
-    <div>
-      <p>{props.addressProfile.account?.name}</p>
-      <p>{address}</p>
-      <p>{props.addressProfile.account?.type}</p>
-      {props.addressProfile.account?.avatar && (
-        <Image src={props.addressProfile.account?.avatar} width={50} height={50} alt='pfp' />
-      )}
+    <div className='flex flex-row min-w-72 gap-x-4'>
+      <div className='min-w-[52px]'>
+        {pfp && (
+          <div className='border border-gray-400 rounded-[50%]'>
+            <Image src={pfp} className='pfpImage' width='50' height='50' alt='pfp' />
+          </div>
+        )}
+      </div>
+      <div className='flex justify-between w-full'>
+        <AddressField header={props.addressProfile.account?.name || ''} value={address} />
+        <div>
+          <TextLightMedium>{props.addressProfile.account?.type}</TextLightMedium>
+        </div>
+      </div>
     </div>
   );
 }

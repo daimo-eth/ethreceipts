@@ -35,7 +35,7 @@ export default async function Page({
 }) {
   const logData = await getLogData(blockNumber, logIndex);
   return (
-    <div>
+    <div className='p-20 max-w-fit m-auto'>
       <ERC20Card
         erc20TransferData={logData.erc20TransferData}
         addressProfileFrom={logData.fromAccountProfile}

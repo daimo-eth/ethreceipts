@@ -1,5 +1,7 @@
 import { getDateDifference, truncateAddress } from '../utils/formatting';
 import { EventLog } from '../utils/types';
+import { EventField, StatusField } from './fields';
+import { TextBold } from './typography';
 
 /**
  * Represents a card component for displaying event log data.
@@ -19,16 +21,20 @@ export default function EventLogCard(props: Readonly<{ eventLogData: EventLog }>
   const transactionHashFormatted = truncateAddress(props.eventLogData.transactionHash);
 
   return (
-    <div className='card'>
-      <div className='card-header'>EVENT LOG</div>
-      <div className='card-body'>
-        <p>Chain: {chainFormatted}</p>
-        <p>Block: {props.eventLogData.blockNumber.toString()}</p>
-        <p>Log: {props.eventLogData.logIndex}</p>
-        <p>Transaction Hash: {transactionHashFormatted}</p>
-        <p>Timestamp: {`${time.toUTCString()} (${dateDifferenceStr})`}</p>
-        <a href={`basescan.org/tx/${props.eventLogData.transactionHash}`}> tx details </a>
+    <div className='rounded-lg flex flex-col px-10 py-6 bg-white w-full m-auto gap-y-8'>
+      <TextBold>EVENT LOG</TextBold>
+      <div className='w-full flex flex-row justify-between'>
+        <EventField header={`${time.toUTCString()}`} value={`${dateDifferenceStr}`} />
+        <StatusField header='SUCCESS' value='Finalized' />
       </div>
+      <div className='w-full flex flex-row justify-between'>
+        <EventField header={chainFormatted} value='Chain' />
+        <EventField header={props.eventLogData.blockNumber.toString()} value='Block' />
+        <EventField header={props.eventLogData.logIndex.toString()} value='Log' />
+        <EventField header={transactionHashFormatted} value='tx details' />
+      </div>
+
+      {/* <a href={`basescan.org/tx/${props.eventLogData.transactionHash}`}> tx details </a> */}
     </div>
   );
 }

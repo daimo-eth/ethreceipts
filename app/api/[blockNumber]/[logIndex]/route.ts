@@ -72,6 +72,7 @@ export async function GET(
     from: erc20EventLogData.args.from,
     to: erc20EventLogData.args.to,
     value: erc20EventLogData.args.value,
+    contractAddress: log.address,
   };
 
   const fromAccount: AddressProfile = await resolveAccountForAddress(erc20TransferData.from);
