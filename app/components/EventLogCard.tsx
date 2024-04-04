@@ -1,4 +1,4 @@
-import { getDateDifference, truncateAddress } from '../utils/formatting';
+import { formatTimestamp, getDateDifference, truncateAddress } from '../utils/formatting';
 import { EventLog } from '../utils/types';
 import { EventField, StatusField } from './fields';
 import { TextBold } from './typography';
@@ -13,6 +13,7 @@ import { TextBold } from './typography';
  */
 export default function EventLogCard(props: Readonly<{ eventLogData: EventLog }>) {
   const time = new Date(Number(props.eventLogData.timestamp) * 1000);
+  const timeFormatted = formatTimestamp(time);
   const dateDifferenceStr = getDateDifference(time);
 
   const chain = process.env.DAIMO_CHAIN || 'Ethereum';
@@ -24,17 +25,19 @@ export default function EventLogCard(props: Readonly<{ eventLogData: EventLog }>
     <div className='rounded-lg flex flex-col px-10 py-6 bg-white w-full m-auto gap-y-8'>
       <TextBold>EVENT LOG</TextBold>
       <div className='w-full flex flex-row justify-between'>
-        <EventField header={`${time.toUTCString()}`} value={`${dateDifferenceStr}`} />
+        <EventField header={`${timeFormatted}`} value={`${dateDifferenceStr}`} />
         <StatusField header='SUCCESS' value='Finalized' />
       </div>
       <div className='w-full flex flex-row justify-between'>
         <EventField header={chainFormatted} value='Chain' />
         <EventField header={props.eventLogData.blockNumber.toString()} value='Block' />
         <EventField header={props.eventLogData.logIndex.toString()} value='Log' />
-        <EventField header={transactionHashFormatted} value='tx details' />
+        <EventField
+          header={transactionHashFormatted}
+          value='Tx details'
+          link={`https://basescan.org/tx/${props.eventLogData.transactionHash}`}
+        />
       </div>
-
-      {/* <a href={`basescan.org/tx/${props.eventLogData.transactionHash}`}> tx details </a> */}
     </div>
   );
 }

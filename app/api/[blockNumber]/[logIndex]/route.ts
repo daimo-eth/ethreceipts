@@ -12,7 +12,8 @@ import { resolveAccountForAddress } from './getProfile';
  * @param {Object} params - The request parameters.
  * @param {string} params.blockNumber - The block number for the desired log.
  * @param {string} params.logIndex - The log index of the desired log.
- * @returns {Object} The log data in the form: { ERC20TransferData, eventLogData }.
+ * @returns {Object} The log data in the form: { ERC20TransferData, eventLogData,
+ *                   fromAccountProfile, toAccountProfile }.
  */
 export async function GET(
   req: Request,
@@ -55,7 +56,6 @@ export async function GET(
   };
 
   // Decode ERC20 transfer event data.
-  // Reference: https://viem.sh/docs/contract/decodeEventLog.html.
   const erc20EventLogData = decodeEventLog({
     abi: erc20Abi,
     data: log.data,

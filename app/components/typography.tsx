@@ -9,19 +9,11 @@ export function TextH3({ children }: { children: React.ReactNode }) {
   return <h3 className='text-[1.5rem] font-semibold text-midnight leading-none'>{children}</h3>;
 }
 
-export function LinkSemiBold({
-  href,
-  target,
-  children,
-}: {
-  href: string;
-  target?: HTMLAttributeAnchorTarget;
-  children: React.ReactNode;
-}) {
+export function LinkLightSmall({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} target={target}>
-      <TextSemiBold>{children}</TextSemiBold>
-    </Link>
+    <a href={href} target='_blank'>
+      <TextLightSmall>{children}</TextLightSmall>
+    </a>
   );
 }
 

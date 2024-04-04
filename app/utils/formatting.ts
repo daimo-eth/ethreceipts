@@ -17,3 +17,14 @@ export function truncateAddress(address: string, startSize: number = 6): string 
     address.substring(0, startSize) + '...' + address.substring(address.length - 2, address.length)
   );
 }
+
+/** Format the timestamp into "26 Mar 2024, 5:09 UTC" format*/
+export function formatTimestamp(timestamp: Date): string {
+  const dateUTC = timestamp.toUTCString().split(',')[1];
+  const dateUTCStr = dateUTC.substring(1, dateUTC.length - 13);
+  const hoursUTCStr = timestamp.getUTCHours();
+  const minutesUTCStr = timestamp.getUTCMinutes();
+  const timeUTCStr =
+    minutesUTCStr < 10 ? `${hoursUTCStr}:0${minutesUTCStr}` : `${hoursUTCStr}:${minutesUTCStr}`;
+  return dateUTCStr + ', ' + timeUTCStr + ' UTC';
+}

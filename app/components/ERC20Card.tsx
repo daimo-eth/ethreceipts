@@ -56,7 +56,7 @@ export default function ERC20Card(
       </div>
       <div className='flex flex-row gap-x-10 mt-6'>
         <div className='w-fit min-w-24'>
-          <TextHeader>Value: </TextHeader>
+          <TextHeader>Amount: </TextHeader>
         </div>
         <div className='flex flex-col ml-16 gap-y-1'>
           <TextMediumLarge>{`$${value.toString()} USDC`}</TextMediumLarge>

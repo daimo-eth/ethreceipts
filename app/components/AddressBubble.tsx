@@ -7,6 +7,7 @@ import { AddressField } from './fields';
 export default function AddressBubble(props: Readonly<{ addressProfile: AddressProfile }>) {
   const address = truncateAddress(props.addressProfile.accountAddress);
   const pfp = props.addressProfile.account?.avatar ?? null;
+
   return (
     <div className='flex flex-row min-w-72 gap-x-4'>
       <div className='min-w-[52px]'>
