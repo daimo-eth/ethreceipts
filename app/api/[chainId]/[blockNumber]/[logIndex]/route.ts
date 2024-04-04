@@ -1,6 +1,6 @@
 import { erc20Abi } from '@/app/utils/viem/abi';
-import { publicClient } from '@/app/utils/viem/client';
-import { Address, Block, Log, decodeEventLog } from 'viem';
+import { createViemClient } from '@/app/utils/viem/client';
+import { Block, Log, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { ERC20Transfer, EventLog } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
@@ -10,6 +10,7 @@ import { resolveAccountForAddress } from './getProfile';
  * Handle GET requests to /api/[blockNumber]/[logIndex]
  *
  * @param {Object} params - The request parameters.
+ * @param {string} params.chainId - The chain ID of the desired log.
  * @param {string} params.blockNumber - The block number for the desired log.
  * @param {string} params.logIndex - The log index of the desired log.
  * @returns {Object} The log data in the form: { ERC20TransferData, eventLogData,
@@ -17,8 +18,9 @@ import { resolveAccountForAddress } from './getProfile';
  */
 export async function GET(
   req: Request,
-  { params }: { params: { blockNumber: string; logIndex: string } },
+  { params }: { params: { chainId: string; blockNumber: string; logIndex: string } },
 ) {
+  const publicClient = createViemClient(params.chainId);
   const blockNumber = BigInt(params.blockNumber);
   const logIndex = Number(params.logIndex);
 

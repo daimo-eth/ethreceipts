@@ -7,12 +7,13 @@ import EventLogCard from '@/app/components/EventLogCard';
 /**
  * Fetch log data from API.
  *
+ * @param {string} chainId - The chain ID.
  * @param {string} blockNumber - The block number.
  * @param {string} logIndex - The log index.
  * @returns {Object} The result from API fetch.
  */
-async function getLogData(blockNumber: string, logIndex: string) {
-  const res = await fetch(`http://localhost:3000/api/${blockNumber}/${logIndex}`);
+async function getLogData(chainId: string, blockNumber: string, logIndex: string) {
+  const res = await fetch(`http://localhost:3000/api/${chainId}/${blockNumber}/${logIndex}`);
   if (!res.ok) {
     throw new Error('Failed to fetch log');
   }
@@ -29,11 +30,11 @@ async function getLogData(blockNumber: string, logIndex: string) {
  * @returns {React.ReactElement} A Log page component.
  */
 export default async function Page({
-  params: { blockNumber, logIndex },
+  params: { chainId, blockNumber, logIndex },
 }: {
-  params: { blockNumber: string; logIndex: string };
+  params: { chainId: string; blockNumber: string; logIndex: string };
 }) {
-  const logData = await getLogData(blockNumber, logIndex);
+  const logData = await getLogData(chainId, blockNumber, logIndex);
   return (
     <div className='p-20 max-w-fit m-auto'>
       <ERC20Card
