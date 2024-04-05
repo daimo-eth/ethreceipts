@@ -4,6 +4,7 @@ import { truncateAddress } from '../utils/formatting';
 import { TextLightMedium } from './typography';
 import { AddressField } from './fields';
 
+/** Represents an address bubble component given an address profile*/
 export default function AddressBubble(props: Readonly<{ addressProfile: AddressProfile }>) {
   const address = truncateAddress(props.addressProfile.accountAddress);
   const pfp = props.addressProfile.account?.avatar ?? null;
