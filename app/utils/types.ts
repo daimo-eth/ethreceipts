@@ -31,30 +31,24 @@ export type EventLog = {
 /** Address Profile */
 export type AddressProfile = {
   accountAddress: string;
-  account: AccountType;
+  account: Account;
 };
 
-export type AccountType = EnsAccount | DaimoAccount | null;
+/** Supported account types */
 export enum AccountTypeStr {
   ENS = 'ENS',
   DAIMO = 'DAIMO',
+  EOA = 'EOA',
+  Contract = 'Contract',
 }
-export const BASE_MAINNNET_CHAIN_ID = 8453;
-export const ETH_MAINNET_CHAIN_ID = 1;
 
-/** ENS Account */
-export type EnsAccount = {
+/** Known account Profile */
+export type Account = {
   type: AccountTypeStr;
-  name: string | null;
-  avatar: string | null;
-};
-
-/** Daimo Account */
-export type DaimoAccount = {
-  type: AccountTypeStr;
-  name: string | null;
-  avatar: string | null;
-};
+  name?: string | null;
+  avatar?: string | null;
+  url?: string | null;
+} | null;
 
 /** Supported chains by Alchemy API */
 export const supportedChains = [

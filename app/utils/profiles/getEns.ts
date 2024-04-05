@@ -1,13 +1,12 @@
-import { Address, isAddress } from 'viem';
+import { Address, PublicClient, isAddress } from 'viem';
 import { normalize } from 'viem/ens';
-import { AccountTypeStr, EnsAccount } from '../types';
-import { publicClient } from '../viem/client';
+import { AccountTypeStr, Account } from '../types';
 
-/** Get ENS name */
-async function tryGetEnsName(accountAddress: Address) {
+/** Attempt to get ENS name */
+async function tryGetEnsName(accountAddress: Address, viemClient: PublicClient) {
   if (!isAddress(accountAddress)) return null;
   try {
-    return await publicClient.getEnsName({
+    return await viemClient.getEnsName({
       address: accountAddress,
     });
   } catch (e) {
@@ -16,10 +15,10 @@ async function tryGetEnsName(accountAddress: Address) {
   }
 }
 
-/** Get ENS avatar */
-async function tryGetEnsAvatar(ensName: string) {
+/** Attempt to get ENS avatar via ENS name */
+async function tryGetEnsAvatar(ensName: string, viemClient: PublicClient) {
   try {
-    return await publicClient.getEnsAvatar({
+    return await viemClient.getEnsAvatar({
       name: normalize(ensName),
     });
   } catch (e) {
@@ -34,18 +33,19 @@ async function tryGetEnsAvatar(ensName: string) {
  * @param {string} accountAddress - The account address for the desired ENS profile.
  * @returns {AccountProfile} - The ENS profile for the account address.
  */
-export async function tryGetEnsProfile(accountAddress: Address): Promise<EnsAccount | null> {
-  // Retrieve ENS name from account address.
-  const ensName = await tryGetEnsName(accountAddress);
+export async function tryGetEnsProfile(
+  accountAddress: Address,
+  viemClient: PublicClient,
+): Promise<Account | null> {
+  const ensName = await tryGetEnsName(accountAddress, viemClient);
   if (!ensName) return null;
+  const ensAvatar = await tryGetEnsAvatar(ensName, viemClient);
 
-  // Retrieve ENS avatar from ENS name.
-  const ensAvatar = await tryGetEnsAvatar(ensName);
-
-  const ensProfile: EnsAccount = {
+  const ensProfile: Account = {
     type: AccountTypeStr.ENS,
     name: ensName,
     avatar: ensAvatar,
+    url: null, // TODO: add link to ens name
   };
   return ensProfile;
 }

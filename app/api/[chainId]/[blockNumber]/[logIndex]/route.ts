@@ -77,8 +77,14 @@ export async function GET(
     contractAddress: log.address,
   };
 
-  const fromAccount: AddressProfile = await resolveAccountForAddress(erc20TransferData.from);
-  const toAccount: AddressProfile = await resolveAccountForAddress(erc20TransferData.to);
+  const fromAccount: AddressProfile = await resolveAccountForAddress(
+    erc20TransferData.from,
+    publicClient,
+  );
+  const toAccount: AddressProfile = await resolveAccountForAddress(
+    erc20TransferData.to,
+    publicClient,
+  );
 
   return Response.json({
     erc20TransferData: erc20TransferData,

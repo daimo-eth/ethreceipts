@@ -15,7 +15,8 @@ import EventLogCard from '@/app/components/EventLogCard';
 async function getLogData(chainId: string, blockNumber: string, logIndex: string) {
   const res = await fetch(`http://localhost:3000/api/${chainId}/${blockNumber}/${logIndex}`);
   if (!res.ok) {
-    throw new Error('Failed to fetch log');
+    console.error('Failed to fetch log');
+    return null;
   }
   return res.json();
 }
@@ -35,6 +36,8 @@ export default async function Page({
   params: { chainId: string; blockNumber: string; logIndex: string };
 }) {
   const logData = await getLogData(chainId, blockNumber, logIndex);
+  if (!logData) return <div>Log not found</div>;
+
   return (
     <div className='p-20 max-w-fit m-auto'>
       <ERC20Card

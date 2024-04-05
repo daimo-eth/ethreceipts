@@ -32,7 +32,6 @@ export default function ERC20Card(
   }>,
 ) {
   const value = Number(BigInt(props.erc20TransferData.value) / ERC20_DECIMAL).toFixed(2);
-
   const contractAddress = truncateAddress(props.erc20TransferData.contractAddress, 4);
 
   return (
