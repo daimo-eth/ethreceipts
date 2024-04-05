@@ -2,12 +2,14 @@
 
 The goal of Eth Receipts is to show ERC-20 transfers in a clean and extensible way.
 
+## Usage
+
 Eth Receipts supports multiple chains and multiple block numbers and log indices in the following format:
 `https://ethreceipt.org/l/<chainId>/<blockNumber>/<logIndex>`
 
 Example: `https://ethreceipt.org/l/8453/12320223/94` specifies Base chain (8453), a block number (12320223) and a log index (94).
 
-### Adding Address Profile Bubble
+## Adding Address Profile Bubble
 
 Eth Receipts currently supports address profile bubbles for ENS and Daimo accounts, but is built to be extensible. To add a new address profile bubble, you must:
 
