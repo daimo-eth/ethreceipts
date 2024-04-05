@@ -18,7 +18,11 @@ export type ERC20Transfer = {
   to: Address;
   value: bigint;
   contractAddress: Address;
+  tokenDecimal: number;
 };
+
+/** ERC20 Token Decimal */
+export const ERC20_DECIMAL = mainnet.nativeCurrency.decimals;
 
 /** Event Log Data */
 export type EventLog = {

@@ -2,7 +2,7 @@ import { erc20Abi } from '@/app/utils/viem/abi';
 import { createViemClient } from '@/app/utils/viem/client';
 import { Block, Log, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
-import { ERC20Transfer, EventLog } from '@/app/utils/types';
+import { ERC20Transfer, ERC20_DECIMAL, EventLog } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
 import { resolveAccountForAddress } from './getProfile';
 
@@ -75,8 +75,10 @@ export async function GET(
     to: erc20EventLogData.args.to,
     value: erc20EventLogData.args.value,
     contractAddress: log.address,
+    tokenDecimal: ERC20_DECIMAL,
   };
 
+  // Get address profiles for from and to addresses.
   const fromAccount: AddressProfile = await resolveAccountForAddress(
     erc20TransferData.from,
     publicClient,

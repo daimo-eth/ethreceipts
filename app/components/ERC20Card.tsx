@@ -1,17 +1,7 @@
 import { truncateAddress } from '../utils/formatting';
 import { AddressProfile, ERC20Transfer } from '../utils/types';
 import AddressBubble from './AddressBubble';
-import {
-  TextBold,
-  TextH1,
-  TextH3,
-  TextHeader,
-  TextLight,
-  TextLightSmall,
-  TextMedium,
-  TextMediumLarge,
-  TextSemiBold,
-} from './typography';
+import { TextBold, TextHeader, TextLightSmall, TextMediumLarge } from './typography';
 
 /* Unit of ERC20 token */
 const ERC20_DECIMAL = BigInt(10 ** 6);
