@@ -1,7 +1,6 @@
 import { ClientConfig, Pool, PoolConfig } from 'pg';
 
-import { chainConfig } from '../trpc';
-import { retryBackoff } from '../utils/retryBackoff';
+import { retryBackoff } from '../../app/utils/retryBackoff';
 
 interface indexer {
   load(pg: Pool, from: number, to: number): void | Promise<void>;
@@ -31,6 +30,7 @@ const config = {
 
 /**
  * Watcher follows the latest indexed logs and prefetches / saves metadata.
+ * Modified to one-layer indexing.
  */
 export class Watcher {
   // Start from a block before the first Daimo tx on Base and Base Sepolia.
@@ -38,30 +38,16 @@ export class Watcher {
   private batchSize = 100000;
   private isIndexing = false;
 
-  // indexers by dependency layers, indexers[0] are indexed first parallely, indexers[1] second, etc.
-  private indexerLayers: indexer[][] = [];
   private pg: Pool;
+  private indexers: indexer[] = [];
 
   constructor() {
     // TODO currently config --> change to poolConfig
     this.pg = new Pool(config);
   }
 
-  async waitFor(blockNumber: number, tries: number): Promise<boolean> {
-    const t0 = Date.now();
-    for (let i = 0; i < tries; i++) {
-      if (this.latest >= blockNumber) {
-        console.log(`[SHOVEL] waiting for block ${blockNumber}, found after ${Date.now() - t0}ms`);
-        return true;
-      }
-      await new Promise((res) => setTimeout(res, 250));
-    }
-    console.log(
-      `[SHOVEL] waiting for block ${blockNumber}, NOT FOUND, still on ${this.latest} after ${
-        Date.now() - t0
-      }ms`,
-    );
-    return false;
+  add(...i: indexer[]) {
+    this.indexers.push(...i);
   }
 
   async init() {
@@ -69,8 +55,7 @@ export class Watcher {
     await this.catchUpTo(shovelLatest);
   }
 
-  // Watches shovel for new blocks, and indexes them.
-  // Skip indexing if it's already indexing.
+  // Watches shovel for new blocks, and indexes them (skip indexing if it's already indexing)
   async watch() {
     setInterval(async () => {
       try {
@@ -106,16 +91,14 @@ export class Watcher {
     const delta = stop - start;
     if (delta < 0) return 0;
     const limit = delta >= n ? n - 1 : delta;
-    console.log(`[SHOVEL] loading ${start} to ${start + limit}`);
 
-    for (const [i, layer] of this.indexerLayers.entries()) {
-      console.log(`[SHOVEL] indexing ${start} to ${start + limit} layer ${i}`);
-      await Promise.all(layer.map((i) => i.load(this.pg, start, start + limit)));
-    }
+    console.log(`[SHOVEL] loading ${start} to ${start + limit}`);
+    await Promise.all(this.indexers.map((i) => i.load(this.pg, start, start + limit)));
     console.log(`[SHOVEL] loaded ${start} to ${start + limit} in ${Date.now() - t0}ms`);
     return start + limit;
   }
 
+  //Get latest shovel.
   async getShovelLatest(): Promise<number> {
     const result = await retryBackoff(`shovel-latest-query`, () =>
       this.pg.query(`select num from shovel.latest`),
