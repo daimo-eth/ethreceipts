@@ -1,4 +1,4 @@
-import { DaimoChain, getChainConfig } from '@daimo/contract';
+import { DaimoChain, getChainConfig } from '@/app/utils/viem/chainConfig';
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 
 export const chainConfig = getChainConfig((process.env.DAIMO_CHAIN || 'baseSepolia') as DaimoChain);
