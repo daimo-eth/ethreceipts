@@ -7,6 +7,7 @@ import { trpc } from '@/app/trpc';
 // res.linkedAccounts?.[0]: with username, displayName, pfpUrl
 export async function tryGetDaimoProfile(accountAddress: Address): Promise<Account | null> {
   try {
+    // @ts-ignore
     const res = await trpc.getEthereumAccount.query({ addr: accountAddress });
     const daimoAccount: Account = {
       type: AccountTypeStr.DAIMO,
