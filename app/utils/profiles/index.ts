@@ -1,8 +1,23 @@
-import { tryGetEnsProfile } from '@/app/utils/profiles/getEns';
-import { tryGetDaimoProfile } from '@/app/utils/profiles/getDaimo';
-import { tryGetUnknownProfile } from '@/app/utils/profiles/getUnknown';
+import { Address, PublicClient } from 'viem';
+import { Account, AddressProfile } from '@/app/utils/types';
+import { getProfileFunctions } from '@/app/utils/profiles/profileFunctions';
 
-const getProfileFunctions = [tryGetEnsProfile, tryGetDaimoProfile]; // Add new address profile functions here.
-getProfileFunctions.push(tryGetUnknownProfile);
+/** Get account type given an address */
+async function getAccountType(address: Address, viemClient: PublicClient): Promise<Account> {
+  // Fetch profile on each supported account type.
+  const accountResults = await Promise.all(
+    getProfileFunctions.map((fn) => fn(address, viemClient)),
+  );
 
-export { getProfileFunctions };
+  // Return known or unknown (contract or EOA) account. If no account exists, return null.
+  return accountResults.find((account) => account !== null) || null;
+}
+
+/** Resolve account profile given an address */
+export async function resolveAccountForAddress(
+  address: Address,
+  viemClient: PublicClient,
+): Promise<AddressProfile> {
+  const account: Account = await getAccountType(address, viemClient);
+  return { accountAddress: address, account: account };
+}

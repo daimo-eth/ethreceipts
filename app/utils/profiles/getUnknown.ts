@@ -9,6 +9,7 @@ export async function tryGetUnknownProfile(
   viemClient: PublicClient,
 ): Promise<Account | null> {
   try {
+    // TODO: add a check to see if the account is a contract.
     const bytecode = await viemClient.getBytecode({
       address: accountAddress as Address,
     });
@@ -18,7 +19,6 @@ export async function tryGetUnknownProfile(
     };
     return unknownAccount;
   } catch (e) {
-    console.log(`Address does not exist: ${accountAddress}`);
     return null;
   }
 }

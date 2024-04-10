@@ -4,7 +4,7 @@ import { Block, Log, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { ERC20Transfer, ERC20_DECIMAL, EventLog } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
-import { resolveAccountForAddress } from './getProfile';
+import { resolveAccountForAddress } from '../../../../utils/profiles';
 
 /**
  * Handle GET requests to /api/[blockNumber]/[logIndex]

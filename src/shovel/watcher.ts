@@ -7,25 +7,18 @@ interface indexer {
 }
 
 const dbConfig: ClientConfig = {
-  connectionString: process.env.SHOVEL_DATABASE_URL,
+  // connectionString: process.env.SHOVEL_DATABASE_URL,
+  connectionString: 'postgresql:///kayleegeorge',
   connectionTimeoutMillis: 20000,
   query_timeout: 20000,
   statement_timeout: 20000,
-  database: process.env.SHOVEL_DATABASE_URL == null ? 'shovel' : undefined,
+  database: process.env.SHOVEL_DATABASE_URL == null ? 'postgres' : undefined,
 };
 
 const poolConfig: PoolConfig = {
   ...dbConfig,
   max: 8,
   idleTimeoutMillis: 60000,
-};
-
-const config = {
-  database: 'postgres',
-  user: 'kayleegeorge',
-  password: '',
-  host: 'localhost',
-  port: 5432,
 };
 
 /**
@@ -43,7 +36,7 @@ export class Watcher {
 
   constructor() {
     // TODO currently config --> change to poolConfig
-    this.pg = new Pool(config);
+    this.pg = new Pool(poolConfig);
   }
 
   add(...i: indexer[]) {
@@ -98,10 +91,10 @@ export class Watcher {
     return start + limit;
   }
 
-  //Get latest shovel.
+  //Get latest shovel block.
   async getShovelLatest(): Promise<number> {
     const result = await retryBackoff(`shovel-latest-query`, () =>
-      this.pg.query(`select num from shovel.latest`),
+      this.pg.query(`select block_num from transfers`),
     );
     return Number(result.rows[0].num);
   }
