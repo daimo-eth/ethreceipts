@@ -19,8 +19,8 @@ export default function AddressBubble(props: Readonly<{ addressProfile: AddressP
             <Image src={pfp} className='pfpImage' width='64' height='64' alt='pfp' />
           </div>
         ) : (
-          <div className='bg-gradient-to-b rounded-[50%] from-[#F3F3F3] to-[#D6D6D6] p-[1px]'>
-            <div className='flex w-16 h-16 rounded-[50%] items-center justify-center bg-white'>
+          <div className='bg-gradient-to-b w-16 h-16 rounded-[50%] from-[#F3F3F3] to-[#D6D6D6] p-[1px]'>
+            <div className='flex w-full h-full rounded-[50%] items-center justify-center bg-white'>
               <TextInitial>{nameInitial}</TextInitial>
             </div>
           </div>

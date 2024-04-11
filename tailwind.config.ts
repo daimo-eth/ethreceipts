@@ -14,6 +14,9 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-neue-montreal)'],
       },
+      dropShadow: {
+        '3xl': '10 0px 4px #F3F3F3',
+      },
     },
   },
   plugins: [],

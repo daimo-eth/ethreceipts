@@ -99,62 +99,63 @@ export function Arrow() {
     </svg>
   );
 }
-
 export function Daimo() {
   return (
-    <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
-      <path
-        d='M12.7991 7.9998L12.7991 7.99981H12.7991L12.7991 7.9998Z'
-        fill='url(#paint0_linear_1_83)'
-        fillOpacity='0.4'
-      />
-      <path
-        d='M13.599 9.38634L11.9992 6.61328M14.3989 7.99981H11.1993M13.599 6.61328L12.7991 7.99981L11.9992 9.38634'
-        stroke='url(#paint1_linear_1_83)'
-        strokeWidth='0.757809'
-        strokeLinecap='round'
-      />
-      <path
-        d='M1.70667 0C0.764101 0 0 0.764101 0 1.70667V14.2933C0 15.2359 0.764101 16 1.70667 16H13.44C14.8538 16 16 14.8538 16 13.44V11.28C16 11.0444 15.809 10.8533 15.5733 10.8533H10.7733C9.83077 10.8533 9.06667 10.0892 9.06667 9.14667V6.85333C9.06667 5.91077 9.83077 5.14667 10.7733 5.14667H15.5733C15.809 5.14667 16 4.95564 16 4.72V2.56C16 1.14615 14.8538 0 13.44 0H1.70667Z'
-        fill='url(#paint2_linear_1_83)'
-        fillOpacity='0.7'
-      />
-      <defs>
-        <linearGradient
-          id='paint0_linear_1_83'
-          x1='12.7991'
-          y1='6.61328'
-          x2='12.7991'
-          y2='9.38634'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='white' />
-          <stop offset='1' stopColor='#F3F3F3' />
-        </linearGradient>
-        <linearGradient
-          id='paint1_linear_1_83'
-          x1='12.7991'
-          y1='6.61328'
-          x2='12.7991'
-          y2='9.38634'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='#535353' />
-          <stop offset='1' stopColor='#323232' />
-        </linearGradient>
-        <linearGradient
-          id='paint2_linear_1_83'
-          x1='8'
-          y1='0'
-          x2='8'
-          y2='16'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop offset='1' stopColor='#111111' />
-          <stop stopColor='#111111' />
-        </linearGradient>
-      </defs>
-    </svg>
+    <div style={{ opacity: 0.3 }}>
+      <svg width='17' height='17' viewBox='0 0 17 17' fill='none'>
+        <path
+          d='M13.5995 8.49979L13.5995 8.4998H13.5994L13.5995 8.49979Z'
+          fill='url(#paint0_linear_1_83)'
+          fillOpacity='0.4'
+        />
+        <path
+          d='M14.4494 9.97299L12.7495 7.02661M15.2993 8.4998H11.8996M14.4494 7.02661L13.5994 8.4998L12.7495 9.97299'
+          stroke='url(#paint1_linear_1_83)'
+          strokeWidth='1.0736'
+          strokeLinecap='round'
+        />
+        <path
+          d='M1.81333 0C0.811857 0 0 0.811857 0 1.81333V15.1867C0 16.1881 0.811857 17 1.81333 17H14.28C15.7822 17 17 15.7822 17 14.28V11.985C17 11.7346 16.797 11.5317 16.5467 11.5317H11.4467C10.4452 11.5317 9.63333 10.7198 9.63333 9.71833V7.28167C9.63333 6.28019 10.4452 5.46833 11.4467 5.46833H16.5467C16.797 5.46833 17 5.26537 17 5.015V2.72C17 1.21779 15.7822 0 14.28 0H1.81333Z'
+          fill='url(#paint2_linear_1_83)'
+          fillOpacity='0.7'
+        />
+        <defs>
+          <linearGradient
+            id='paint0_linear_1_83'
+            x1='13.5995'
+            y1='7.02661'
+            x2='13.5995'
+            y2='9.97299'
+            gradientUnits='userSpaceOnUse'
+          >
+            <stop stopColor='white' />
+            <stop offset='1' stopColor='#F3F3F3' />
+          </linearGradient>
+          <linearGradient
+            id='paint1_linear_1_83'
+            x1='13.5995'
+            y1='7.02661'
+            x2='13.5995'
+            y2='9.97299'
+            gradientUnits='userSpaceOnUse'
+          >
+            <stop stopColor='#535353' />
+            <stop offset='1' stopColor='#323232' />
+          </linearGradient>
+          <linearGradient
+            id='paint2_linear_1_83'
+            x1='8.5'
+            y1='0'
+            x2='8.5'
+            y2='17'
+            gradientUnits='userSpaceOnUse'
+          >
+            <stop offset='1' stopColor='#111111' />
+            <stop stopColor='#111111' />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
   );
 }
 

@@ -10,9 +10,6 @@ body {
   height: 100vh;
 }
 
-a {
-  color: gray;
-}
 .pfpImage {
   border-radius: 50%;
 }
@@ -25,6 +22,7 @@ hr {
 }
 
 .container {
+  display: flex;
   position: relative;
   width: 100%;
   height: 100%;

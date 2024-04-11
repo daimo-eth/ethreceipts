@@ -30,23 +30,23 @@ export default function TransferCard(
   return (
     <div
       className='rounded-[24px] flex flex-col w-full m-auto
-      border-[1px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[0.5px] drop-shadow-[0px_4px_10px_rgba(243,243,243,1)]'
+      border-[0px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[1px] drop-shadow-3xl'
     >
-      <div className='flex flex-col bg-white rounded-[22px]'>
+      <div className='flex flex-col bg-white rounded-[23px]'>
         <div className='flex flex-col gap-y-1 w-full items-center px-10 py-12'>
           <TextValue>{`$${value.toString()} USDC`}</TextValue>
           <TextMemo>{memo}</TextMemo>
         </div>
 
-        <div className='flex flex-row container border-y-[1.5px] border-[#F3F3F3]'>
-          <div className='flex flex-col flex-[1] px-16 py-8 gap-y-4 border-r-[0.5px] border-[#F3F3F3]'>
+        <div className='flex width-full container border-y-[2px] border-[#F3F3F3]'>
+          <div className='flex w-1/2 flex-col px-16 py-8 gap-y-4 border-r-[1px] border-[#F3F3F3]'>
             <TextHeader>FROM</TextHeader>
             <AddressBubble addressProfile={props.addressProfileFrom} />
           </div>
           <div className='flex items-center overlay-component'>
             <TransferArrow />
           </div>
-          <div className='flex flex-col flex-[1] px-16 py-8 gap-y-4 border-l-[0.5px] border-[#F3F3F3]'>
+          <div className='flex w-1/2 flex-col px-16 py-8 gap-y-4 border-l-[1px] border-[#F3F3F3]'>
             <TextHeader>TO</TextHeader>
             <AddressBubble addressProfile={props.addressProfileTo} />
           </div>
