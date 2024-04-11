@@ -9,13 +9,13 @@ async function main() {
   // Create Viem client with correct chain.
   const viemClient = createViemClient(chainConfig.chainL1.id.toString());
 
+  // Create shovel watcher with ERC20 indexer.
   const shovelWatcher = new Watcher();
   await shovelWatcher.init();
-  shovelWatcher.add(new CoinIndexer(viemClient));
-  shovelWatcher.watch();
 
-  // here do I create a router / HTTP handler?
-  // https://github.com/daimo-eth/daimo/blob/4eec1462de3781da50cc838a45928942fc49e1eb/packages/daimo-api/src/server/server.ts#L28
+  const coinIndexer = new CoinIndexer(viemClient);
+  shovelWatcher.add(coinIndexer);
+  shovelWatcher.watch();
 }
 
 main().catch(console.error);

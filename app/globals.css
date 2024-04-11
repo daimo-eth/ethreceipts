@@ -3,9 +3,11 @@
 @import 'tailwindcss/utilities';
 
 body {
-  font-family: 'Inter';
-  background-color: #e6e7e8;
+  font-family: 'var(--font-neue-montreal)';
+  background: linear-gradient(#ffffff, #f6f6f6);
+  background-repeat: no-repeat;
   color: #231f20;
+  height: 100vh;
 }
 
 a {
@@ -13,6 +15,28 @@ a {
 }
 .pfpImage {
   border-radius: 50%;
+}
+
+hr {
+  width: 100%;
+  border: 1px solid #f3f3f3;
+  margin: none;
+  padding: none;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* For the overlay arrow */
+.overlay-component {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 @layer utilities {

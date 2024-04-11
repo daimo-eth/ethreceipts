@@ -48,16 +48,13 @@ export class CoinIndexer {
           from transfers
           where (
             block_num >= $1
-            and block_num <= $2
           );
         `,
-        [from, to],
+        [from],
       ),
     );
-    // make this function async
     const logs: Transfer[] = await Promise.all(
       result.rows.map(async (row: any) => {
-        // TODO: is this the right way to do this?
         const transfer: Transfer = {
           blockHash: bytesToHex(row.block_hash, { size: 32 }),
           blockNumber: BigInt(row.block_num),
@@ -69,15 +66,22 @@ export class CoinIndexer {
           to: getAddress(bytesToHex(row.to, { size: 20 })),
           value: BigInt(row.value),
         };
+        console.log(`[COIN] ${transfer.from} sent ${transfer.value} USDC`);
 
         // Get address profiles for from and to addresses.
-        const addressProfileFrom = await resolveAccountForAddress(transfer.from, this.viemClient);
-        const addressProfileTo = await resolveAccountForAddress(transfer.to, this.viemClient);
-        if (addressProfileFrom.account?.name) {
-          console.log(`[COIN] ${addressProfileFrom.account.name} sent ${transfer.value} USDC`);
-        }
-        if (addressProfileTo.account?.name) {
-          console.log(`[COIN] ${addressProfileTo.account.name} received ${transfer.value} USDC`);
+        try {
+          const addressProfileFrom = await resolveAccountForAddress(transfer.from, this.viemClient);
+          const addressProfileTo = await resolveAccountForAddress(transfer.to, this.viemClient);
+          if (addressProfileFrom.account?.name) {
+            console.log(`[PROFILE] ${addressProfileFrom.account.name} sent ${transfer.value} USDC`);
+          }
+          if (addressProfileTo.account?.name) {
+            console.log(
+              `[PROFILE] ${addressProfileTo.account.name} received ${transfer.value} USDC`,
+            );
+          }
+        } catch (e) {
+          console.log(`[PROFILE] error resolving account for ${transfer.from} or ${transfer.to}`);
         }
 
         // TODO: need to add the profile to the database.

@@ -13,16 +13,18 @@ import {
 } from 'viem/chains';
 
 /** ERC20 Transaction Data */
-export type ERC20Transfer = {
+export type Transfer = {
   from: Address;
   to: Address;
   value: bigint;
   contractAddress: Address;
-  tokenDecimal: number;
+  tokenDecimal: bigint;
+  tokenSymbol: string;
 };
 
-/** ERC20 Token Decimal */
-export const ERC20_DECIMAL = mainnet.nativeCurrency.decimals;
+/** Token Decimals */
+export const ERC20_DECIMAL = BigInt(mainnet.nativeCurrency.decimals);
+export const USDC_DECIMAL = BigInt(10 ** 6);
 
 /** Event Log Data */
 export type EventLog = {

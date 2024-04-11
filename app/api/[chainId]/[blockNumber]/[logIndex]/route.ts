@@ -2,7 +2,7 @@ import { erc20Abi } from '@/app/utils/viem/abi';
 import { createViemClient } from '@/app/utils/viem/client';
 import { Block, Log, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
-import { ERC20Transfer, ERC20_DECIMAL, EventLog } from '@/app/utils/types';
+import { Transfer, EventLog, USDC_DECIMAL } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
 import { resolveAccountForAddress } from '../../../../utils/profiles';
 
@@ -13,7 +13,7 @@ import { resolveAccountForAddress } from '../../../../utils/profiles';
  * @param {string} params.chainId - The chain ID of the desired log.
  * @param {string} params.blockNumber - The block number for the desired log.
  * @param {string} params.logIndex - The log index of the desired log.
- * @returns {Object} The log data in the form: { ERC20TransferData, eventLogData,
+ * @returns {Object} The log data in the form: { transferData, eventLogData,
  *                   fromAccountProfile, toAccountProfile }.
  */
 export async function GET(
@@ -70,13 +70,19 @@ export async function GET(
   }
 
   // Format ERC20 transfer event data.
-  const erc20TransferData: ERC20Transfer = {
+  const erc20TransferData: Transfer = {
     from: erc20EventLogData.args.from,
     to: erc20EventLogData.args.to,
     value: erc20EventLogData.args.value,
     contractAddress: log.address,
-    tokenDecimal: ERC20_DECIMAL,
+    tokenDecimal: USDC_DECIMAL,
+    tokenSymbol: 'USDC',
   };
+
+  // TODO: Check whether the block is finalized. --> make sure this is correct.
+  const latestFinalizedBlock = await publicClient.getBlock({
+    blockTag: 'finalized',
+  });
 
   // Get address profiles for from and to addresses.
   const fromAccount: AddressProfile = await resolveAccountForAddress(
@@ -89,7 +95,7 @@ export async function GET(
   );
 
   return Response.json({
-    erc20TransferData: erc20TransferData,
+    transferData: erc20TransferData,
     eventLogData: eventLogData,
     fromAccountProfile: fromAccount,
     toAccountProfile: toAccount,

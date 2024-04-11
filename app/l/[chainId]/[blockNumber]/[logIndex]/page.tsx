@@ -1,6 +1,6 @@
-import AddressBubble from '@/app/components/AddressBubble';
-import ERC20Card from '@/app/components/ERC20Card';
-import EventLogCard from '@/app/components/EventLogCard';
+import Footer from '@/app/components/Footer';
+import TransferCard from '@/app/components/TransferCard';
+import { Header } from '@/app/components/typography';
 
 // const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
 
@@ -39,14 +39,17 @@ export default async function Page({
   if (!logData) return <div>Log not found</div>;
 
   return (
-    <div className='p-20 max-w-fit m-auto'>
-      <ERC20Card
-        erc20TransferData={logData.erc20TransferData}
+    <div className='flex flex-col items-center justify-center max-w-fit m-auto'>
+      <div className='flex pt-24 pb-14'>
+        <Header>ETH RECEIPTS</Header>
+      </div>
+      <TransferCard
+        transferData={logData.transferData}
         addressProfileFrom={logData.fromAccountProfile}
         addressProfileTo={logData.toAccountProfile}
+        eventLogData={logData.eventLogData}
       />
-      <br />
-      <EventLogCard eventLogData={logData.eventLogData} />
+      <Footer />
     </div>
   );
 }

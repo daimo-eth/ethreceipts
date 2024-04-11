@@ -1,58 +1,91 @@
-import Link from 'next/link';
-import { HTMLAttributeAnchorTarget } from 'react';
-
-export function TextH1({ children }: { children: React.ReactNode }) {
-  return <h1 className='text-[1.75rem] font-semibold text-midnight leading-none'>{children}</h1>;
+// Name of an account.
+export function AccountName({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[20px] leading=[24px] tracking-[-0.3px] font-normal bg-gradient-to-b from-[#323232] to-[#000000] bg-clip-text text-transparent'>
+      {children}
+    </p>
+  );
 }
 
-export function TextH3({ children }: { children: React.ReactNode }) {
-  return <h3 className='text-[1.5rem] font-semibold text-midnight leading-none'>{children}</h3>;
+// Address of an account.
+export function AccountAddress({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[16px] leading-[19px] tracking-[-0.025em] font-light bg-gradient-to-b from-[#AAAAAA] to-[#777777] bg-clip-text text-transparent'>
+      {children}
+    </p>
+  );
 }
 
-export function LinkLightSmall({ href, children }: { href: string; children: React.ReactNode }) {
+// From and To.
+export function TextHeader({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[12px] leading-[14.5px] tracking-[2px] font-semibold bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
+      {children}
+    </p>
+  );
+}
+
+// Value of transfer.
+export function TextValue({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[36px] leading-[43.2px] tracking-[-2px] font-medium bg-gradient-to-b from-[#535353] to-[#000000] bg-clip-text text-transparent sans'>
+      {children}
+    </p>
+  );
+}
+
+export function TextMemo({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[20px] leading-[19px] tracking-[-0.02em] font-light bg-gradient-to-b from-[#AAAAAA] to-[#777777] bg-clip-text text-transparent'>
+      {children}
+    </p>
+  );
+}
+
+export function TextInitial({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[24px] leading-[28px] tracking-[0.5px] font-semibold bg-gradient-to-b from-[#535353] to-[#111111] bg-clip-text text-transparent'>
+      {children}
+    </p>
+  );
+}
+
+export function TextLight({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[14px] leading-[16.8px] tracking-[-0.025em] font-light bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
+      {children}
+    </p>
+  );
+}
+
+export function LinkLight({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a href={href} target='_blank'>
-      <TextLightSmall>{children}</TextLightSmall>
+      <TextLight>{children}</TextLight>
     </a>
   );
 }
 
-export function TextSemiBold({ children }: { children: React.ReactNode }) {
-  return <p className='text-[16px] leading-[20.8px] font-semibold'>{children}</p>;
+export function Header({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[24px] leading-[28px] tracking-[2px] font-semibold bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
+      {children}
+    </p>
+  );
 }
 
-export function TextMedium({ children }: { children: React.ReactNode }) {
-  return <p className='text-base leading-[20.8px] font-medium'>{children}</p>;
+export function TextFooter({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[14px] leading-[16.8px] tracking-[-0.025em] font-light color-[#AAAAAA] opacity-70'>
+      {children}
+    </p>
+  );
 }
 
-export function TextMediumLarge({ children }: { children: React.ReactNode }) {
-  return <p className='text-2xl leading-[20.8px] font-medium'>{children}</p>;
-}
-
-export function TextMediumGreen({ children }: { children: React.ReactNode }) {
-  return <p className='text-base leading-[20.8px] font-medium text-green-500'>{children}</p>;
-}
-
-export function TextBold({ children }: { children: React.ReactNode }) {
-  return <p className='text-base tracking-none leading-[20.8px] font-bold'>{children}</p>;
-}
-
-export function TextError({ children }: { children: React.ReactNode }) {
-  return <p className='text-base font-semibold text-danger'>{children}</p>;
-}
-
-export function TextLight({ children }: { children: React.ReactNode }) {
-  return <p className='text-sm leading-[20.8px]  text-light-gray'>{children}</p>;
-}
-
-export function TextLightMedium({ children }: { children: React.ReactNode }) {
-  return <p className='text-sm leading-[20.8px] text-light-gray font-medium'>{children}</p>;
-}
-
-export function TextLightSmall({ children }: { children: React.ReactNode }) {
-  return <p className='text-xs leading-[20.8px] text-light-gray'>{children}</p>;
-}
-
-export function TextHeader({ children }: { children: React.ReactNode }) {
-  return <p className='text-lg leading-[20.8px] font-semibold text-midnight'>{children}</p>;
+export function LinkFooter({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a href={href} target='_blank'>
+      <TextFooter>{children}</TextFooter>
+    </a>
+  );
 }

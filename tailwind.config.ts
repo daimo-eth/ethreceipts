@@ -11,6 +11,9 @@ const config: Config = {
       colors: {
         'light-gray': '#939598',
       },
+      fontFamily: {
+        sans: ['var(--font-neue-montreal)'],
+      },
     },
   },
   plugins: [],

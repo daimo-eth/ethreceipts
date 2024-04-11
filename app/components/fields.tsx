@@ -1,41 +1,17 @@
-import {
-  LinkLightSmall,
-  TextLight,
-  TextLightSmall,
-  TextMedium,
-  TextMediumGreen,
-} from './typography';
-
-/** Header-value React component field for Event card */
-export function EventField(props: { header: string; value: string; link?: string }) {
-  return (
-    <div className='w-fit'>
-      <TextMedium>{props.header}</TextMedium>
-      {props.link ? (
-        <LinkLightSmall href={props.link}>{props.value}</LinkLightSmall>
-      ) : (
-        <TextLightSmall>{props.value}</TextLightSmall>
-      )}
-    </div>
-  );
-}
+import { Daimo } from '@/public/icons';
+import { AccountAddress, AccountName } from './typography';
 
 /** Header-value React component field for Address Bubble */
-export function AddressField(props: { header: string; value: string }) {
+export function AddressField(props: { name: string; address: string }) {
   return (
-    <div className='w-fit'>
-      <TextMedium>{props.header}</TextMedium>
-      <TextLight>{props.value}</TextLight>
-    </div>
-  );
-}
-
-/** Header-value React component field for Status field in Event card */
-export function StatusField(props: { header: string; value: string }) {
-  return (
-    <div className='w-fit'>
-      <TextMediumGreen>{props.header}</TextMediumGreen>
-      <TextLightSmall>{props.value}</TextLightSmall>
+    <div className='flex flex-col'>
+      <div className='flex flex-row gap-x-3 items-center'>
+        <AccountName>{props.name}</AccountName>
+        <a href={`https://daimo.com/l/account/${props.name}`} target='_blank'>
+          <Daimo />
+        </a>
+      </div>
+      <AccountAddress>{props.address}</AccountAddress>
     </div>
   );
 }
