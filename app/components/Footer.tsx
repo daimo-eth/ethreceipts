@@ -1,5 +1,6 @@
-import { Daimo, OldDaimo } from '@/public/icons';
+import { OldDaimo } from '@/public/icons';
 import { LinkFooter, TextFooter } from './typography';
+import { Daimo } from '@/public/profileIcons/Daimo';
 
 export default function Footer() {
   return (

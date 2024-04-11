@@ -19,7 +19,7 @@ Eth Receipts currently supports address profile bubbles for ENS and Daimo accoun
   - The function should take an `Address` and a `PublicClient` as parameters and return an `Account` (defined in `app/utils/types.ts`) or `null`.
 - In `app/utils/profiles/index.ts`, add the function to the `getProfileFunctions` array.
 - In `app/utils/types.ts`, add a new `AccountTypeStr` enum value for the new address profile bubble (e.g. `ENS`, `DAIMO`).
-- (optional) In `app/components/AddressBubble.tsx`, add a new `AccountIcon` component for the new address profile bubble.
+- (optional) In `public/profileIcons/profileIcons.tsx`, add a new component for the profile logo and add it to the `AccountIcon` function.
 - (optional) In `apps/utils/profiles/getProfileLink.ts`, add a function that returns a link for an account name given an account type.
 
 ### Build Locally

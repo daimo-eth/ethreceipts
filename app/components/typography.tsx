@@ -28,7 +28,7 @@ export function TextHeader({ children }: { children: React.ReactNode }) {
 // Value of transfer.
 export function TextValue({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[36px] leading-[43.2px] tracking-[-2px] font-medium bg-gradient-to-b from-[#535353] to-[#000000] bg-clip-text text-transparent sans'>
+    <p className='text-[36px] leading-[36px] tracking-[-2px] font-medium bg-gradient-to-b from-[#535353] to-[#000000] bg-clip-text text-transparent sans'>
       {children}
     </p>
   );

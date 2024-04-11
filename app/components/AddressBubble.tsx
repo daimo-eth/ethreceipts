@@ -2,7 +2,7 @@ import { AccountTypeStr, AddressProfile } from '@/app/utils/types';
 import Image from 'next/image';
 import { truncateAddress } from '../utils/formatting';
 import { TextInitial } from './typography';
-import { AccountIcon, Daimo, ENS } from '@/public/icons';
+import { AccountIcon } from '@/public/profileIcons/profileIcons';
 import { AccountAddress, AccountName } from './typography';
 import { getProfileLink } from '../utils/profiles/getProfileLink';
 

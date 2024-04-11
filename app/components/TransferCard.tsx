@@ -1,5 +1,4 @@
-import { Arrow } from '@/public/icons';
-import { truncateAddress } from '../utils/formatting';
+import { Link } from '@/public/icons';
 import { AddressProfile, Transfer, EventLog } from '../utils/types';
 import AddressBubble from './AddressBubble';
 import EventLogCard from './EventLog';
@@ -26,6 +25,7 @@ export default function TransferCard(
     BigInt(props.transferData.value) / BigInt(props.transferData.tokenDecimal),
   ).toFixed(2);
   const memo = 'for nyc trip'; // TODO: add memo
+  const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${props.eventLogData.chainId}/${props.eventLogData.blockNumber}/${props.eventLogData.logIndex}`;
 
   return (
     <div
@@ -33,9 +33,16 @@ export default function TransferCard(
       border-[0px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[1px] drop-shadow-3xl'
     >
       <div className='flex flex-col bg-white rounded-[23px]'>
-        <div className='flex flex-col gap-y-1 w-full items-center px-10 py-12'>
-          <TextValue>{`$${value.toString()} USDC`}</TextValue>
-          {memo && <TextMemo>{memo}</TextMemo>}
+        <div className='flex flex-col w-full items-center px-10 py-10'>
+          <div className='w-full flex justify-end px-4 mb-[-4px]'>
+            <a href={link} target='_blank'>
+              <Link />
+            </a>
+          </div>
+          <div className='flex flex-col items-center w-full gap-y-2'>
+            <TextValue>{`$${value.toString()} USDC`}</TextValue>
+            {memo && <TextMemo>{memo}</TextMemo>}
+          </div>
         </div>
 
         <div className='flex width-full container border-y-[2px] border-[#F3F3F3]'>

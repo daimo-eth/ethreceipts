@@ -55,6 +55,7 @@ export async function GET(
     blockNumber: blockNumber,
     logIndex: log.logIndex,
     transactionHash: log.transactionHash,
+    chainId: Number(params.chainId),
   };
 
   // Decode ERC20 transfer event data.

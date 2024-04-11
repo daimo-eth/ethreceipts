@@ -32,6 +32,7 @@ export type EventLog = {
   blockNumber: bigint;
   logIndex: number;
   transactionHash: string;
+  chainId: number;
 };
 
 /** Address Profile */

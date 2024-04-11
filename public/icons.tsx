@@ -1,6 +1,3 @@
-import { AccountTypeStr } from '@/app/utils/types';
-import { ensLink } from './ensLink';
-
 export function ExternalLink() {
   return (
     <svg
@@ -102,65 +99,6 @@ export function Arrow() {
     </svg>
   );
 }
-export function Daimo() {
-  return (
-    <div style={{ opacity: 0.3 }}>
-      <svg width='17' height='17' viewBox='0 0 17 17' fill='none'>
-        <path
-          d='M13.5995 8.49979L13.5995 8.4998H13.5994L13.5995 8.49979Z'
-          fill='url(#paint0_linear_1_83)'
-          fillOpacity='0.4'
-        />
-        <path
-          d='M14.4494 9.97299L12.7495 7.02661M15.2993 8.4998H11.8996M14.4494 7.02661L13.5994 8.4998L12.7495 9.97299'
-          stroke='url(#paint1_linear_1_83)'
-          strokeWidth='1.0736'
-          strokeLinecap='round'
-        />
-        <path
-          d='M1.81333 0C0.811857 0 0 0.811857 0 1.81333V15.1867C0 16.1881 0.811857 17 1.81333 17H14.28C15.7822 17 17 15.7822 17 14.28V11.985C17 11.7346 16.797 11.5317 16.5467 11.5317H11.4467C10.4452 11.5317 9.63333 10.7198 9.63333 9.71833V7.28167C9.63333 6.28019 10.4452 5.46833 11.4467 5.46833H16.5467C16.797 5.46833 17 5.26537 17 5.015V2.72C17 1.21779 15.7822 0 14.28 0H1.81333Z'
-          fill='url(#paint2_linear_1_83)'
-          fillOpacity='0.7'
-        />
-        <defs>
-          <linearGradient
-            id='paint0_linear_1_83'
-            x1='13.5995'
-            y1='7.02661'
-            x2='13.5995'
-            y2='9.97299'
-            gradientUnits='userSpaceOnUse'
-          >
-            <stop stopColor='white' />
-            <stop offset='1' stopColor='#F3F3F3' />
-          </linearGradient>
-          <linearGradient
-            id='paint1_linear_1_83'
-            x1='13.5995'
-            y1='7.02661'
-            x2='13.5995'
-            y2='9.97299'
-            gradientUnits='userSpaceOnUse'
-          >
-            <stop stopColor='#535353' />
-            <stop offset='1' stopColor='#323232' />
-          </linearGradient>
-          <linearGradient
-            id='paint2_linear_1_83'
-            x1='8.5'
-            y1='0'
-            x2='8.5'
-            y2='17'
-            gradientUnits='userSpaceOnUse'
-          >
-            <stop offset='1' stopColor='#111111' />
-            <stop stopColor='#111111' />
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-  );
-}
 
 export function OldDaimo() {
   return (
@@ -173,34 +111,29 @@ export function OldDaimo() {
   );
 }
 
-export function ENS() {
+export function Link() {
   return (
     <svg
-      width='16'
-      height='16'
+      width='13.5'
+      height='13.5'
       viewBox='0 0 16 16'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      xmlnsXlink='http://www.w3.org/1999/xlink'
     >
-      <rect width='16' height='16' fill='url(#pattern0_1_265)' />
+      <g clipPath='url(#clip0_1_188)'>
+        <path
+          d='M6.66668 8.66666C6.95295 9.04939 7.31822 9.36606 7.73768 9.59526C8.15715 9.82446 8.62102 9.96073 9.09775 9.99486C9.57455 10.029 10.0531 9.96019 10.5009 9.79313C10.9488 9.62613 11.3554 9.36466 11.6934 9.02666L13.6934 7.02666C14.3006 6.39796 14.6365 5.55595 14.6289 4.68197C14.6213 3.80798 14.2707 2.97193 13.6527 2.35391C13.0347 1.73588 12.1987 1.38532 11.3247 1.37773C10.4507 1.37013 9.60868 1.70611 8.98002 2.31331L7.83335 3.45331M9.33335 7.33333C9.04702 6.95053 8.68175 6.63385 8.26228 6.40468C7.84282 6.17551 7.37902 6.03923 6.90222 6.00508C6.42548 5.97093 5.94695 6.03973 5.49911 6.20678C5.05127 6.37384 4.6446 6.63526 4.30668 6.97333L2.30668 8.97333C1.69948 9.60199 1.3635 10.444 1.3711 11.318C1.37869 12.192 1.72925 13.028 2.34728 13.6461C2.9653 14.2641 3.80135 14.6146 4.67534 14.6222C5.54932 14.6298 6.39133 14.2939 7.02002 13.6867L8.16002 12.5467'
+          stroke='#535353'
+          strokeWidth='1.33333'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+      </g>
       <defs>
-        <pattern id='pattern0_1_265' patternContentUnits='objectBoundingBox' width='1' height='1'>
-          <use xlinkHref='#image0_1_265' transform='scale(0.000449236)' />
-        </pattern>
-        <image id='image0_1_265' width='2226' height='2226' xlinkHref={ensLink} />
+        <clipPath id='clip0_1_188'>
+          <rect width='16' height='16' fill='white' />
+        </clipPath>
       </defs>
     </svg>
   );
-}
-
-export function AccountIcon({ accountType }: { accountType: AccountTypeStr }) {
-  switch (accountType) {
-    case AccountTypeStr.DAIMO:
-      return <Daimo />;
-    case AccountTypeStr.ENS:
-      return <ENS />;
-    default:
-      return <></>;
-  }
 }
