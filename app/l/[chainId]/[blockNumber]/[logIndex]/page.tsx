@@ -2,7 +2,7 @@ import Footer from '@/app/components/Footer';
 import TransferCard from '@/app/components/TransferCard';
 import { Header } from '@/app/components/typography';
 
-// const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
+const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
 
 /**
  * Fetch log data from API.
@@ -13,7 +13,7 @@ import { Header } from '@/app/components/typography';
  * @returns {Object} The result from API fetch.
  */
 async function getLogData(chainId: string, blockNumber: string, logIndex: string) {
-  const res = await fetch(`http://localhost:3000/api/${chainId}/${blockNumber}/${logIndex}`);
+  const res = await fetch(`${apiUrl}/api/${chainId}/${blockNumber}/${logIndex}`);
   if (!res.ok) {
     console.error('Failed to fetch log');
     return null;
