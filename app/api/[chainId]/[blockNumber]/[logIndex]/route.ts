@@ -2,9 +2,10 @@ import { erc20Abi } from '@/app/utils/viem/abi';
 import { createViemClient } from '@/app/utils/viem/client';
 import { Block, Log, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
-import { Transfer, EventLog, USDC_DECIMAL } from '@/app/utils/types';
+import { Transfer, EventLog, USDC_DECIMAL, SupportedChainId } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
 import { resolveAccountForAddress } from '../../../../utils/profiles';
+import { getChainConfig } from '@/app/utils/viem/chainConfig';
 
 /**
  * Handle GET requests to /api/[blockNumber]/[logIndex]

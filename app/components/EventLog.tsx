@@ -2,6 +2,7 @@ import { ExternalLink, FinalizedCheck } from '@/public/icons';
 import { formatTimestamp, getDateDifference, truncateAddress } from '../utils/formatting';
 import { EventLog, Transfer } from '../utils/types';
 import { LinkLight, TextLight } from './typography';
+import { getChainExplorerByChainId } from '../utils/getExplorerURL';
 
 /**
  * Represents a card component for displaying event log data.
@@ -22,8 +23,9 @@ export default function EventLogCard(
   const chainFormatted = chain[0].toUpperCase() + chain.slice(1);
 
   const tokenLink = `https://etherscan.io/token/${props.transferData.contractAddress}`;
-  // TODO: add basescan link as field, not hardcoded
-  const transactionLink = `https://basescan.org/tx/${props.eventLogData.transactionHash}`;
+
+  const explorerUrl = getChainExplorerByChainId(props.eventLogData.chainId);
+  const transactionLink = `${explorerUrl}/tx/${props.eventLogData.transactionHash}`;
 
   return (
     <div className='w-full flex flex-row justify-between py-4 px-10'>

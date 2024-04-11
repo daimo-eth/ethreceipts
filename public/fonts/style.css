@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('sf-pro/sf-pro-display_regular.woff2') format('woff2'),
+    url('sf-pro/sf-pro-display_light.woff') format('woff'),
+    url('sf-pro/sf-pro-display_bold.woff') format('woff'),
+    url('sf-pro/sf-pro-display_.woff') format('woff');
+}

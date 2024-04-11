@@ -12,7 +12,7 @@ const config: Config = {
         'light-gray': '#939598',
       },
       fontFamily: {
-        sans: ['var(--font-neue-montreal)'],
+        sans: ['var(--font-SF-Pro-Display)'],
       },
       dropShadow: {
         '3xl': '10 0px 4px #F3F3F3',
