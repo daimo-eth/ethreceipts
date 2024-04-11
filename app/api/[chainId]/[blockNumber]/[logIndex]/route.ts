@@ -80,12 +80,10 @@ export async function GET(
     tokenSymbol: 'USDC',
   };
 
-  console.log(`[API] got to erc20 transfer data`);
-
   // TODO: Check whether the block is finalized. --> make sure this is correct.
-  // const latestFinalizedBlock = await publicClient.getBlock({
-  //   blockTag: 'finalized',
-  // });
+  const latestFinalizedBlock = await publicClient.getBlock({
+    blockTag: 'finalized',
+  });
 
   // Get address profiles for from and to addresses.
   const fromAccount: AddressProfile = await resolveAccountForAddress(
@@ -96,7 +94,6 @@ export async function GET(
     erc20TransferData.to,
     publicClient,
   );
-  console.log(`[API] got to address profiles`);
 
   return Response.json({
     transferData: erc20TransferData,
