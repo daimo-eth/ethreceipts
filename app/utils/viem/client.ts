@@ -20,7 +20,7 @@ export function createViemClient(chainId: string) {
   if (!network) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
-  const ALCHEMY_RPC_URL: string = `https://${network}.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
+  const ALCHEMY_RPC_URL: string = `https://${network}.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
   const chain: Chain = getViemChainById(Number(chainId) as SupportedChainId);
 
   // Create Viem client with correct chain and RPC.
