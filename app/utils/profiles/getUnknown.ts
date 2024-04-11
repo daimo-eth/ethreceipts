@@ -9,13 +9,8 @@ export async function tryGetUnknownProfile(
   viemClient: PublicClient,
 ): Promise<Account | null> {
   try {
-    // TODO: add a check to see if the account is a contract.
-    const bytecode = await viemClient.getBytecode({
-      address: accountAddress as Address,
-    });
-    const addressType = bytecode ? 'Contract' : 'EOA';
     const unknownAccount: Account = {
-      type: AccountTypeStr[addressType],
+      type: AccountTypeStr.UNKNOWN,
     };
     return unknownAccount;
   } catch (e) {
