@@ -1,9 +1,31 @@
-import { AddressProfile } from '@/app/utils/types';
+import { AccountTypeStr, AddressProfile } from '@/app/utils/types';
 import Image from 'next/image';
 import { truncateAddress } from '../utils/formatting';
 import { TextInitial } from './typography';
-import { AddressField } from './fields';
-import { Daimo } from '@/public/icons';
+import { AccountIcon, Daimo, ENS } from '@/public/icons';
+import { AccountAddress, AccountName } from './typography';
+import { getProfileLink } from '../utils/profiles/getProfileLink';
+
+/** Header-value React component field for Address Bubble */
+function AddressField(props: { name: string; address: string; accountType: AccountTypeStr }) {
+  // Get profile link for an account name.
+  const profileLink = getProfileLink(props.name, props.accountType);
+  return (
+    <div className='flex flex-col'>
+      <div className='flex flex-row gap-x-3 items-center'>
+        <AccountName>{props.name}</AccountName>
+        {profileLink ? (
+          <a href={profileLink} target='_blank'>
+            <AccountIcon accountType={props.accountType} />
+          </a>
+        ) : (
+          <AccountIcon accountType={props.accountType} />
+        )}
+      </div>
+      <AccountAddress>{props.address}</AccountAddress>
+    </div>
+  );
+}
 
 /** Represents an address bubble component given an address profile*/
 export default function AddressBubble(props: Readonly<{ addressProfile: AddressProfile }>) {
@@ -27,7 +49,11 @@ export default function AddressBubble(props: Readonly<{ addressProfile: AddressP
         )}
       </div>
       <div className='flex flex-row gap-x-1 items-center justify-start'>
-        <AddressField name={name || ''} address={address} />
+        <AddressField
+          name={name || ''}
+          address={address}
+          accountType={props.addressProfile.account?.type}
+        />
       </div>
     </div>
   );

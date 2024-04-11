@@ -40,7 +40,7 @@ export default async function Page({
 
   return (
     <div className='flex flex-col items-center justify-center max-w-fit m-auto'>
-      <div className='flex pt-24 pb-14'>
+      <div className='flex pt-20 pb-14'>
         <Header>ETH RECEIPTS</Header>
       </div>
       <TransferCard

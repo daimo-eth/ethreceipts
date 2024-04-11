@@ -1,3 +1,6 @@
+import { AccountTypeStr } from '@/app/utils/types';
+import { ensLink } from './ensLink';
+
 export function ExternalLink() {
   return (
     <svg
@@ -168,4 +171,36 @@ export function OldDaimo() {
       alt='daimo'
     />
   );
+}
+
+export function ENS() {
+  return (
+    <svg
+      width='16'
+      height='16'
+      viewBox='0 0 16 16'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      xmlnsXlink='http://www.w3.org/1999/xlink'
+    >
+      <rect width='16' height='16' fill='url(#pattern0_1_265)' />
+      <defs>
+        <pattern id='pattern0_1_265' patternContentUnits='objectBoundingBox' width='1' height='1'>
+          <use xlinkHref='#image0_1_265' transform='scale(0.000449236)' />
+        </pattern>
+        <image id='image0_1_265' width='2226' height='2226' xlinkHref={ensLink} />
+      </defs>
+    </svg>
+  );
+}
+
+export function AccountIcon({ accountType }: { accountType: AccountTypeStr }) {
+  switch (accountType) {
+    case AccountTypeStr.DAIMO:
+      return <Daimo />;
+    case AccountTypeStr.ENS:
+      return <ENS />;
+    default:
+      return <></>;
+  }
 }

@@ -11,7 +11,10 @@ export default function Footer() {
         </div>
         <LinkFooter href='https://github.com/daimo-eth/daimo'>GitHub</LinkFooter>
         <div className='flex flex-row items-center gap-x-2'>
-          <Daimo />
+          <a href='https://daimo.com' target='_blank'>
+            <Daimo />
+          </a>
+
           <TextFooter>Built by Daimo</TextFooter>
         </div>
       </div>

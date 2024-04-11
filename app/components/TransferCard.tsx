@@ -35,7 +35,7 @@ export default function TransferCard(
       <div className='flex flex-col bg-white rounded-[23px]'>
         <div className='flex flex-col gap-y-1 w-full items-center px-10 py-12'>
           <TextValue>{`$${value.toString()} USDC`}</TextValue>
-          <TextMemo>{memo}</TextMemo>
+          {memo && <TextMemo>{memo}</TextMemo>}
         </div>
 
         <div className='flex width-full container border-y-[2px] border-[#F3F3F3]'>

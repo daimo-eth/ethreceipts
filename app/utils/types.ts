@@ -44,8 +44,7 @@ export type AddressProfile = {
 export enum AccountTypeStr {
   ENS = 'ENS',
   DAIMO = 'DAIMO',
-  EOA = 'EOA',
-  Contract = 'Contract',
+  UNKNOWN = 'Unknown',
 }
 
 /** Known account Profile */
@@ -54,7 +53,7 @@ export type Account = {
   name?: string | null;
   avatar?: string | null;
   url?: string | null;
-} | null;
+};
 
 /** Supported chains by Alchemy API */
 export const supportedChains = [

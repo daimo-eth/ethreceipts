@@ -9,7 +9,9 @@ Eth Receipts supports multiple chains and multiple block numbers and log indices
 
 Example: `https://ethreceipt.org/l/8453/12320223/94` specifies Base chain (8453), a block number (12320223) and a log index (94).
 
-## Adding Address Profile Bubble
+## Contributing
+
+**Adding Address Profile Bubble**
 
 Eth Receipts currently supports address profile bubbles for ENS and Daimo accounts, but is built to be extensible. To add a new address profile bubble, you must:
 
@@ -17,6 +19,8 @@ Eth Receipts currently supports address profile bubbles for ENS and Daimo accoun
   - The function should take an `Address` and a `PublicClient` as parameters and return an `Account` (defined in `app/utils/types.ts`) or `null`.
 - In `app/utils/profiles/index.ts`, add the function to the `getProfileFunctions` array.
 - In `app/utils/types.ts`, add a new `AccountTypeStr` enum value for the new address profile bubble (e.g. `ENS`, `DAIMO`).
+- (optional) In `app/components/AddressBubble.tsx`, add a new `AccountIcon` component for the new address profile bubble.
+- (optional) In `apps/utils/profiles/getProfileLink.ts`, add a function that returns a link for an account name given an account type.
 
 ### Build Locally
 
