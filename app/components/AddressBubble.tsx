@@ -26,7 +26,7 @@ export default function AddressBubble(props: Readonly<{ addressProfile: AddressP
   const address = truncateAddress(props.addressProfile.accountAddress);
   const pfp = props.addressProfile.account?.avatar ?? null;
   const name = props.addressProfile.account?.name;
-  const nameInitial = name ? name[0].toUpperCase() : '';
+  const nameInitial = name ? name[0].toUpperCase() : '0x';
   return (
     <div className='flex flex-row w-full gap-x-4'>
       <div className='flex'>

@@ -48,7 +48,7 @@ export function TextMemo({ children }: { children: React.ReactNode }) {
 // Initial for profile bubble.
 export function TextInitial({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[24px] leading-[28px] tracking-[0.5px] font-semibold bg-gradient-to-b from-[#535353] to-[#111111] bg-clip-text text-transparent'>
+    <p className='text-[24px] leading-[28px] tracking-[0.5px] font-medium bg-gradient-to-b from-[#535353] to-[#111111] bg-clip-text text-transparent'>
       {children}
     </p>
   );
