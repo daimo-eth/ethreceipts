@@ -14,13 +14,7 @@ function AddressField(props: { name: string; address: string; accountType: Accou
     <div className='flex flex-col'>
       <div className='flex flex-row gap-x-3 items-center'>
         <AccountName>{props.name}</AccountName>
-        {/* Have to swap out icon size based on screen size*/}
-        <div className='sm:visible invisible'>
-          <AccountIcon accountType={props.accountType} link={profileLink} />
-        </div>
-        <div className='sm:invisible visible'>
-          <AccountIcon accountType={props.accountType} link={profileLink} small />
-        </div>
+        <AccountIcon accountType={props.accountType} link={profileLink} />
       </div>
 
       <AccountAddress>{props.address}</AccountAddress>
