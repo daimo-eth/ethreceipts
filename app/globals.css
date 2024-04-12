@@ -7,6 +7,12 @@ html {
   height: 100%;
 }
 
+body {
+  background: linear-gradient(#ffffff, #f6f6f6);
+  margin: 0;
+  background-repeat: no-repeat;
+}
+
 .pfpImage {
   border-radius: 50%;
 }
