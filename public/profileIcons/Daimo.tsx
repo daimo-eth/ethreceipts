@@ -1,4 +1,4 @@
-export function Daimo({ width = '17', height = '17' }: { width?: string; height?: string }) {
+export function Daimo({ width = '16', height = '16' }: { width?: string; height?: string }) {
   return (
     <div style={{ opacity: 0.3 }}>
       <svg width={width} height={height} viewBox='0 0 17 17' fill='none'>
