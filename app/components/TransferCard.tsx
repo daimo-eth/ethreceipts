@@ -20,13 +20,14 @@ export default function TransferCard(
     addressProfileFrom: AddressProfile;
     addressProfileTo: AddressProfile;
     eventLogData: EventLog;
+    finalized: boolean;
   }>,
 ) {
   const value = Number(
     BigInt(props.transferData.value) / BigInt(props.transferData.tokenDecimal),
   ).toFixed(2);
-  const memo = 'for nyc trip'; // TODO: add memo
   const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${props.eventLogData.chainId}/${props.eventLogData.blockNumber}/${props.eventLogData.logIndex}`;
+  const memo = props.transferData.memo;
 
   return (
     <div
@@ -61,7 +62,11 @@ export default function TransferCard(
             <AddressBubble addressProfile={props.addressProfileTo} />
           </div>
         </div>
-        <EventLogCard eventLogData={props.eventLogData} transferData={props.transferData} />
+        <EventLogCard
+          eventLogData={props.eventLogData}
+          transferData={props.transferData}
+          finalized={props.finalized}
+        />
       </div>
     </div>
   );

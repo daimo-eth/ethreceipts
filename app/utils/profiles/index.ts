@@ -8,7 +8,6 @@ async function getAccountType(address: Address, viemClient: PublicClient): Promi
   const accountResults = await Promise.all(
     getProfileFunctions.map((fn) => fn(address, viemClient)),
   );
-
   // Return known or unknown (contract or EOA) account. If no account exists, return null.
   return accountResults.find((account) => account !== null) || { type: AccountTypeStr.UNKNOWN };
 }

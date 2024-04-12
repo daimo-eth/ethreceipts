@@ -2,7 +2,7 @@ import Footer from '@/app/components/Footer';
 import TransferCard from '@/app/components/TransferCard';
 import { Header } from '@/app/components/typography';
 
-// const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
+const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
 
 /**
  * Fetch log data from API.
@@ -13,8 +13,10 @@ import { Header } from '@/app/components/typography';
  * @returns {Object} The result from API fetch.
  */
 async function getLogData(chainId: string, blockNumber: string, logIndex: string) {
+  // Revalidate every 10 minutes.
   const res = await fetch(
-    `https://eth-receipts.vercel.app/api/${chainId}/${blockNumber}/${logIndex}`,
+    `${apiUrl}/api/${chainId}/${blockNumber}/${logIndex}`,
+    // { next: { revalidate: 600 } },
   );
   if (!res.ok) {
     console.error('Failed to fetch log');
@@ -50,6 +52,7 @@ export default async function Page({
         addressProfileFrom={logData.fromAccountProfile}
         addressProfileTo={logData.toAccountProfile}
         eventLogData={logData.eventLogData}
+        finalized={logData.finalized}
       />
       <Footer />
     </div>

@@ -20,6 +20,7 @@ export type Transfer = {
   contractAddress: Address;
   tokenDecimal: bigint;
   tokenSymbol: string;
+  memo?: string;
 };
 
 /** Token Decimals */

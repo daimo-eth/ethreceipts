@@ -5,7 +5,7 @@ import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { Transfer, EventLog, USDC_DECIMAL, SupportedChainId } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
 import { resolveAccountForAddress } from '../../../../utils/profiles';
-import { getChainConfig } from '@/app/utils/viem/chainConfig';
+import { tryGetDaimoMemo } from '@/app/utils/getDaimoMemo';
 
 /**
  * Handle GET requests to /api/[blockNumber]/[logIndex]
@@ -68,8 +68,11 @@ export async function GET(
 
   // Ensure log is an ERC20 transfer event.
   if (erc20EventLogData.eventName !== 'Transfer') {
-    return Response.json('Log not an ERC20 transfer event', { status: 404 });
+    return Response.json('Log not a transfer event', { status: 404 });
   }
+
+  // Get Daimo memo if exists.
+  const memo = await tryGetDaimoMemo(log.transactionHash);
 
   // Format ERC20 transfer event data.
   const erc20TransferData: Transfer = {
@@ -79,18 +82,21 @@ export async function GET(
     contractAddress: log.address,
     tokenDecimal: USDC_DECIMAL,
     tokenSymbol: 'USDC',
+    memo: memo,
   };
 
-  // TODO: Check whether the block is finalized. --> make sure this is correct.
+  // Check whether the block is finalized.
   const latestFinalizedBlock = await publicClient.getBlock({
     blockTag: 'finalized',
   });
+  const isFinalized = blockNumber <= latestFinalizedBlock.number;
 
   // Get address profiles for from and to addresses.
   const fromAccount: AddressProfile = await resolveAccountForAddress(
     erc20TransferData.from,
     publicClient,
   );
+
   const toAccount: AddressProfile = await resolveAccountForAddress(
     erc20TransferData.to,
     publicClient,
@@ -101,5 +107,6 @@ export async function GET(
     eventLogData: eventLogData,
     fromAccountProfile: fromAccount,
     toAccountProfile: toAccount,
+    finalized: isFinalized,
   });
 }

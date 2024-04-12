@@ -1,4 +1,4 @@
-import { ExternalLink, FinalizedCheck } from '@/public/icons';
+import { ConfirmedCheck, ExternalLink, FinalizedCheck } from '@/public/icons';
 import { formatTimestamp, getDateDifference, truncateAddress } from '../utils/formatting';
 import { EventLog, Transfer } from '../utils/types';
 import { LinkLight, TextLight } from './typography';
@@ -13,10 +13,9 @@ import { getChainExplorerByChainId } from '../utils/getExplorerURL';
  * @returns {React.ReactElement} An event log card component.
  */
 export default function EventLogCard(
-  props: Readonly<{ eventLogData: EventLog; transferData: Transfer }>,
+  props: Readonly<{ eventLogData: EventLog; transferData: Transfer; finalized: boolean }>,
 ) {
   const time = new Date(Number(props.eventLogData.timestamp) * 1000);
-  const timeFormatted = formatTimestamp(time);
   const dateDifferenceStr = getDateDifference(time);
 
   const chain = process.env.DAIMO_CHAIN || 'Ethereum';
@@ -40,8 +39,18 @@ export default function EventLogCard(
         </a>
       </div>
       <div className='flex flex-row gap-x-1 items-center'>
-        <FinalizedCheck />
-        <TextLight>Finalized</TextLight>
+        {/* If finalized, show "Finalized" and "Confirmed" icons. Otherwise, show "Confirmed" icon. */}
+        {props.finalized ? (
+          <>
+            <FinalizedCheck />
+            <TextLight>Finalized</TextLight>{' '}
+          </>
+        ) : (
+          <>
+            <ConfirmedCheck />
+            <TextLight>Confirmed</TextLight>
+          </>
+        )}
       </div>
     </div>
   );

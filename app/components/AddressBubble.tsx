@@ -16,7 +16,6 @@ function AddressField(props: { name: string; address: string; accountType: Accou
         <AccountName>{props.name}</AccountName>
         <AccountIcon accountType={props.accountType} link={profileLink} />
       </div>
-
       <AccountAddress>{props.address}</AccountAddress>
     </div>
   );

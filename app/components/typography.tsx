@@ -1,3 +1,5 @@
+/** Typography components for Eth Receipts */
+
 // Name of an account.
 export function AccountName({ children }: { children: React.ReactNode }) {
   return (
@@ -34,6 +36,7 @@ export function TextValue({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Memo of transfer.
 export function TextMemo({ children }: { children: React.ReactNode }) {
   return (
     <p className='sm:text-[20px] text-[16px] leading-[23px] tracking-[-0.03em] font-light bg-gradient-to-b from-[#AAAAAA] to-[#777777] bg-clip-text text-transparent'>
@@ -42,6 +45,7 @@ export function TextMemo({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Initial for profile bubble.
 export function TextInitial({ children }: { children: React.ReactNode }) {
   return (
     <p className='text-[24px] leading-[28px] tracking-[0.5px] font-semibold bg-gradient-to-b from-[#535353] to-[#111111] bg-clip-text text-transparent'>
@@ -50,6 +54,7 @@ export function TextInitial({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Light text.
 export function TextLight({ children }: { children: React.ReactNode }) {
   return (
     <p className='text-[14px] leading-[16.8px] tracking-[-0.03em] font-light bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
@@ -58,6 +63,7 @@ export function TextLight({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Link for text.
 export function LinkLight({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a href={href} target='_blank'>
@@ -66,6 +72,7 @@ export function LinkLight({ href, children }: { href: string; children: React.Re
   );
 }
 
+// Header for Eth Receipts.
 export function Header({ children }: { children: React.ReactNode }) {
   return (
     <p className='sm:text-[24px] text-[20px] leading-[28px] tracking-[2px] font-semibold bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
@@ -74,6 +81,7 @@ export function Header({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Text for footer.
 export function TextFooter({ children }: { children: React.ReactNode }) {
   return (
     <p className='sm:text-[14px] text-[10px] leading-[16.8px] tracking-[-0.025em] font-light color-[#AAAAAA] opacity-70'>
@@ -82,6 +90,7 @@ export function TextFooter({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Link for footer.
 export function LinkFooter({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a href={href} target='_blank'>
