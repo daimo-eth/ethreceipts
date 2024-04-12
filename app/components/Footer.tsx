@@ -2,6 +2,7 @@ import { OldDaimo } from '@/public/icons';
 import { LinkFooter, TextFooter } from './typography';
 import { Daimo } from '@/public/profileIcons/Daimo';
 
+/** Footer component for Eth Receipts */
 export default function Footer() {
   return (
     <div className='sm:absolute relative bottom-0 w-full py-10 sm:px-[25%] px-2'>

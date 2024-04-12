@@ -1,4 +1,3 @@
-import { Link } from '@/public/icons';
 import { AddressProfile, Transfer, EventLog } from '../utils/types';
 import AddressBubble from './AddressBubble';
 import EventLogCard from './EventLog';
@@ -6,6 +5,8 @@ import { TextValue, TextHeader, TextMemo } from './typography';
 import TransferArrow from './TransferArrow';
 import { NeueMontreal } from '@/public/fonts';
 import { formatValue } from '../utils/formatting';
+import stablecoinsAddresses from '../utils/tokens/stablecoins';
+import CopyReceipt from './CopyReceipt';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -27,9 +28,10 @@ export default function TransferCard(
   const value = formatValue(
     Number(props.transferData.value) / Number(10 ** Number(props.transferData.tokenDecimal)),
   );
-  // const formattedValue = numberWithCommas(Number(value));
   const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${props.eventLogData.chainId}/${props.eventLogData.blockNumber}/${props.eventLogData.logIndex}`;
+
   const memo = props.transferData.memo;
+  const isStablecoin = stablecoinsAddresses.includes(props.transferData.contractAddress);
 
   return (
     <div
@@ -37,15 +39,15 @@ export default function TransferCard(
       border-[0px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[1px] drop-shadow-3xl'
     >
       <div className='flex flex-col bg-white rounded-[23px]'>
-        <div className='flex flex-col w-full items-center px-10 sm:py-10 pt-10 pb-8'>
-          <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-8px] mb-[-16px]'>
-            <a href={link} target='_blank'>
-              <Link />
-            </a>
+        <div className='flex flex-col w-full items-center px-10 sm:py-8 pt-8 pb-8'>
+          <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-16px] mb-[-24px]'>
+            <CopyReceipt link={link} />
           </div>
           <div className='flex flex-col items-center w-full'>
             <div className={NeueMontreal.className}>
-              <TextValue>{`$${value} ${props.transferData.tokenSymbol}`}</TextValue>
+              <TextValue>{`${isStablecoin ? '$' : ''}${value} ${
+                props.transferData.tokenSymbol
+              }`}</TextValue>
             </div>
             {memo && <TextMemo>{memo}</TextMemo>}
           </div>

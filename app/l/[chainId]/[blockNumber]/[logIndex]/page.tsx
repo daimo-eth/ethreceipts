@@ -1,4 +1,5 @@
 import Footer from '@/app/components/Footer';
+import LogNotFound from '@/app/components/LogNotFound';
 import TransferCard from '@/app/components/TransferCard';
 import { Header } from '@/app/components/typography';
 
@@ -40,20 +41,23 @@ export default async function Page({
   params: { chainId: string; blockNumber: string; logIndex: string };
 }) {
   const logData = await getLogData(chainId, blockNumber, logIndex);
-  if (!logData) return <div>Log not found</div>;
 
   return (
     <div className='flex flex-col items-center justify-center max-w-fit m-auto'>
       <div className='flex sm:pt-20 pt-12 sm:pb-14 pb-8'>
-        <Header>ETH RECEIPTS</Header>
+        <Header>ETH RECEIPT</Header>
       </div>
-      <TransferCard
-        transferData={logData.transferData}
-        addressProfileFrom={logData.fromAccountProfile}
-        addressProfileTo={logData.toAccountProfile}
-        eventLogData={logData.eventLogData}
-        finalized={logData.finalized}
-      />
+      {logData ? (
+        <TransferCard
+          transferData={logData.transferData}
+          addressProfileFrom={logData.fromAccountProfile}
+          addressProfileTo={logData.toAccountProfile}
+          eventLogData={logData.eventLogData}
+          finalized={logData.finalized}
+        />
+      ) : (
+        <LogNotFound />
+      )}
       <Footer />
     </div>
   );

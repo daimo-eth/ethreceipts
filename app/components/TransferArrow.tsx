@@ -1,5 +1,6 @@
 import { Arrow } from '@/public/icons';
 
+/** Middle arrow component */
 export default function TransferArrow() {
   return (
     <div
