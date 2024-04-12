@@ -13,6 +13,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-SF-Pro-Display)'],
+        mono: ['var(--font-NeueMontreal)'],
       },
       dropShadow: {
         '3xl': '10 0px 4px #F3F3F3',

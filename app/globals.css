@@ -3,10 +3,8 @@
 @import 'tailwindcss/utilities';
 
 body {
-  font-family: 'var(--font-PP-neue-montreal)';
   background: linear-gradient(#ffffff, #f6f6f6);
   background-repeat: no-repeat;
-  color: #231f20;
   height: 100vh;
 }
 

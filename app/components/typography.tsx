@@ -28,7 +28,7 @@ export function TextHeader({ children }: { children: React.ReactNode }) {
 // Value of transfer.
 export function TextValue({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[36px] leading-[36px] tracking-[-2px] font-medium bg-gradient-to-b from-[#535353] to-[#000000] bg-clip-text text-transparent sans'>
+    <p className='font-mono text-[36px] leading-[43px] tracking-[-0.03em] font-medium bg-gradient-to-b from-[#535353] to-[#000000] bg-clip-text text-transparent'>
       {children}
     </p>
   );
@@ -36,7 +36,7 @@ export function TextValue({ children }: { children: React.ReactNode }) {
 
 export function TextMemo({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[20px] leading-[19px] tracking-[-0.02em] font-light bg-gradient-to-b from-[#AAAAAA] to-[#777777] bg-clip-text text-transparent'>
+    <p className='text-[20px] leading-[23px] tracking-[-0.03em] font-light bg-gradient-to-b from-[#AAAAAA] to-[#777777] bg-clip-text text-transparent'>
       {children}
     </p>
   );
@@ -52,7 +52,7 @@ export function TextInitial({ children }: { children: React.ReactNode }) {
 
 export function TextLight({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[14px] leading-[16.8px] tracking-[-0.025em] font-light bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
+    <p className='text-[14px] leading-[16.8px] tracking-[-0.03em] font-light bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
       {children}
     </p>
   );

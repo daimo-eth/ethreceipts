@@ -4,6 +4,7 @@ import AddressBubble from './AddressBubble';
 import EventLogCard from './EventLog';
 import { TextValue, TextHeader, TextMemo } from './typography';
 import TransferArrow from './TransferArrow';
+import { NeueMontreal } from '../layout';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -34,13 +35,16 @@ export default function TransferCard(
     >
       <div className='flex flex-col bg-white rounded-[23px]'>
         <div className='flex flex-col w-full items-center px-10 py-10'>
-          <div className='w-full flex justify-end px-4 mb-[-4px]'>
+          <div className='w-full flex justify-end px-4 mb-[-8px]'>
             <a href={link} target='_blank'>
               <Link />
             </a>
           </div>
-          <div className='flex flex-col items-center w-full gap-y-2'>
-            <TextValue>{`$${value.toString()} USDC`}</TextValue>
+          <div className='flex flex-col items-center w-full'>
+            <div className={NeueMontreal.className}>
+              <TextValue>{`$${value.toString()} USDC`}</TextValue>
+            </div>
+
             {memo && <TextMemo>{memo}</TextMemo>}
           </div>
         </div>
