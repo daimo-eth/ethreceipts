@@ -23,10 +23,6 @@ export type Transfer = {
   memo?: string;
 };
 
-/** Token Decimals */
-export const ERC20_DECIMAL = BigInt(mainnet.nativeCurrency.decimals);
-export const USDC_DECIMAL = BigInt(10 ** 6);
-
 /** Event Log Data */
 export type EventLog = {
   timestamp: bigint;

@@ -1,8 +1,8 @@
-import { erc20Abi } from '@/app/utils/viem/abi';
+import { erc20Abi, tokenAbi } from '@/app/utils/viem/abi';
 import { createViemClient } from '@/app/utils/viem/client';
-import { Block, Log, decodeEventLog } from 'viem';
+import { Address, Block, Log, ReadContractReturnType, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
-import { Transfer, EventLog, USDC_DECIMAL, SupportedChainId } from '@/app/utils/types';
+import { Transfer, EventLog } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
 import { resolveAccountForAddress } from '../../../../utils/profiles';
 import { tryGetDaimoMemo } from '@/app/utils/getDaimoMemo';
@@ -71,8 +71,22 @@ export async function GET(
     return Response.json('Log not a transfer event', { status: 404 });
   }
 
+  // Get token decimals.
+  const tokenDecimal: ReadContractReturnType = await publicClient.readContract({
+    address: log.address as Address,
+    abi: tokenAbi,
+    functionName: 'decimals',
+  });
+
+  // Get token symbol.
+  const tokenSymbol: ReadContractReturnType = await publicClient.readContract({
+    address: log.address as Address,
+    abi: tokenAbi,
+    functionName: 'symbol',
+  });
+
   // Get Daimo memo if exists.
-  const memo = await tryGetDaimoMemo(log.transactionHash);
+  // const memo = await tryGetDaimoMemo(log.transactionHash);
 
   // Format ERC20 transfer event data.
   const erc20TransferData: Transfer = {
@@ -80,9 +94,8 @@ export async function GET(
     to: erc20EventLogData.args.to,
     value: erc20EventLogData.args.value,
     contractAddress: log.address,
-    tokenDecimal: USDC_DECIMAL,
-    tokenSymbol: 'USDC',
-    memo: memo,
+    tokenDecimal: BigInt(tokenDecimal as string),
+    tokenSymbol: tokenSymbol as string,
   };
 
   // Check whether the block is finalized.

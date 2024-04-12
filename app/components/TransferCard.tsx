@@ -5,6 +5,7 @@ import EventLogCard from './EventLog';
 import { TextValue, TextHeader, TextMemo } from './typography';
 import TransferArrow from './TransferArrow';
 import { NeueMontreal } from '@/public/fonts';
+import { formatValue } from '../utils/formatting';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -23,9 +24,10 @@ export default function TransferCard(
     finalized: boolean;
   }>,
 ) {
-  const value = Number(
-    BigInt(props.transferData.value) / BigInt(props.transferData.tokenDecimal),
-  ).toFixed(2);
+  const value = formatValue(
+    Number(props.transferData.value) / Number(10 ** Number(props.transferData.tokenDecimal)),
+  );
+  // const formattedValue = numberWithCommas(Number(value));
   const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${props.eventLogData.chainId}/${props.eventLogData.blockNumber}/${props.eventLogData.logIndex}`;
   const memo = props.transferData.memo;
 
@@ -43,7 +45,7 @@ export default function TransferCard(
           </div>
           <div className='flex flex-col items-center w-full'>
             <div className={NeueMontreal.className}>
-              <TextValue>{`$${value.toString()} USDC`}</TextValue>
+              <TextValue>{`$${value} ${props.transferData.tokenSymbol}`}</TextValue>
             </div>
             {memo && <TextMemo>{memo}</TextMemo>}
           </div>
