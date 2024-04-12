@@ -28,7 +28,7 @@ export default function EventLogCard(
   const transactionLink = `${explorerUrl}/tx/${props.eventLogData.transactionHash}`;
 
   return (
-    <div className='w-full flex flex-row justify-between py-4 px-10'>
+    <div className='w-full flex sm:flex-row flex-col sm:gap-y-0 gap-y-2 justify-between py-4 px-10'>
       <div className='flex flex-row gap-x-1 items-center'>
         <LinkLight href={tokenLink}>{props.transferData.tokenSymbol}</LinkLight>
         <TextLight>•</TextLight>

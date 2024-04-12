@@ -4,7 +4,7 @@ import AddressBubble from './AddressBubble';
 import EventLogCard from './EventLog';
 import { TextValue, TextHeader, TextMemo } from './typography';
 import TransferArrow from './TransferArrow';
-import { NeueMontreal } from '../layout';
+import { NeueMontreal } from '@/public/fonts';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -34,8 +34,8 @@ export default function TransferCard(
       border-[0px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[1px] drop-shadow-3xl'
     >
       <div className='flex flex-col bg-white rounded-[23px]'>
-        <div className='flex flex-col w-full items-center px-10 py-10'>
-          <div className='w-full flex justify-end px-4 mb-[-8px]'>
+        <div className='flex flex-col w-full items-center px-10 sm:py-10 pt-10 pb-8'>
+          <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-8px] mb-[-16px]'>
             <a href={link} target='_blank'>
               <Link />
             </a>
@@ -44,20 +44,19 @@ export default function TransferCard(
             <div className={NeueMontreal.className}>
               <TextValue>{`$${value.toString()} USDC`}</TextValue>
             </div>
-
             {memo && <TextMemo>{memo}</TextMemo>}
           </div>
         </div>
 
-        <div className='flex width-full container border-y-[2px] border-[#F3F3F3]'>
-          <div className='flex w-1/2 flex-col px-16 py-8 gap-y-4 border-r-[1px] border-[#F3F3F3]'>
+        <div className='flex sm:flex-row flex-col width-full container border-y-[2px] border-[#F3F3F3]'>
+          <div className='flex sm:w-1/2 w-full flex-col px-16 sm:py-8 pt-10 pb-12 gap-y-4 sm:border-r-[1px] sm:border-b-[0px] border-b-[1px] border-[#F3F3F3]'>
             <TextHeader>FROM</TextHeader>
             <AddressBubble addressProfile={props.addressProfileFrom} />
           </div>
           <div className='flex items-center overlay-component'>
             <TransferArrow />
           </div>
-          <div className='flex w-1/2 flex-col px-16 py-8 gap-y-4 border-l-[1px] border-[#F3F3F3]'>
+          <div className='flex sm:w-1/2 w-full flex-col px-16 sm:py-8 pt-10 pb-12 gap-y-4 sm:border-l-[1px] sm:border-t-[0px] border-t-[1px] border-[#F3F3F3]'>
             <TextHeader>TO</TextHeader>
             <AddressBubble addressProfile={props.addressProfileTo} />
           </div>

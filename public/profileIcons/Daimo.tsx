@@ -1,7 +1,7 @@
-export function Daimo() {
+export function Daimo({ width = '17', height = '17' }: { width?: string; height?: string }) {
   return (
     <div style={{ opacity: 0.3 }}>
-      <svg width='17' height='17' viewBox='0 0 17 17' fill='none'>
+      <svg width={width} height={height} viewBox='0 0 17 17' fill='none'>
         <path
           d='M13.5995 8.49979L13.5995 8.4998H13.5994L13.5995 8.49979Z'
           fill='url(#paint0_linear_1_83)'

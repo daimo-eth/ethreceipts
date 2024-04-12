@@ -2,10 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-body {
+html {
   background: linear-gradient(#ffffff, #f6f6f6);
-  background-repeat: no-repeat;
-  height: 100vh;
+  height: 100%;
 }
 
 .pfpImage {
