@@ -1,8 +1,8 @@
 import { erc20Abi, tokenAbi } from '@/app/utils/viem/abi';
-import { createViemClient } from '@/app/utils/viem/client';
+import { createViemClient, getChainNameById } from '@/app/utils/viem/client';
 import { Address, Block, Log, ReadContractReturnType, decodeEventLog } from 'viem';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
-import { Transfer, EventLog } from '@/app/utils/types';
+import { Transfer, EventLog, SupportedChainId } from '@/app/utils/types';
 import { AddressProfile } from '@/app/utils/types';
 import { resolveAccountForAddress } from '../../../../utils/profiles';
 import { tryGetDaimoMemo } from '@/app/utils/getDaimoMemo';
@@ -50,6 +50,8 @@ export async function GET(
     blockNumber: blockNumber,
   });
 
+  const chainName = getChainNameById(Number(params.chainId) as SupportedChainId);
+
   // Format event log data.
   const eventLogData: EventLog = {
     timestamp: block.timestamp,
@@ -57,6 +59,7 @@ export async function GET(
     logIndex: log.logIndex,
     transactionHash: log.transactionHash,
     chainId: Number(params.chainId),
+    chainName: chainName,
   };
 
   // Decode ERC20 transfer event data.

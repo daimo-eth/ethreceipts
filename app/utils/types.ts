@@ -30,6 +30,7 @@ export type EventLog = {
   logIndex: number;
   transactionHash: string;
   chainId: number;
+  chainName: string;
 };
 
 /** Address Profile */

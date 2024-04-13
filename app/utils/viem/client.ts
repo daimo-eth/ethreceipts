@@ -11,6 +11,12 @@ function getViemChainById(chainId: SupportedChainId): Chain {
   return extractChain({ chains: supportedChains, id: chainId });
 }
 
+/** Get Chain name in string format. */
+export function getChainNameById(chainId: SupportedChainId): string {
+  const chain = getViemChainById(chainId);
+  return chain.name;
+}
+
 /**
  * Create Viem client connected to chainID.
  * Uses private Alchemy API key.

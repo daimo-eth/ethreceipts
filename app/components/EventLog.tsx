@@ -18,7 +18,7 @@ export default function EventLogCard(
   const time = new Date(Number(props.eventLogData.timestamp) * 1000);
   const dateDifferenceStr = getDateDifference(time);
 
-  const chain = process.env.DAIMO_CHAIN || 'Ethereum';
+  const chain = props.eventLogData.chainName;
   const chainFormatted = chain[0].toUpperCase() + chain.slice(1);
 
   const tokenLink = `https://etherscan.io/token/${props.transferData.contractAddress}`;

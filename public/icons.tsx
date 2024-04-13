@@ -145,8 +145,8 @@ export function OldDaimo() {
 export function Link() {
   return (
     <svg
-      width='13.5'
-      height='13.5'
+      width='13.5px'
+      height='13.5px'
       viewBox='0 0 16 16'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -165,6 +165,34 @@ export function Link() {
           <rect width='16' height='16' fill='white' />
         </clipPath>
       </defs>
+    </svg>
+  );
+}
+
+export function Warning() {
+  return (
+    <svg
+      width='14px'
+      height='14px'
+      viewBox='0 0 24 24'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <circle cx='12' cy='17' r='1' fill='#d33000' />
+      <path
+        d='M12 10L12 14'
+        stroke='#d33000'
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M3.44722 18.1056L10.2111 4.57771C10.9482 3.10361 13.0518 3.10362 13.7889 4.57771L20.5528 18.1056C21.2177 19.4354 20.2507 21 18.7639 21H5.23607C3.7493 21 2.78231 19.4354 3.44722 18.1056Z'
+        stroke='#d33000'
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
     </svg>
   );
 }

@@ -28,7 +28,7 @@ export default function AddressBubble(props: Readonly<{ addressProfile: AddressP
   const name = props.addressProfile.account?.name;
   const nameInitial = name ? name[0].toUpperCase() : '0x';
   return (
-    <div className='flex flex-row w-full gap-x-4'>
+    <div className='flex flex-row w-min-fit gap-x-4'>
       <div className='flex'>
         {pfp ? (
           <div className='rounded-[50%] sm:w-16 w-12 sm:h-16 h-12'>

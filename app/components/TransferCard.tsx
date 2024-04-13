@@ -7,6 +7,8 @@ import { NeueMontreal } from '@/public/fonts';
 import { formatValue } from '../utils/formatting';
 import stablecoinsAddresses from '../utils/tokens/stablecoins';
 import CopyReceipt from './CopyReceipt';
+import { checkTokenWhitelist } from '../utils/tokens/tokenWhitelist';
+import { Warning } from '@/public/icons';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -32,6 +34,10 @@ export default function TransferCard(
 
   const memo = props.transferData.memo;
   const isStablecoin = stablecoinsAddresses.includes(props.transferData.contractAddress);
+  const isWhitelistedToken = checkTokenWhitelist(
+    props.transferData.contractAddress,
+    props.eventLogData.chainId,
+  );
 
   return (
     <div
@@ -43,11 +49,18 @@ export default function TransferCard(
           <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-16px] mb-[-24px]'>
             <CopyReceipt link={link} />
           </div>
-          <div className='flex flex-col items-center w-full'>
+          <div className='flex flex-col items-center justify-center w-full'>
             <div className={NeueMontreal.className}>
-              <TextValue>{`${isStablecoin ? '$' : ''}${value} ${
-                props.transferData.tokenSymbol
-              }`}</TextValue>
+              <div className='flex flex-row flex-start gap-x-1'>
+                <TextValue>{`${isStablecoin ? '$' : ''}${value} ${
+                  props.transferData.tokenSymbol
+                }`}</TextValue>
+                {!isWhitelistedToken && (
+                  <div className='flex py-1 px-1'>
+                    <Warning />
+                  </div>
+                )}
+              </div>
             </div>
             {memo && <TextMemo>{memo}</TextMemo>}
           </div>
