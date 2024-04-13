@@ -21,9 +21,8 @@ export default function EventLogCard(
   const chain = props.eventLogData.chainName;
   const chainFormatted = chain[0].toUpperCase() + chain.slice(1);
 
-  const tokenLink = `https://etherscan.io/token/${props.transferData.contractAddress}`;
-
   const explorerUrl = getChainExplorerByChainId(props.eventLogData.chainId);
+  const tokenLink = `${explorerUrl}/token/${props.transferData.contractAddress}`;
   const transactionLink = `${explorerUrl}/tx/${props.eventLogData.transactionHash}`;
 
   return (
@@ -43,7 +42,7 @@ export default function EventLogCard(
         {props.finalized ? (
           <>
             <FinalizedCheck />
-            <TextLight>Finalized</TextLight>{' '}
+            <TextLight>Finalized</TextLight>
           </>
         ) : (
           <>
