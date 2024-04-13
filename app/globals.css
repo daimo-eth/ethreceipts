@@ -39,6 +39,19 @@ hr {
   z-index: 1;
 }
 
+/* For hover tooltip */
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid black;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

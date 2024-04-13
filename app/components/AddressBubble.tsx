@@ -12,10 +12,13 @@ function AddressField(props: { name: string; address: string; accountType: Accou
   const profileLink = getProfileLink(props.name, props.accountType);
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-row gap-x-3 items-center'>
-        <AccountName>{props.name}</AccountName>
-        <AccountIcon accountType={props.accountType} link={profileLink} />
-      </div>
+      <a href={profileLink} target='_blank'>
+        <div className='flex flex-row gap-x-3 items-center'>
+          <AccountName>{props.name}</AccountName>
+          <AccountIcon accountType={props.accountType} />
+        </div>
+      </a>
+
       <AccountAddress>{props.address}</AccountAddress>
     </div>
   );
