@@ -2,11 +2,11 @@ import { AddressProfile, Transfer, EventLog } from '../utils/types';
 import AddressBubble from './AddressBubble';
 import EventLogCard from './EventLog';
 import { TextValue, TextHeader, TextMemo } from './typography';
-import TransferArrow from './TransferArrow';
+import TransferArrow from './minorComponents/TransferArrow';
 import { NeueMontreal } from '@/public/fonts';
 import { formatValue } from '../utils/formatting';
 import stablecoinsAddresses from '../utils/tokens/stablecoins';
-import CopyReceipt from './CopyReceipt';
+import CopyReceipt from './minorComponents/CopyReceipt';
 import { checkTokenWhitelist } from '../utils/tokens/tokenWhitelist';
 import { Warning } from '@/public/icons';
 
