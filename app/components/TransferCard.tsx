@@ -33,6 +33,7 @@ export default function TransferCard(
   const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${props.eventLogData.chainId}/${props.eventLogData.blockNumber}/${props.eventLogData.logIndex}`;
 
   const memo = props.transferData.memo;
+
   const isStablecoin = stablecoinsAddresses.includes(props.transferData.contractAddress);
   const isWhitelistedToken = checkTokenWhitelist(
     props.transferData.contractAddress,
@@ -42,14 +43,14 @@ export default function TransferCard(
   return (
     <div
       className='rounded-[24px] flex flex-col w-full m-auto
-      border-[0px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[1px] drop-shadow-3xl'
+      border-[0px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[1px] drop-shadow-3xl min-w-fit'
     >
       <div className='flex flex-col bg-white rounded-[23px]'>
-        <div className='flex flex-col w-full items-center px-10 sm:py-8 pt-8 pb-8'>
-          <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-16px] mb-[-24px]'>
+        <div className='flex flex-col w-full items-center sm:px-10 px-8 sm:py-8 pt-8 pb-8'>
+          <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-16px] mb-[-12px]'>
             <CopyReceipt link={link} />
           </div>
-          <div className='flex flex-col items-center justify-center w-full'>
+          <div className='flex flex-col items-center justify-center w-full min-w-fit'>
             <div className={NeueMontreal.className}>
               <div className='flex flex-row flex-start gap-x-1'>
                 <TextValue>{`${isStablecoin ? '$' : ''}${value} ${
