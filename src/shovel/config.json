@@ -10,7 +10,7 @@
       "enabled": true,
       "sources": [{ "name": "mainnet" }, { "name": "base" }],
       "table": {
-        "name": "transfers",
+        "name": "usdc-transfers",
         "columns": [
           { "name": "chain_id", "type": "numeric" },
           { "name": "block_num", "type": "numeric" },
