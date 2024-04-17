@@ -84,7 +84,7 @@ export function Header({ children }: { children: React.ReactNode }) {
 // Text for footer.
 export function TextFooter({ children }: { children: React.ReactNode }) {
   return (
-    <p className='sm:text-[14px] text-[10px] leading-[16.8px] tracking-[-0.025em] font-light color-[#AAAAAA] opacity-70'>
+    <p className='sm:text-[14px] text-[10px] leading-[16.8px] tracking-[-0.025em] font-light text-[#AAAAAA] opacity-70'>
       {children}
     </p>
   );
@@ -96,5 +96,40 @@ export function LinkFooter({ href, children }: { href: string; children: React.R
     <a href={href} target='_blank'>
       <TextFooter>{children}</TextFooter>
     </a>
+  );
+}
+
+// Header for account activity on profile.
+export function HeaderProfileActivity({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[16px] leading-[20px] tracking-[-0.025em] font-light text-[#000000]'>
+      {children}
+    </p>
+  );
+}
+
+// Row header for profile table.
+export function RowHeaderProfileActivity({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[12px] leading-[14.5px] tracking-[-0.025em] font-normal text-[#323232]'>
+      {children}
+    </p>
+  );
+}
+
+// Transfers made to/from a specific account.
+export function RowValueProfileActivity({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[12px] leading-[14.5px] tracking-[-0.025em] font-normal text-[#535353]'>
+      {children}
+    </p>
+  );
+}
+
+export function RowTimeProfileActivity({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[12px] leading-[14.5px] tracking-[-0.025em] font-normal text-[#AAAAAA]'>
+      {children}
+    </p>
   );
 }

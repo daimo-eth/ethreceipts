@@ -1,19 +1,22 @@
 /** Retrieves how many days/hours/minutes ago the given timestamp is relative to current timestamp */
-export function getDateDifference(date: Date): string {
+export function getDateDifference(date: Date, sent: boolean = true): string {
   const now = new Date();
   const diff = now.getTime() - date.getTime();
   const diffInDays = Math.floor(diff / (1000 * 60 * 60 * 24));
   const diffInHours = Math.floor(diff / (1000 * 60 * 60));
   const diffInMinutes = Math.floor(diff / (1000 * 60));
-  if (diffInDays > 0) return `Sent ${diffInDays} day${diffInDays == 1 ? '' : 's'} ago`;
-  else if (diffInHours > 0) return `Sent ${diffInHours} hour${diffInHours == 1 ? '' : 's'} ago`;
+  if (diffInDays > 0)
+    return `${sent ? 'Sent' : ''} ${diffInDays} day${diffInDays == 1 ? '' : 's'} ago`;
+  else if (diffInHours > 0)
+    return `${sent ? 'Sent' : ''} ${diffInHours} hour${diffInHours == 1 ? '' : 's'} ago`;
   else if (diffInMinutes > 0)
-    return `Sent ${diffInMinutes} min${diffInMinutes == 1 ? '' : 's'} ago`;
+    return `${sent ? 'Sent' : ''} ${diffInMinutes} min${diffInMinutes == 1 ? '' : 's'} ago`;
   else return 'Just now';
 }
 
 /** Truncates address hash */
 export function truncateAddress(address: string, startSize: number = 8): string {
+  if (!address) return '';
   return (
     address.substring(0, startSize) + '...' + address.substring(address.length - 4, address.length)
   );
