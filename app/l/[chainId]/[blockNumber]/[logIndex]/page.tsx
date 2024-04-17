@@ -58,7 +58,6 @@ export default async function Page({
       ) : (
         <LogNotFound />
       )}
-      <Footer />
     </div>
   );
 }
