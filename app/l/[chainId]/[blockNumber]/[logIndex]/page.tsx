@@ -1,4 +1,3 @@
-import Footer from '@/app/components/Footer';
 import LogNotFound from '@/app/components/LogNotFound';
 import TransferCard from '@/app/components/TransferCard';
 import { Header } from '@/app/components/typography';
