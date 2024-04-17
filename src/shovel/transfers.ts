@@ -3,7 +3,7 @@ import type { Integration, Table } from '@indexsupply/shovel-config';
 import { getChainConfig } from '@/app/utils/viem/chainConfig';
 
 const table: Table = {
-  name: 'transfers',
+  name: 'usdc-transfers',
   columns: [
     { name: 'chain_id', type: 'numeric' },
     { name: 'block_num', type: 'numeric' },
@@ -17,8 +17,9 @@ const table: Table = {
   ],
 };
 
+// USDC transfers.
 export const transfersIntegration: Integration = {
-  name: 'transfers',
+  name: 'usdc-transfers',
   enabled: true,
   sources: [{ name: '$CHAIN_NAME', start: '$CHAIN_START_BLOCK' }],
   table,
