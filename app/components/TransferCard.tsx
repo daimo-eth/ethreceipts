@@ -9,6 +9,7 @@ import stablecoinsAddresses from '../utils/tokens/stablecoins';
 import CopyReceipt from './minorComponents/CopyReceipt';
 import { checkTokenWhitelist } from '../utils/tokens/tokenWhitelist';
 import { Warning } from '@/public/icons';
+import TokenWarning from './minorComponents/TokenWarning';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -58,7 +59,7 @@ export default function TransferCard(
                 }`}</TextValue>
                 {!isWhitelistedToken && (
                   <div className='flex py-1 px-1'>
-                    <Warning />
+                    <TokenWarning />
                   </div>
                 )}
               </div>
