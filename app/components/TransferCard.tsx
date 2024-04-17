@@ -6,7 +6,7 @@ import TransferArrow from './minorComponents/TransferArrow';
 import { NeueMontreal } from '@/public/fonts';
 import { formatValue } from '../utils/formatting';
 import stablecoinsAddresses from '../utils/tokens/stablecoins';
-import CopyReceipt from './minorComponents/CopyReceipt';
+import CopyReceipt from './minorComponents/CopyText';
 import { checkTokenWhitelist } from '../utils/tokens/tokenWhitelist';
 import { Warning } from '@/public/icons';
 import TokenWarning from './minorComponents/TokenWarning';

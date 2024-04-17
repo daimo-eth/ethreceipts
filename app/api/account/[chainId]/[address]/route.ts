@@ -38,8 +38,6 @@ export async function GET(
   const publicClient = createViemClient(params.chainId);
 
   const accountHistory = await getDaimoAccountHistory(params.address as Address);
-  console.log(accountHistory);
-
   const accountProfile: AddressProfile = await resolveAccountForAddress(
     params.address as Hex,
     publicClient,

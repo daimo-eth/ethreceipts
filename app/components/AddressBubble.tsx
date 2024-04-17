@@ -5,6 +5,7 @@ import { TextInitial } from './typography';
 import { AccountIcon } from '@/public/profileIcons/profileIcons';
 import { AccountAddress, AccountName } from './typography';
 import { getProfileLink } from '../utils/profiles/getProfileLink';
+import CopyText from './minorComponents/CopyText';
 
 /** Header-value React component field for Address Bubble */
 function AddressField(props: { name: string; address: string; accountType: AccountTypeStr }) {
@@ -18,14 +19,18 @@ function AddressField(props: { name: string; address: string; accountType: Accou
           <AccountIcon accountType={props.accountType} />
         </div>
       </a>
-
-      <AccountAddress>{props.address}</AccountAddress>
+      <div className='flex flex-row gap-x-1 items-center'>
+        <AccountAddress>{props.address}</AccountAddress>
+        <CopyText text={props.address} hoverText='Copy address' />
+      </div>
     </div>
   );
 }
 
 /** Represents an address bubble component given an address profile*/
-export default function AddressBubble(props: Readonly<{ addressProfile: AddressProfile }>) {
+export default function AddressBubble(
+  props: Readonly<{ addressProfile: AddressProfile; link?: boolean }>,
+) {
   const address = truncateAddress(props.addressProfile.accountAddress);
   const pfp = props.addressProfile.account?.avatar ?? null;
   const name = props.addressProfile.account?.name;
