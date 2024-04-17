@@ -6,10 +6,9 @@ import TransferArrow from './minorComponents/TransferArrow';
 import { NeueMontreal } from '@/public/fonts';
 import { formatValue } from '../utils/formatting';
 import stablecoinsAddresses from '../utils/tokens/stablecoins';
-import CopyReceipt from './minorComponents/CopyText';
 import { checkTokenWhitelist } from '../utils/tokens/tokenWhitelist';
-import { Warning } from '@/public/icons';
 import TokenWarning from './minorComponents/TokenWarning';
+import CopyText from './minorComponents/CopyText';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -49,7 +48,7 @@ export default function TransferCard(
       <div className='flex flex-col bg-white rounded-[23px]'>
         <div className='flex flex-col w-full items-center sm:px-10 px-8 sm:py-8 pt-8 pb-8'>
           <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-16px] mb-[-12px]'>
-            <CopyReceipt link={link} />
+            <CopyText text={link} hoverText='Copy link' />
           </div>
           <div className='flex flex-col items-center justify-center w-full min-w-fit'>
             <div className={NeueMontreal.className}>
