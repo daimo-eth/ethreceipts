@@ -2,8 +2,7 @@ import Footer from '@/app/components/Footer';
 import LogNotFound from '@/app/components/LogNotFound';
 import TransferCard from '@/app/components/TransferCard';
 import { Header } from '@/app/components/typography';
-
-const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
+import { apiUrl } from '@/app/env';
 
 /**
  * Fetch log data from API.
@@ -58,7 +57,6 @@ export default async function Page({
       ) : (
         <LogNotFound />
       )}
-      <Footer />
     </div>
   );
 }

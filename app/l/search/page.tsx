@@ -9,7 +9,6 @@ export default function Page() {
         <Header>ETH RECEIPT</Header>
       </div>
       <SearchBar />
-      <Footer />
     </div>
   );
 }
