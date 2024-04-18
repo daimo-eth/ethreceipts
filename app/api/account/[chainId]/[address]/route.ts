@@ -2,7 +2,7 @@ import { getDaimoAccountHistory } from '@/app/utils/accountHistory/getDaimoAccou
 import { resolveAccountForAddress } from '@/app/utils/profiles';
 import { AddressProfile } from '@/app/utils/types';
 import { createViemClient } from '@/app/utils/viem/client';
-import { Address, Hex } from 'viem';
+import { Account, Address, Hex } from 'viem';
 
 // TransferLog type from Daimo API.
 // TODO: add type when Daimo API is updated.
@@ -21,6 +21,11 @@ type TransferLog = {
   opHash: string;
   requestStatus: string | null;
   feeAmount: number;
+};
+
+export type TransferHistoryEntry = {
+  transferLog: TransferLog;
+  otherAccountProfile: AddressProfile;
 };
 
 /**
@@ -48,8 +53,22 @@ export async function GET(
     ? accountHistory.transferLogs.filter((log: TransferLog) => log.type === 'transfer')
     : [];
 
+  // Get other account profile for each transfer.
+  const transfers: TransferHistoryEntry[] = await Promise.all(
+    accountTransfers.map(async (transferLog) => {
+      const otherAccountAddress =
+        params.address == transferLog.from ? transferLog.to : transferLog.from;
+      const otherAccountProfile: AddressProfile = await resolveAccountForAddress(
+        otherAccountAddress as Address,
+        publicClient,
+      );
+
+      return { transferLog: transferLog, otherAccountProfile: otherAccountProfile };
+    }),
+  );
+
   return Response.json({
     accountProfile: accountProfile,
-    accountTransferHistory: accountTransfers,
+    accountTransferHistory: transfers,
   });
 }

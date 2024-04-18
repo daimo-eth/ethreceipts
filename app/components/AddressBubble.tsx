@@ -27,7 +27,7 @@ function AddressField(props: { name: string; address: string; accountType: Accou
   );
 }
 
-/** Represents an address bubble component given an address profile*/
+/** Represents an address bubble component given an address profile for transfers*/
 export default function AddressBubble(
   props: Readonly<{ addressProfile: AddressProfile; link?: boolean }>,
 ) {
@@ -35,6 +35,7 @@ export default function AddressBubble(
   const pfp = props.addressProfile.account?.avatar ?? null;
   const name = props.addressProfile.account?.name;
   const nameInitial = name ? name[0].toUpperCase() : '0x';
+
   return (
     <div className='flex flex-row w-min-fit gap-x-4'>
       <div className='flex'>

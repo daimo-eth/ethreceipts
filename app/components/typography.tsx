@@ -99,6 +99,8 @@ export function LinkFooter({ href, children }: { href: string; children: React.R
   );
 }
 
+/** Typography for profile search */
+
 // Header for account activity on profile.
 export function HeaderProfileActivity({ children }: { children: React.ReactNode }) {
   return (
@@ -129,6 +131,14 @@ export function RowValueProfileActivity({ children }: { children: React.ReactNod
 export function RowTimeProfileActivity({ children }: { children: React.ReactNode }) {
   return (
     <p className='text-[12px] leading-[14.5px] tracking-[-0.025em] font-normal text-[#AAAAAA]'>
+      {children}
+    </p>
+  );
+}
+
+export function RowAccountProfileInitial({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='text-[10px] leading-[28px] tracking-[0.5px] font-medium bg-gradient-to-b from-[#535353] to-[#111111] bg-clip-text text-transparent'>
       {children}
     </p>
   );
