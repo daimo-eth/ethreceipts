@@ -57,7 +57,7 @@ export default function TransferCard(
                   props.transferData.tokenSymbol
                 }`}</TextValue>
                 {!isWhitelistedToken && (
-                  <div className='flex py-1 px-1'>
+                  <div className='flex py-1 px-2'>
                     <TokenWarning />
                   </div>
                 )}
