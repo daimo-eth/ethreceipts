@@ -44,11 +44,18 @@ export async function GET(
     return Response.json('Block not finalized', { status: 404 });
   }
 
-  // Get the block details of the block.
   // Type Block reference: https://github.com/wevm/viem/blob/main/src/types/block.ts.
-  const block: Block = await publicClient.getBlock({
-    blockNumber: blockNumber,
-  });
+  let block: Block;
+  try {
+    block = await publicClient.getBlock({
+      blockNumber: blockNumber,
+    });
+  } catch (e) {
+    console.log(`[ERROR] Failed to get block ${blockNumber}: ${e}`);
+    return Response.json(`Invalid block number ${blockNumber} for chain ${params.chainId}`, {
+      status: 404,
+    });
+  }
 
   const chainName = getChainNameById(Number(params.chainId) as SupportedChainId);
 
@@ -73,11 +80,6 @@ export async function GET(
   } catch (e) {
     console.log(`[ERROR] Failed to decode event log: ${e}`);
     return Response.json('Inputted log is not an ERC-20 transfer event', { status: 404 });
-  }
-
-  // Ensure log is an ERC20 transfer event.
-  if (erc20EventLogData.eventName !== 'Transfer') {
-    return Response.json('Log not a transfer event', { status: 404 });
   }
 
   // Get token decimals.

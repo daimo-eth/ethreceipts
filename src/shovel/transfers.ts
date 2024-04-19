@@ -1,7 +1,5 @@
 import type { Integration, Table } from '@indexsupply/shovel-config';
 
-import { getChainConfig } from '@/app/utils/viem/chainConfig';
-
 const table: Table = {
   name: 'usdc-transfers',
   columns: [
@@ -17,7 +15,7 @@ const table: Table = {
   ],
 };
 
-// USDC transfers.
+// All ERC-20 transfers.
 export const transfersIntegration: Integration = {
   name: 'usdc-transfers',
   enabled: true,
@@ -29,12 +27,13 @@ export const transfersIntegration: Integration = {
     { name: 'block_hash', column: 'block_hash' },
     { name: 'tx_idx', column: 'tx_idx' },
     { name: 'tx_hash', column: 'tx_hash' },
-    {
-      name: 'log_addr',
-      column: 'log_addr',
-      filter_op: 'contains',
-      filter_arg: [getChainConfig('base').tokenAddress, getChainConfig('baseSepolia').tokenAddress],
-    },
+    // USDC transfers.
+    // {
+    //   name: 'log_addr',
+    //   column: 'log_addr',
+    //   filter_op: 'contains',
+    //   filter_arg: [getChainConfig('base').tokenAddress, getChainConfig('baseSepolia').tokenAddress],
+    // },
   ],
   event: {
     name: 'Transfer',

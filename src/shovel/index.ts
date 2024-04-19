@@ -27,7 +27,7 @@ const integrations = [transfersIntegration];
 // TODO: add mainnet.
 const config = makeConfig({
   pg_url: '$DATABASE_URL',
-  sources: [base],
+  sources: [base, mainnet],
   integrations,
 });
 
