@@ -63,11 +63,17 @@ export async function GET(
   };
 
   // Decode ERC20 transfer event data.
-  const erc20EventLogData = decodeEventLog({
-    abi: erc20Abi,
-    data: log.data,
-    topics: log.topics,
-  });
+  let erc20EventLogData;
+  try {
+    erc20EventLogData = decodeEventLog({
+      abi: erc20Abi,
+      data: log.data,
+      topics: log.topics,
+    });
+  } catch (e) {
+    console.log(`[ERROR] Failed to decode event log: ${e}`);
+    return Response.json('Inputted log is not an ERC-20 transfer event', { status: 404 });
+  }
 
   // Ensure log is an ERC20 transfer event.
   if (erc20EventLogData.eventName !== 'Transfer') {

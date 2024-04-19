@@ -43,6 +43,7 @@ export type AddressProfile = {
 export enum AccountTypeStr {
   ENS = 'ENS',
   DAIMO = 'DAIMO',
+  FARCASTER = 'FARCASTER',
   UNKNOWN = 'Unknown',
 }
 

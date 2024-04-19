@@ -7,6 +7,14 @@ module.exports = {
         hostname: 'daimo.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 's.gravatar.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.imgur.com',
+      },
     ],
   },
 };
