@@ -2,7 +2,7 @@ import { getDaimoAccountHistory } from '@/app/utils/accountHistory/getDaimoAccou
 import { resolveAccountForAddress } from '@/app/utils/profiles';
 import { AddressProfile } from '@/app/utils/types';
 import { createViemClient } from '@/app/utils/viem/client';
-import { Account, Address, Hex } from 'viem';
+import { Address, Hex } from 'viem';
 
 // TransferLog type from Daimo API.
 // TODO: add type when Daimo API is updated.
