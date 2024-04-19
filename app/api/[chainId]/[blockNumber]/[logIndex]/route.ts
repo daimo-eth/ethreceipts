@@ -110,11 +110,13 @@ export async function GET(
   // Get address profiles for from and to addresses.
   const fromAccount: AddressProfile = await resolveAccountForAddress(
     erc20TransferData.from,
+    Number(params.chainId),
     publicClient,
   );
 
   const toAccount: AddressProfile = await resolveAccountForAddress(
     erc20TransferData.to,
+    Number(params.chainId),
     publicClient,
   );
 

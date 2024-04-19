@@ -1,8 +1,15 @@
 import { tryGetEnsProfile } from '@/app/utils/profiles/getEns';
 import { tryGetDaimoProfile } from '@/app/utils/profiles/getDaimo';
-import { tryGetUnknownProfile } from '@/app/utils/profiles/getUnknown';
 
-const getProfileFunctions = [tryGetEnsProfile, tryGetDaimoProfile]; // Add new address profile functions here.
-getProfileFunctions.push(tryGetUnknownProfile);
+const getProfileFunctions = (chainId: number) => {
+  switch (chainId) {
+    case 1:
+      return [tryGetEnsProfile];
+    case 8453:
+      return [tryGetDaimoProfile];
+    default:
+      return [tryGetEnsProfile];
+  }
+};
 
 export { getProfileFunctions };

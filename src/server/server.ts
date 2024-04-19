@@ -7,6 +7,7 @@ async function main() {
   console.log('[Server] intializing shovel watcher');
 
   // Create Viem client with correct chain.
+  // TODO: use different chain config.
   const viemClient = createViemClient(chainConfig.chainL1.id.toString());
 
   // Create shovel watcher with ERC20 indexer.
