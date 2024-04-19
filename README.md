@@ -18,7 +18,7 @@ Today, Eth Receipts supports Base (8453) and Ethereum (1).
 We built Eth Receipts to be easy to extend and contribute to. Currently, the project supports address bubbles for Daimo and ENS accounts but can easily be extended to other address profiles.
 
 <details open>
-<summary>Add a new address profile bubble</summary>
+<summary><strong>Add a new address profile bubble</strong></summary>
 <br>
 To add a new address profile bubble, you must:
 
@@ -35,10 +35,12 @@ To add a new address profile bubble, you must:
 Eth Receipt is a project supported and built by [Daimo](https://daimo.com).
 
 <details open>
-<summary>Dev quickstart</summary>
+<summary><strong>Dev quickstart</strong></summary>
 <br>
-```
+
+```sh
 pnpm install
 pnpm run dev
 ```
+
 </details>
