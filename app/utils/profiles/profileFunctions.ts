@@ -9,7 +9,7 @@ const getProfileFunctions = (chainId: number) => {
     case 8453:
       return [tryGetDaimoProfile];
     default:
-      return [tryGetEnsProfile];
+      return [];
   }
 };
 
