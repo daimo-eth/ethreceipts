@@ -50,7 +50,7 @@ export default function TransferCard(
           <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-16px] mb-[-12px]'>
             <CopyReceipt link={link} />
           </div>
-          <div className='flex flex-col items-center justify-center w-full min-w-fit'>
+          <div className='flex flex-col items-center justify-center w-full min-w-fit gap-y-2'>
             <div className={NeueMontreal.className}>
               <div className='flex flex-row flex-start gap-x-1'>
                 <TextValue>{`${isStablecoin ? '$' : ''}${value} ${
