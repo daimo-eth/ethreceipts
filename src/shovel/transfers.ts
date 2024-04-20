@@ -16,10 +16,14 @@ const table: Table = {
 };
 
 // All ERC-20 transfers.
+// Must set start block for each chain.
 export const transfersIntegration: Integration = {
   name: 'transfers',
   enabled: true,
-  sources: [{ name: '$CHAIN_NAME', start: '$CHAIN_START_BLOCK' }],
+  sources: [
+    { name: 'mainnet', start: '$MAINNET_START_BLOCK' },
+    { name: 'base', start: '$BASE_START_BLOCK' },
+  ],
   table,
   block: [
     { name: 'chain_id', column: 'chain_id' },
