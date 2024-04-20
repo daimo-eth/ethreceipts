@@ -5,6 +5,7 @@ import { resolveAccountForAddress } from '@/app/utils/profiles';
 
 /* ERC20 Transfer Event. */
 export interface Transfer {
+  chainId: number;
   address: Hex;
   blockNumber: bigint;
   blockHash: Hex;
@@ -36,6 +37,7 @@ export class CoinIndexer {
       pg.query(
         `
           select
+            chain_id,
             block_num,
             block_hash,
             tx_hash,
@@ -48,14 +50,16 @@ export class CoinIndexer {
           from transfers
           where (
             block_num >= $1
+            and block_num <= $2
           );
         `,
-        [from],
+        [from, to],
       ),
     );
     const logs: Transfer[] = await Promise.all(
       result.rows.map(async (row: any) => {
         const transfer: Transfer = {
+          chainId: Number(row.chain_id),
           blockHash: bytesToHex(row.block_hash, { size: 32 }),
           blockNumber: BigInt(row.block_num),
           transactionHash: bytesToHex(row.tx_hash, { size: 32 }),
@@ -66,28 +70,33 @@ export class CoinIndexer {
           to: getAddress(bytesToHex(row.to, { size: 20 })),
           value: BigInt(row.value),
         };
-        console.log(`[COIN] ${transfer.from} sent ${transfer.value} USDC`);
 
         // Get address profiles for from and to addresses.
         try {
-          // const addressProfileFrom = await resolveAccountForAddress(transfer.from, this.viemClient);
-          // const addressProfileTo = await resolveAccountForAddress(transfer.to, this.viemClient);
-          // if (addressProfileFrom.account?.name) {
-          //   console.log(`[PROFILE] ${addressProfileFrom.account.name} sent ${transfer.value} USDC`);
-          // }
-          // if (addressProfileTo.account?.name) {
-          //   console.log(
-          //     `[PROFILE] ${addressProfileTo.account.name} received ${transfer.value} USDC`,
-          //   );
-          // }
+          const addressProfileFrom = await resolveAccountForAddress(
+            transfer.from,
+            transfer.chainId,
+            this.viemClient,
+          );
+          const addressProfileTo = await resolveAccountForAddress(
+            transfer.to,
+            transfer.chainId,
+            this.viemClient,
+          );
+          if (addressProfileFrom.account?.name) {
+            console.log(`[PROFILE] ${addressProfileFrom.account.name} sent ${transfer.value}`);
+          }
+          if (addressProfileTo.account?.name) {
+            console.log(`[PROFILE] ${addressProfileTo.account.name} received ${transfer.value}`);
+          }
         } catch (e) {
           console.log(`[PROFILE] error resolving account for ${transfer.from} or ${transfer.to}`);
         }
-
-        // TODO: need to add the profile to the database.
         return transfer;
       }),
     );
+
+    // TODO: Add the profile to the db
 
     console.log(
       `[COIN] loaded ${logs.length} transfers ${from} ${to} in ${Date.now() - startTime}ms`,
