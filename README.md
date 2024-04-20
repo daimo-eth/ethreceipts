@@ -9,7 +9,7 @@ The goal of Eth Receipts is to show ERC-20 transfers in a clean and extensible w
 To see a receipt of an ERC-20 transfer, specify the chain ID, block number, and log index in the following format:
 `https://ethreceipt.org/l/<chainId>/<blockNumber>/<logIndex>`
 
-**Examples**: `https://ethreceipt.org/l/8453/12320223/94` specifies Base chain (8453), a block number (12320223) and a log index (94). `https://www.ethreceipt.org/l/1/14648578/431` specifies Ethereum (1), a block number (14648578) and a log index (431).
+**Examples**: [https://ethreceipt.org/l/8453/12320223/94](https://ethreceipt.org/l/8453/12320223/94) specifies Base chain (8453), a block number (12320223) and a log index (94). [https://www.ethreceipt.org/l/1/14648578/431](https://www.ethreceipt.org/l/1/14648578/431) specifies Ethereum (1), a block number (14648578) and a log index (431).
 
 Today, Eth Receipts supports Base (8453) and Ethereum (1).
 
