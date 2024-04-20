@@ -6,10 +6,14 @@ export async function tryGetDaimoMemo(txHash: Hex, logIndex: number): Promise<st
   try {
     // @ts-ignore
     const memo = await trpc.getMemo.query({ txHash, logIndex });
-    console.log(`Daimo memo found for tx ${txHash}: ${memo}`);
-    return memo;
+    if (!memo) {
+      console.log(`No Daimo memo found for tx ${txHash} / logIndex ${logIndex}`);
+      return undefined;
+    }
+    console.log(`Daimo memo found for tx ${txHash}: ${memo.memo}`);
+    return memo.memo;
   } catch (e) {
-    console.log(`No Daimo memo found for tx ${txHash} / logIndex ${logIndex}`);
+    console.log(`Error fetching Daimo memo found for tx ${txHash} / logIndex ${logIndex}`);
     return undefined;
   }
 }

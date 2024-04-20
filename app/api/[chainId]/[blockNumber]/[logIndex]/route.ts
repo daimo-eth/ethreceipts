@@ -97,7 +97,7 @@ export async function GET(
   });
 
   // Get Daimo memo if exists.
-  // const memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
+  const memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
 
   // Format ERC20 transfer event data.
   const erc20TransferData: Transfer = {
@@ -107,6 +107,7 @@ export async function GET(
     contractAddress: log.address,
     tokenDecimal: BigInt(tokenDecimal as string),
     tokenSymbol: tokenSymbol as string,
+    memo: memo,
   };
 
   // Check whether the block is finalized.
