@@ -19,7 +19,7 @@
   ],
   "integrations": [
     {
-      "name": "usdc-transfers",
+      "name": "transfers",
       "enabled": true,
       "sources": [
         {
@@ -28,7 +28,7 @@
         }
       ],
       "table": {
-        "name": "usdc-transfers",
+        "name": "transfers",
         "columns": [
           {
             "name": "chain_id",
