@@ -30,4 +30,28 @@ export class DB {
       waitingCount,
     };
   }
+
+  async getTransfer(chainId: number, blockNumber: number, logIndex: number) {
+    console.log(`[DB] getting transfer(${chainId}, ${blockNumber}, ${logIndex})`);
+    await this.pool.query(
+      `select
+        chain_id,
+        block_num,
+        block_hash,
+        tx_hash,
+        tx_idx,
+        log_addr,
+        f as "from",
+        t as "to",
+        v as "value"
+      from transfers
+      where (
+        chain_id = $1 AND
+        block_num = $2 AND
+        log_idx = $3
+      );
+    `,
+      [chainId, blockNumber, logIndex],
+    );
+  }
 }

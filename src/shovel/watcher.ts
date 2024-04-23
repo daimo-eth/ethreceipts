@@ -7,12 +7,11 @@ interface indexer {
 }
 
 const dbConfig: ClientConfig = {
-  // connectionString: process.env.SHOVEL_DATABASE_URL,
-  connectionString: 'postgresql:///kayleegeorge',
+  connectionString: process.env.SHOVEL_DATABASE_URL,
   connectionTimeoutMillis: 20000,
   query_timeout: 20000,
   statement_timeout: 20000,
-  // database: process.env.SHOVEL_DATABASE_URL == null ? 'shovel' : undefined,
+  database: process.env.SHOVEL_DATABASE_URL == null ? 'shovel' : undefined,
 };
 
 const poolConfig: PoolConfig = {
@@ -90,7 +89,8 @@ export class Watcher {
     return start + limit;
   }
 
-  //Get latest shovel block number.
+  // Get latest shovel block number.
+  // TODO: confirm this works as intended.
   async getShovelLatest(): Promise<number> {
     const result = await retryBackoff(
       `shovel-latest-query`,

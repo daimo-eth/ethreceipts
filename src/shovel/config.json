@@ -19,16 +19,20 @@
   ],
   "integrations": [
     {
-      "name": "usdc-transfers",
+      "name": "transfers",
       "enabled": true,
       "sources": [
         {
-          "name": "$CHAIN_NAME",
-          "start": "$CHAIN_START_BLOCK"
+          "name": "mainnet",
+          "start": "$MAINNET_START_BLOCK"
+        },
+        {
+          "name": "base",
+          "start": "$BASE_START_BLOCK"
         }
       ],
       "table": {
-        "name": "usdc-transfers",
+        "name": "transfers",
         "columns": [
           {
             "name": "chain_id",

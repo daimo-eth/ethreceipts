@@ -1,7 +1,7 @@
 import type { Integration, Table } from '@indexsupply/shovel-config';
 
 const table: Table = {
-  name: 'usdc-transfers',
+  name: 'transfers',
   columns: [
     { name: 'chain_id', type: 'numeric' },
     { name: 'block_num', type: 'numeric' },
@@ -16,10 +16,14 @@ const table: Table = {
 };
 
 // All ERC-20 transfers.
+// Must set start block for each chain.
 export const transfersIntegration: Integration = {
-  name: 'usdc-transfers',
+  name: 'transfers',
   enabled: true,
-  sources: [{ name: '$CHAIN_NAME', start: '$CHAIN_START_BLOCK' }],
+  sources: [
+    { name: 'mainnet', start: '$MAINNET_START_BLOCK' },
+    { name: 'base', start: '$BASE_START_BLOCK' },
+  ],
   table,
   block: [
     { name: 'chain_id', column: 'chain_id' },
@@ -27,13 +31,6 @@ export const transfersIntegration: Integration = {
     { name: 'block_hash', column: 'block_hash' },
     { name: 'tx_idx', column: 'tx_idx' },
     { name: 'tx_hash', column: 'tx_hash' },
-    // USDC transfers.
-    // {
-    //   name: 'log_addr',
-    //   column: 'log_addr',
-    //   filter_op: 'contains',
-    //   filter_arg: [getChainConfig('base').tokenAddress, getChainConfig('baseSepolia').tokenAddress],
-    // },
   ],
   event: {
     name: 'Transfer',
