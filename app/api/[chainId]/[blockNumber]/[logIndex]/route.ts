@@ -162,7 +162,7 @@ export async function GET(
     const block: Block = await getBlockFromViem(BigInt(params.blockNumber), publicClient);
     eventLogData.timestamp = block.timestamp;
   } catch (e) {
-    return Error(`Block ${params.blockNumber} not found`);
+    return Response.json(`Block ${params.blockNumber} not found`, { status: 404 });
   }
 
   // Error handling for missing fields.
