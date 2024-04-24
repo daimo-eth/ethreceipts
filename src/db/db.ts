@@ -2,11 +2,10 @@ import { ClientConfig, Pool, PoolConfig } from 'pg';
 
 /** Credentials come from env.PGURL, defaults to localhost & no auth. */
 const dbConfig: ClientConfig = {
-  connectionString: process.env.PGURL,
+  connectionString: process.env.DB_URL,
   connectionTimeoutMillis: 5000,
   query_timeout: 5000,
   statement_timeout: 5000,
-  database: process.env.PGURL == null ? 'daimo' : undefined,
 };
 
 const poolConfig: PoolConfig = {
@@ -31,10 +30,12 @@ export class DB {
     };
   }
 
-  async getTransfer(chainId: number, blockNumber: number, logIndex: number) {
+  // Attempt to get transfers given a chainId, blockNumber, and logIndex.
+  async getTransfer(chainId: Number, blockNumber: bigint, logIndex: Number) {
     console.log(`[DB] getting transfer(${chainId}, ${blockNumber}, ${logIndex})`);
-    await this.pool.query(
-      `select
+    try {
+      const res = await this.pool.query(
+        `select
         chain_id,
         block_num,
         block_hash,
@@ -43,15 +44,21 @@ export class DB {
         log_addr,
         f as "from",
         t as "to",
-        v as "value"
-      from transfers
+        v as "value",
+        src_name,
+        log_idx
+      from erc20_transfers
       where (
         chain_id = $1 AND
         block_num = $2 AND
         log_idx = $3
       );
     `,
-      [chainId, blockNumber, logIndex],
-    );
+        [chainId, blockNumber, logIndex],
+      );
+      return res;
+    } catch (e) {
+      console.log(`[DB] error getting transfer(${chainId}, ${blockNumber}, ${logIndex})`);
+    }
   }
 }

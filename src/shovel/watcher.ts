@@ -90,14 +90,10 @@ export class Watcher {
   }
 
   // Get latest shovel block number.
-  // TODO: confirm this works as intended.
   async getShovelLatest(): Promise<number> {
-    const result = await retryBackoff(
-      `shovel-latest-query`,
-      () => this.pg.query(`select block_num from transfers`),
-      // this.pg.query(`select num from shovel.latest`),
+    const result = await retryBackoff(`shovel-latest-query`, () =>
+      this.pg.query(`select num from shovel.latest`),
     );
-    return Number(result.rows[0].block_num);
-    // return Number(result.rows[0].num);
+    return Number(result.rows[0].num);
   }
 }

@@ -6,7 +6,7 @@ export async function tryGetDaimoMemo(txHash: Hex, logIndex: number): Promise<st
   try {
     // @ts-ignore
     const memo = await trpc.getMemo.query({ txHash, logIndex });
-    if (!memo) {
+    if (memo?.memo == undefined) {
       console.log(`No Daimo memo found for tx ${txHash} / logIndex ${logIndex}`);
       return undefined;
     }

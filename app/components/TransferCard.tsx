@@ -9,6 +9,7 @@ import stablecoinsAddresses from '../utils/tokens/stablecoins';
 import CopyReceipt from './minorComponents/CopyReceipt';
 import { checkTokenWhitelist } from '../utils/tokens/tokenWhitelist';
 import TokenWarning from './minorComponents/TokenWarning';
+import { Block } from 'viem';
 
 /**
  * Represents an ERC20 Transfer card.
@@ -24,7 +25,7 @@ export default function TransferCard(
     addressProfileFrom: AddressProfile;
     addressProfileTo: AddressProfile;
     eventLogData: EventLog;
-    finalized: boolean;
+    latestFinalizedBlockNumber: number;
   }>,
 ) {
   const value = formatValue(
@@ -83,7 +84,7 @@ export default function TransferCard(
         <EventLogCard
           eventLogData={props.eventLogData}
           transferData={props.transferData}
-          finalized={props.finalized}
+          finalized={props.latestFinalizedBlockNumber >= props.eventLogData.blockNumber}
         />
       </div>
     </div>
