@@ -166,9 +166,14 @@ export async function GET(
   }
 
   // Error handling for missing fields.
-  if (erc20TransferData.contractAddress === undefined) return Error('Contract address not found');
-  if (erc20TransferData.from === undefined) return Error('From address not found');
-  if (erc20TransferData.to === undefined) return Error('To address not found');
+  if (
+    erc20TransferData.contractAddress === undefined ||
+    erc20TransferData.from === undefined ||
+    erc20TransferData.to === undefined
+  )
+    return Response.json('Contract address, from address, or to address not found', {
+      status: 404,
+    });
 
   // Fetch token details.
   const { tokenDecimal, tokenSymbol } = await getTokenDetails(
