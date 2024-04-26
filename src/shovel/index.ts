@@ -8,7 +8,7 @@ import { transfersIntegration } from './transfers';
 const mainnet: Source = {
   name: 'mainnet',
   chain_id: 1,
-  url: 'https://ethereum-rpc.publicnode.com',
+  url: '$MAINNET_RPC_URL',
   batch_size: 100,
   concurrency: 4,
 };
@@ -17,7 +17,7 @@ const mainnet: Source = {
 const base: Source = {
   name: 'base',
   chain_id: 8453,
-  url: 'https://base-rpc.publicnode.com',
+  url: '$BASE_RPC_URL',
   batch_size: 100,
   concurrency: 4,
 };
