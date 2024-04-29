@@ -1,102 +1,47 @@
-export function ExternalLink() {
-  return (
-    <svg
-      width='16px'
-      height='16px'
-      viewBox='0 0 24 24'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
-      <defs>
-        <linearGradient id='gradient' x1='0%' y1='0%' x2='0%' y2='100%'>
-          <stop offset='0%' stopColor='#D6D6D6' />
-          <stop offset='100%' stopColor='#AAAAAA' />
-        </linearGradient>
-      </defs>
-      <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
-      <g id='SVGRepo_tracerCarrier' strokeLinecap='round' strokeLinejoin='round'></g>
-      <g id='Interface / External_Link'>
-        <path
-          id='Vector'
-          d='M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11'
-          stroke='url(#gradient)' // Apply the gradient here
-          strokeWidth='2'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        ></path>
-      </g>
-    </svg>
-  );
-}
+import Image from 'next/image';
 
 export function FinalizedCheck() {
   return (
-    <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg width='22' height='16' viewBox='0 0 22 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
-        d='M18.3333 6L10.1667 14.1667L7 11'
-        stroke='url(#paint0_linear_29_393)'
-        strokeWidth='1.66667'
+        d='M18.667 4L11.3337 11.3333L8.66699 8.66667'
+        stroke='#3fb950'
+        strokeWidth='2'
         strokeLinecap='round'
         strokeLinejoin='round'
       />
       <path
-        d='M14.6673 3L5.50065 12.1667L1.33398 8'
-        stroke='url(#paint1_linear_29_393)'
-        strokeWidth='1.66667'
+        d='M13.3332 4L5.99984 11.3333L2.6665 8'
+        stroke='#3fb950'
+        strokeWidth='2'
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <defs>
-        <linearGradient
-          id='paint0_linear_29_393'
-          x1='12.6667'
-          y1='5'
-          x2='12.6667'
-          y2='14.1667'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='#D6D6D6' />
-          <stop offset='1' stopColor='#AAAAAA' />
-        </linearGradient>
-        <linearGradient
-          id='paint1_linear_29_393'
-          x1='8.00065'
-          y1='3'
-          x2='8.00065'
-          y2='12.1667'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='#D6D6D6' />
-          <stop offset='1' stopColor='#AAAAAA' />
-        </linearGradient>
-      </defs>
     </svg>
   );
 }
 
 export function ConfirmedCheck() {
   return (
-    <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
-        d='M16.6668 5L7.50016 14.1667L3.3335 10'
-        stroke='url(#paint0_linear_5_437)'
-        strokeWidth='1.66667'
+        d='M20 6L9 17L5 13'
+        stroke='#3fb950'
+        strokeWidth='2'
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <defs>
-        <linearGradient
-          id='paint0_linear_5_437'
-          x1='10.0002'
-          y1='5'
-          x2='10.0002'
-          y2='14.1667'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='#D6D6D6' />
-          <stop offset='1' stopColor='#AAAAAA' />
-        </linearGradient>
-      </defs>
+    </svg>
+  );
+}
+
+export function SuccessCircle() {
+  return (
+    <svg height='24' viewBox='0 0 24 24' version='1.1' width='24' data-view-component='true'>
+      <path
+        d='M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12Zm16.28-2.72a.751.751 0 0 0-.018-1.042.751.751 0 0 0-1.042-.018l-5.97 5.97-2.47-2.47a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042l3 3a.75.75 0 0 0 1.06 0Z'
+        fill='#3fb950'
+      />
     </svg>
   );
 }
@@ -132,14 +77,7 @@ export function Arrow() {
 }
 
 export function OldDaimo() {
-  return (
-    <img
-      width='20px'
-      height='20px'
-      src='https://s3-alpha-sig.figma.com/img/6601/97e9/bb28526f284ef81327be6ed4c82143c0?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jlI1qqfXYlX53ZTaFzwjqc5kHHFOoRN5J5~rWSmns~hKTFT4vtA1xUMw0CcbrIFPXDKk0OpQycWKKqFq5Ow4ofH99cjenFWCouc9kb2Ou31rBhss8KQ6YPkbu-mg8VF6vOfHm7sRkZdNEdjCzavCjxvTeczxHl4w-KLv4nB4WWZT7Tmox77S39FyC74Hv-8t5cqiWGBBX9yU8Gr2FR9OTX-QV0rElv7iOCmDiPqfRZUeS-FwXAUzfNhGc1lYRNZ5cBNT8bxcHZkc5sJtKvs50dr8dwnEsX78UiasIsLV7GJwvvZQAwVZ09iMmyNkExqdMW9jdgkmQ6xg4IWkaa0eqA__'
-      alt='daimo'
-    />
-  );
+  return <Image src='/assets/eth-logo.png' width='20' height='20' alt='daimo' />;
 }
 
 export function Link() {

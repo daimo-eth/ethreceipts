@@ -35,11 +35,11 @@ export default function AddressBubble(props: Readonly<{ addressProfile: AddressP
     <div className='flex flex-row w-min-fit gap-x-4'>
       <div className='flex'>
         {pfp ? (
-          <div className='rounded-[50%] sm:w-16 w-12 sm:h-16 h-12'>
+          <div className='rounded-[50%] w-12 h-12'>
             <Image src={pfp} className='pfpImage' width='64' height='64' alt='pfp' />
           </div>
         ) : (
-          <div className='bg-gradient-to-b sm:w-16 w-12 sm:h-16 h-12 rounded-[50%] from-[#F3F3F3] to-[#D6D6D6] p-[1px]'>
+          <div className='bg-gradient-to-b w-12 h-12 rounded-[50%] from-[#F3F3F3] to-[#D6D6D6] p-[1px]'>
             <div className='flex w-full h-full rounded-[50%] items-center justify-center bg-white'>
               <TextInitial>{nameInitial}</TextInitial>
             </div>

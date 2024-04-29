@@ -1,14 +1,66 @@
 import { AddressProfile, Transfer, EventLog } from '../utils/types';
 import AddressBubble from './AddressBubble';
 import EventLogCard from './EventLog';
-import { TextValue, TextHeader, TextMemo } from './typography';
+import {
+  TextValue,
+  TextHeader,
+  TextMemo,
+  TextSuccess,
+  TextLight,
+  TextSuccessTiny,
+} from './typography';
 import TransferArrow from './minorComponents/TransferArrow';
-import { NeueMontreal } from '@/public/fonts';
-import { formatValue } from '../utils/formatting';
+import { formatTimestamp, formatValue } from '../utils/formatting';
 import stablecoinsAddresses from '../utils/tokens/stablecoins';
-import CopyReceipt from './minorComponents/CopyReceipt';
 import { checkTokenWhitelist } from '../utils/tokens/tokenWhitelist';
 import TokenWarning from './minorComponents/TokenWarning';
+import { robotoMono } from '../layout';
+import { FinalizedCheck, SuccessCircle } from '@/public/icons';
+import { QRCodeSVG } from 'qrcode.react';
+import { getChainExplorerByChainId } from '../utils/getExplorerURL';
+
+function BlockStatusStamp({
+  blockNumber,
+  logIndex,
+  chainId,
+  transactionHash,
+}: {
+  blockNumber: number;
+  logIndex: number;
+  chainId: number;
+  transactionHash: string;
+}) {
+  const explorerUrl = getChainExplorerByChainId(chainId)!;
+  const transactionLink = `${explorerUrl}/tx/${transactionHash}`;
+
+  return (
+    <a
+      href={transactionLink}
+      target='_blank'
+      className='border-[#3fb950] border-[4px] rounded-[8px] p-2 flex flex-col items-center justify-center gap-1'
+    >
+      <div className='flex flex-row items-center justify-center'>
+        <FinalizedCheck />
+        <TextSuccess>CONFIRMED</TextSuccess>
+      </div>
+      <div className='flex flex-row items-center justify-center'>
+        <TextSuccessTiny>
+          #{blockNumber} • L{logIndex}
+        </TextSuccessTiny>
+      </div>
+    </a>
+  );
+}
+
+function ShareQRCode({ blockNumber, logIndex }: { blockNumber: number; logIndex: number }) {
+  const link = `https://ethreceipt.org/l/8453/${blockNumber}/${logIndex}`;
+
+  const shareOnClick = () => {
+    navigator.clipboard.writeText(link);
+  };
+
+  return <QRCodeSVG value={link} size={64} />;
+}
 
 /**
  * Represents an ERC20 Transfer card.
@@ -40,51 +92,62 @@ export default function TransferCard(
     props.eventLogData.chainId,
   );
 
-  return (
-    <div
-      className='rounded-[24px] flex flex-col w-full m-auto
-      border-[0px] bg-gradient-to-b from-[#F3F3F3] to-[#D6D6D6] p-[1px] drop-shadow-3xl min-w-fit'
-    >
-      <div className='flex flex-col bg-white rounded-[23px]'>
-        <div className='flex flex-col w-full items-center sm:px-10 px-8 sm:py-8 pt-8 pb-8'>
-          <div className='w-full flex justify-end sm:px-4 px-0 sm:mb-[-16px] mb-[-12px]'>
-            <CopyReceipt link={link} />
-          </div>
-          <div className='flex flex-col items-center justify-center w-full min-w-fit gap-y-2'>
-            <div className={NeueMontreal.className}>
-              <div className='flex flex-row flex-start gap-x-1'>
-                <TextValue>{`${isStablecoin ? '$' : ''}${value} ${
-                  props.transferData.tokenSymbol
-                }`}</TextValue>
-                {!isWhitelistedToken && (
-                  <div className='flex py-1 px-2'>
-                    <TokenWarning />
-                  </div>
-                )}
-              </div>
-            </div>
-            {memo && <TextMemo>{memo}</TextMemo>}
-          </div>
-        </div>
+  const time = new Date(Number(props.eventLogData.timestamp) * 1000);
+  const formattedTs = formatTimestamp(time);
 
-        <div className='flex sm:flex-row flex-col width-full container border-y-[2px] border-[#F3F3F3]'>
-          <div className='flex sm:w-1/2 w-full flex-col px-16 sm:py-8 pt-10 pb-12 gap-y-4 sm:border-r-[1px] sm:border-b-[0px] border-b-[1px] border-[#F3F3F3]'>
-            <TextHeader>FROM</TextHeader>
-            <AddressBubble addressProfile={props.addressProfileFrom} />
+  const chain = props.eventLogData.chainName;
+  const chainFormatted = chain[0].toUpperCase() + chain.slice(1);
+
+  return (
+    <div className='flex flex-col bg-white rounded-[16px] w-full m-auto drop-shadow min-w-fit'>
+      <div className='flex flex-col w-full items-center p-4'>
+        <div className='flex flex-col items-center justify-center w-full min-w-fit gap-y-4'>
+          <div className={robotoMono.className}>
+            <div className='flex flex-row flex-start gap-x-1 p-4'>
+              <TextValue>{`${isStablecoin ? '$' : ''}${value} ${
+                props.transferData.tokenSymbol
+              }`}</TextValue>
+              {!isWhitelistedToken && (
+                <div className='flex py-1 px-2'>
+                  <TokenWarning />
+                </div>
+              )}
+            </div>
           </div>
-          <div className='flex items-center overlay-component'>
-            <TransferArrow />
+          {memo && <TextMemo>{memo}</TextMemo>}
+          <div className='flex flex-row gap-x-2 items-center'>
+            <SuccessCircle />
+            <TextSuccess>Status: Completed</TextSuccess>
           </div>
-          <div className='flex sm:w-1/2 w-full flex-col px-16 sm:py-8 pt-10 pb-12 gap-y-4 sm:border-l-[1px] sm:border-t-[0px] border-t-[1px] border-[#F3F3F3]'>
-            <TextHeader>TO</TextHeader>
-            <AddressBubble addressProfile={props.addressProfileTo} />
-          </div>
+          <TextLight>
+            {chainFormatted} • {formattedTs}
+          </TextLight>
         </div>
-        <EventLogCard
-          eventLogData={props.eventLogData}
-          transferData={props.transferData}
-          finalized={props.finalized}
-        />
+      </div>
+
+      <div className='flex flex-col width-full container border-t-2 border-dashed'>
+        <div className='flex w-full flex-row justify-between py-4 p-8 border-dashed border-b-2 gap-x-24'>
+          <TextHeader>FROM</TextHeader>
+          <AddressBubble addressProfile={props.addressProfileFrom} />
+        </div>
+        <div className='flex w-full flex-row justify-between py-4 p-8 border-dashed border-b-2 gap-x-24'>
+          <TextHeader>TO</TextHeader>
+          <AddressBubble addressProfile={props.addressProfileTo} />
+        </div>
+      </div>
+      <div className='flex flex-col width-full container'>
+        <div className='flex w-full flex-row justify-between p-8 gap-x-24'>
+          <ShareQRCode
+            blockNumber={Number(props.eventLogData.blockNumber)}
+            logIndex={props.eventLogData.logIndex}
+          />
+          <BlockStatusStamp
+            blockNumber={Number(props.eventLogData.blockNumber)}
+            logIndex={props.eventLogData.logIndex}
+            chainId={Number(props.eventLogData.chainId)}
+            transactionHash={props.eventLogData.transactionHash}
+          />
+        </div>
       </div>
     </div>
   );

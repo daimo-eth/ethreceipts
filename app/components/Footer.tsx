@@ -5,20 +5,21 @@ import { Daimo } from '@/public/profileIcons/Daimo';
 /** Footer component for Eth Receipts */
 export default function Footer() {
   return (
-    <div className='sm:absolute relative bottom-0 w-full py-10 sm:px-[25%] px-2'>
-      <div className='flex flex-row flex-wrap w-full items-center justify-between w-full items-center min-w-fit'>
-        <div className='flex flex-row items-center gap-x-1'>
+    <div className='mt-10 mx-12'>
+      <div className='flex flex-row flex-wrap justify-between w-full items-center min-w-fit max-w-[]'>
+        <a
+          className='flex flex-row items-center gap-x-2'
+          href='https://ethereum.org'
+          target='_blank'
+        >
           <OldDaimo />
           <TextFooter>Powered by Ethereum</TextFooter>
-        </div>
+        </a>
         <LinkFooter href='https://github.com/daimo-eth/daimo'>GitHub</LinkFooter>
-        <div className='flex flex-row items-center gap-x-2'>
-          <a href='https://daimo.com' target='_blank'>
-            <Daimo />
-          </a>
-
+        <a className='flex flex-row items-center gap-x-2' href='https://daimo.com' target='_blank'>
+          <Daimo />
           <TextFooter>Built by Daimo</TextFooter>
-        </div>
+        </a>
       </div>
     </div>
   );

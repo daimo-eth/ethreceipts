@@ -21,13 +21,22 @@ export function truncateAddress(address: string, startSize: number = 8): string 
 
 /** Format the timestamp into "26 Mar 2024, 5:09 UTC" format*/
 export function formatTimestamp(timestamp: Date): string {
-  const dateUTC = timestamp.toUTCString().split(',')[1];
-  const dateUTCStr = dateUTC.substring(1, dateUTC.length - 13);
-  const hoursUTCStr = timestamp.getUTCHours();
-  const minutesUTCStr = timestamp.getUTCMinutes();
-  const timeUTCStr =
-    minutesUTCStr < 10 ? `${hoursUTCStr}:0${minutesUTCStr}` : `${hoursUTCStr}:${minutesUTCStr}`;
-  return dateUTCStr + ', ' + timeUTCStr + ' UTC';
+  // Options for the DateTimeFormat
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'short', // abbreviated day of the week
+    month: 'short', // abbreviated month
+    day: '2-digit', // two-digit day
+    hour: 'numeric', // numeric hour
+    minute: '2-digit', // two-digit minute
+    hour12: true, // use 12-hour format
+    timeZoneName: 'short', // abbreviated time zone name
+  };
+
+  // Create a formatter with the local timezone
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+
+  // Format the date
+  return formatter.format(timestamp);
 }
 
 export function formatValue(value: Number): string {
