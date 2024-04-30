@@ -52,7 +52,7 @@ export default async function Page({
           addressProfileFrom={logData.fromAccountProfile}
           addressProfileTo={logData.toAccountProfile}
           eventLogData={logData.eventLogData}
-          finalized={logData.finalized}
+          latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
         />
       ) : (
         <LogNotFound />

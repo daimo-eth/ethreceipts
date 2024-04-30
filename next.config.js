@@ -15,6 +15,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'i.imgur.com',
       },
+      {
+        protocol: 'https',
+        hostname: 's3-alpha-sig.figma.com',
+      },
     ],
   },
 };

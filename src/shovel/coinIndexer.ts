@@ -72,26 +72,26 @@ export class CoinIndexer {
         };
 
         // Get address profiles for from and to addresses.
-        try {
-          const addressProfileFrom = await resolveAccountForAddress(
-            transfer.from,
-            transfer.chainId,
-            this.viemClient,
-          );
-          const addressProfileTo = await resolveAccountForAddress(
-            transfer.to,
-            transfer.chainId,
-            this.viemClient,
-          );
-          if (addressProfileFrom.account?.name) {
-            console.log(`[PROFILE] ${addressProfileFrom.account.name} sent ${transfer.value}`);
-          }
-          if (addressProfileTo.account?.name) {
-            console.log(`[PROFILE] ${addressProfileTo.account.name} received ${transfer.value}`);
-          }
-        } catch (e) {
-          console.log(`[PROFILE] error resolving account for ${transfer.from} or ${transfer.to}`);
-        }
+        // try {
+        //   const addressProfileFrom = await resolveAccountForAddress(
+        //     transfer.from,
+        //     transfer.chainId,
+        //     this.viemClient,
+        //   );
+        //   const addressProfileTo = await resolveAccountForAddress(
+        //     transfer.to,
+        //     transfer.chainId,
+        //     this.viemClient,
+        //   );
+        //   if (addressProfileFrom.account?.name) {
+        //     console.log(`[PROFILE] ${addressProfileFrom.account.name} sent ${transfer.value}`);
+        //   }
+        //   if (addressProfileTo.account?.name) {
+        //     console.log(`[PROFILE] ${addressProfileTo.account.name} received ${transfer.value}`);
+        //   }
+        // } catch (e) {
+        //   console.log(`[PROFILE] error resolving account for ${transfer.from} or ${transfer.to}`);
+        // }
         return transfer;
       }),
     );
