@@ -47,7 +47,7 @@ export class DB {
         v as "value",
         src_name,
         log_idx
-      from erc20_transfers
+      from transfers
       where (
         chain_id = $1 AND
         block_num = $2 AND

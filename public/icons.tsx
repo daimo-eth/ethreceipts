@@ -1,3 +1,4 @@
+import Image from 'next/image';
 export function ExternalLink() {
   return (
     <svg
@@ -133,10 +134,10 @@ export function Arrow() {
 
 export function OldDaimo() {
   return (
-    <img
-      width='20px'
-      height='20px'
-      src='https://s3-alpha-sig.figma.com/img/6601/97e9/bb28526f284ef81327be6ed4c82143c0?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jlI1qqfXYlX53ZTaFzwjqc5kHHFOoRN5J5~rWSmns~hKTFT4vtA1xUMw0CcbrIFPXDKk0OpQycWKKqFq5Ow4ofH99cjenFWCouc9kb2Ou31rBhss8KQ6YPkbu-mg8VF6vOfHm7sRkZdNEdjCzavCjxvTeczxHl4w-KLv4nB4WWZT7Tmox77S39FyC74Hv-8t5cqiWGBBX9yU8Gr2FR9OTX-QV0rElv7iOCmDiPqfRZUeS-FwXAUzfNhGc1lYRNZ5cBNT8bxcHZkc5sJtKvs50dr8dwnEsX78UiasIsLV7GJwvvZQAwVZ09iMmyNkExqdMW9jdgkmQ6xg4IWkaa0eqA__'
+    <Image
+      width={20}
+      height={20}
+      src='https://s3-alpha-sig.figma.com/img/6601/97e9/bb28526f284ef81327be6ed4c82143c0?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=AB~1lukEEv3MwmvyBjbclXra8ZHRowjt9Tgopt-XuA7BXOYykCgKvFrkkeDGt3d0pMbRnEWksLo2W6hNKfSppzRtJb56SWgUgOvTHcmVgOj0-4OKYO1Selasd2HzqzYRZdNGgK0mpm20ZH0VW3AGtgciY~tjBkmUiDNiM0bXb2PP1EozcHyjwxbFirPlqSd8SGrJyw8ZDNsTUe2prZIFtcsodcjB2OoHHSz7qGrw5v0kb-KQ1lkDv6EhRS-hZPLlTvrDEd3ayW9A~IT~-QvMtm3TVr4NLikBi-g-LfSeeUJW5e1ejzbXTpnOxmeSoGF0nzViS40BgPNySs-bO3sg5A__'
       alt='daimo'
     />
   );
