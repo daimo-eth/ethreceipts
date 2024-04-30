@@ -18,7 +18,7 @@ async function fetchTransferFromViem(
   blockNum: string,
   logIdx: string,
   publicClient: PublicClient,
-): Promise<{ erc20TransferData: Transfer; eventLogData: Partial<EventLog> } | Error> {
+): Promise<{ erc20TransferData: Transfer; eventLogData: Partial<EventLog> }> {
   const blockNumber = BigInt(blockNum);
   const logIndex = Number(logIdx);
 
@@ -31,8 +31,9 @@ async function fetchTransferFromViem(
   // Type Log reference: https://github.com/wevm/viem/blob/main/src/types/log.ts.
   const log: Log = logs[logIndex];
 
-  if (log.blockNumber !== blockNumber || log.logIndex !== logIndex) return Error('Log not found');
-  if (log.transactionHash === null) return Error('Block not finalized');
+  if (log.blockNumber !== blockNumber || log.logIndex !== logIndex)
+    throw new Error('Log not found');
+  if (log.transactionHash === null) throw new Error('Block not finalized');
 
   // Format event log data.
   const eventLogData: Partial<EventLog> = {
@@ -52,7 +53,7 @@ async function fetchTransferFromViem(
     });
   } catch (e) {
     console.log(`[ERROR] Failed to decode event log: ${e}`);
-    return Error('Inputted log is not an ERC-20 transfer event');
+    throw new Error('Inputted log is not an ERC-20 transfer event');
   }
 
   const { tokenDecimal, tokenSymbol } = await getTokenDetails(log.address, publicClient);
@@ -85,12 +86,11 @@ async function fetchTransferFromDB(
   chainId: number,
   blockNumber: bigint,
   logIndex: number,
-): Promise<{ erc20TransferData: Partial<Transfer>; eventLogData: Partial<EventLog> } | Error> {
+): Promise<{ erc20TransferData: Partial<Transfer>; eventLogData: Partial<EventLog> }> {
   const db = new DB();
   const transfers = await db.getTransfer(chainId, blockNumber, logIndex);
-
-  if (transfers?.rowCount === 0 || transfers === undefined)
-    return Error('Transfer not found in DB');
+  if (transfers === null || transfers?.rowCount === 0 || transfers === undefined)
+    throw new Error('Transfer not found in DB');
 
   const transfer = transfers.rows[0];
   const txHash = `0x${transfer.tx_hash.toString('hex')}` as Hex;

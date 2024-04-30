@@ -59,6 +59,7 @@ export class DB {
       return res;
     } catch (e) {
       console.log(`[DB] error getting transfer(${chainId}, ${blockNumber}, ${logIndex})`);
+      return null;
     }
   }
 }
