@@ -31,7 +31,9 @@ export default function TransferCard(
   const value = formatValue(
     Number(props.transferData.value) / Number(10 ** Number(props.transferData.tokenDecimal)),
   );
-  const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${props.eventLogData.chainId}/${props.eventLogData.blockNumber}/${props.eventLogData.logIndex}`;
+
+  const { chainId, blockNumber, logIndex } = props.eventLogData;
+  const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${chainId}/${blockNumber}/${logIndex}`;
 
   const memo = props.transferData.memo;
 

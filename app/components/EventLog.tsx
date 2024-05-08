@@ -25,31 +25,42 @@ export default function EventLogCard(
   const tokenLink = `${explorerUrl}/token/${props.transferData.contractAddress}`;
   const transactionLink = `${explorerUrl}/tx/${props.eventLogData.transactionHash}`;
 
+  const { blockNumber, logIndex } = props.eventLogData;
+
   return (
-    <div className='w-full flex sm:flex-row flex-col sm:gap-y-0 gap-y-2 justify-between py-4 px-10'>
-      <div className='flex flex-row gap-x-1 items-center'>
-        <LinkLight href={tokenLink}>{props.transferData.tokenSymbol}</LinkLight>
-        <TextLight>•</TextLight>
-        <TextLight>{chainFormatted}</TextLight>
-        <TextLight>•</TextLight>
-        <TextLight>{dateDifferenceStr}</TextLight>
-        <a href={transactionLink} target='_blank'>
-          <ExternalLink />
-        </a>
+    <div className='w-full py-4 px-10 flex flex-col gap-1'>
+      <div className='flex sm:flex-row flex-col sm:gap-y-0 gap-y-2 justify-between'>
+        <div className='flex flex-row gap-x-1 items-center'>
+          <LinkLight href={tokenLink}>{props.transferData.tokenSymbol}</LinkLight>
+          <TextLight>•</TextLight>
+          <TextLight>{chainFormatted}</TextLight>
+          <TextLight>•</TextLight>
+          <TextLight>{dateDifferenceStr}</TextLight>
+          <a href={transactionLink} target='_blank'>
+            <ExternalLink />
+          </a>
+        </div>
+        <div className='flex flex-row gap-x-1 items-center'>
+          {/* If finalized, show "Finalized" and "Confirmed" icons. Otherwise, show "Confirmed" icon. */}
+          {props.finalized ? (
+            <>
+              <FinalizedCheck />
+              <TextLight>Finalized</TextLight>
+            </>
+          ) : (
+            <>
+              <ConfirmedCheck />
+              <TextLight>Confirmed</TextLight>
+            </>
+          )}
+        </div>
       </div>
       <div className='flex flex-row gap-x-1 items-center'>
-        {/* If finalized, show "Finalized" and "Confirmed" icons. Otherwise, show "Confirmed" icon. */}
-        {props.finalized ? (
-          <>
-            <FinalizedCheck />
-            <TextLight>Finalized</TextLight>
-          </>
-        ) : (
-          <>
-            <ConfirmedCheck />
-            <TextLight>Confirmed</TextLight>
-          </>
-        )}
+        <TextLight>Block #{Number(blockNumber)}</TextLight>
+        <TextLight>•</TextLight>
+        <TextLight>Log {logIndex}</TextLight>
+        <TextLight>•</TextLight>
+        <TextLight>ERC-20 Transfer</TextLight>
       </div>
     </div>
   );

@@ -57,7 +57,7 @@ export function TextInitial({ children }: { children: React.ReactNode }) {
 // Light text.
 export function TextLight({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[14px] leading-[16.8px] tracking-[-0.03em] font-light bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
+    <p className='text-[14px] leading-[16.8px] tracking-[-0.03em] font-light text-light-gray'>
       {children}
     </p>
   );
@@ -87,14 +87,5 @@ export function TextFooter({ children }: { children: React.ReactNode }) {
     <p className='sm:text-[14px] text-[10px] leading-[16.8px] tracking-[-0.025em] font-light color-[#AAAAAA] opacity-70'>
       {children}
     </p>
-  );
-}
-
-// Link for footer.
-export function LinkFooter({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a href={href} target='_blank'>
-      <TextFooter>{children}</TextFooter>
-    </a>
   );
 }
