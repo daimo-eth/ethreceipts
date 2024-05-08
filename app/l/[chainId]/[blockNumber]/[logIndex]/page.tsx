@@ -39,6 +39,7 @@ export default async function Page({
 }: {
   params: { chainId: string; blockNumber: string; logIndex: string };
 }) {
+  console.log(`[LOG PAGE] chainId: ${chainId}, blockNumber: ${blockNumber}, logIndex: ${logIndex}`);
   const logData = await getLogData(chainId, blockNumber, logIndex);
 
   return (

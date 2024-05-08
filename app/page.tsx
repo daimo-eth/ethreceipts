@@ -7,7 +7,7 @@ export default function Home() {
           The goal of Eth Receipts is to show ERC-20 transfers in a clean and extensible way. No
           information overload, no noise. Just a simple receipt.
         </div>
-        <div>Go to /l/[blockNumber]/[logIndex] to see the log page for a log.</div>
+        <div>Go to /l/[chainId]/[blockNumber]/[logIndex] to see the log page for a log.</div>
       </div>
     </div>
   );
