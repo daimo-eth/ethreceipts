@@ -1,6 +1,6 @@
 import LogNotFound from '@/app/components/LogNotFound';
 import TransferCard from '@/app/components/TransferCard';
-import { Header } from '@/app/components/typography';
+import Image from 'next/image';
 
 const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
 
@@ -44,8 +44,14 @@ export default async function Page({
 
   return (
     <div className='flex flex-col items-center justify-center max-w-fit m-auto'>
-      <div className='flex sm:pt-20 pt-12 sm:pb-14 pb-8'>
-        <Header>ETH RECEIPT</Header>
+      <div className='flex flex-row justify-center pt-8 pb-8 sm:pb-14'>
+        <Image
+          width={414}
+          height={214}
+          src={'/assets/eth-receipts-header.png'}
+          className='w-[138px] h-[71px] sm:w-[207px] sm:h-[107px]'
+          alt='ETH RECEIPTS'
+        />
       </div>
       {logData ? (
         <TransferCard

@@ -1,8 +1,8 @@
-import { ConfirmedCheck, ExternalLink, FinalizedCheck } from '@/public/icons';
-import { formatTimestamp, getDateDifference, truncateAddress } from '../utils/formatting';
-import { EventLog, Transfer } from '../utils/types';
-import { LinkLight, TextLight } from './typography';
+import { IconConfirmedCheck, IconExternalLink, IconFinalizedCheck } from '@/public/icons';
+import { getDateDifference } from '../utils/formatting';
 import { getChainExplorerByChainId } from '../utils/getExplorerURL';
+import { EventLog, Transfer } from '../utils/types';
+import { TextMedium, TextSmallHeader } from './typography';
 
 /**
  * Represents a card component for displaying event log data.
@@ -13,55 +13,62 @@ import { getChainExplorerByChainId } from '../utils/getExplorerURL';
  * @returns {React.ReactElement} An event log card component.
  */
 export default function EventLogCard(
-  props: Readonly<{ eventLogData: EventLog; transferData: Transfer; finalized: boolean }>,
+  props: Readonly<{ eventLogData: EventLog; finalized: boolean }>,
 ) {
-  const time = new Date(Number(props.eventLogData.timestamp) * 1000);
+  const { timestamp, blockNumber, logIndex, chainId, transactionHash, chainName } =
+    props.eventLogData;
+
+  const time = new Date(Number(timestamp) * 1000);
   const dateDifferenceStr = getDateDifference(time);
 
-  const chain = props.eventLogData.chainName;
+  const chain = chainName;
   const chainFormatted = chain[0].toUpperCase() + chain.slice(1);
 
-  const explorerUrl = getChainExplorerByChainId(props.eventLogData.chainId);
-  const tokenLink = `${explorerUrl}/token/${props.transferData.contractAddress}`;
-  const transactionLink = `${explorerUrl}/tx/${props.eventLogData.transactionHash}`;
-
-  const { blockNumber, logIndex } = props.eventLogData;
+  const explorerUrl = getChainExplorerByChainId(chainId);
+  const transactionLink = `${explorerUrl}/tx/${transactionHash}`;
 
   return (
-    <div className='w-full py-4 px-10 flex flex-col gap-1'>
-      <div className='flex sm:flex-row flex-col sm:gap-y-0 gap-y-2 justify-between'>
-        <div className='flex flex-row gap-x-1 items-center'>
-          <LinkLight href={tokenLink}>{props.transferData.tokenSymbol}</LinkLight>
-          <TextLight>•</TextLight>
-          <TextLight>{chainFormatted}</TextLight>
-          <TextLight>•</TextLight>
-          <TextLight>{dateDifferenceStr}</TextLight>
-          <a href={transactionLink} target='_blank'>
-            <ExternalLink />
-          </a>
-        </div>
-        <div className='flex flex-row gap-x-1 items-center'>
-          {/* If finalized, show "Finalized" and "Confirmed" icons. Otherwise, show "Confirmed" icon. */}
-          {props.finalized ? (
-            <>
-              <FinalizedCheck />
-              <TextLight>Finalized</TextLight>
-            </>
-          ) : (
-            <>
-              <ConfirmedCheck />
-              <TextLight>Confirmed</TextLight>
-            </>
-          )}
-        </div>
+    <div className='w-full pt-8 pb-12 px-16 flex flex-row justify-between'>
+      <div className='flex flex-row gap-9'>
+        <KV k='CHAIN' v={chainFormatted} />
+        <KV k='BLOCK' v={'' + blockNumber} />
+        <KV k='LOG' v={'#' + logIndex} />
+        <KV k='LOG TYPE' v='ERC-20 Transfer' />
       </div>
-      <div className='flex flex-row gap-x-1 items-center'>
-        <TextLight>Block #{Number(blockNumber)}</TextLight>
-        <TextLight>•</TextLight>
-        <TextLight>Log {logIndex}</TextLight>
-        <TextLight>•</TextLight>
-        <TextLight>ERC-20 Transfer</TextLight>
+      <div className='flex flex-col gap-1 items-end'>
+        <a href={transactionLink} target='_blank' className='flex flex-row gap-1'>
+          <TextMedium>{dateDifferenceStr}</TextMedium>
+          <IconExternalLink />
+        </a>
+        <TxStatus finalized={props.finalized} />
       </div>
+    </div>
+  );
+}
+
+function KV(props: Readonly<{ k: string; v: string }>) {
+  return (
+    <div className='flex flex-col gap-2 pt-1'>
+      <TextSmallHeader>{props.k}</TextSmallHeader>
+      <TextMedium>{props.v}</TextMedium>
+    </div>
+  );
+}
+
+function TxStatus(props: Readonly<{ finalized: boolean }>) {
+  return (
+    <div className='flex flex-row gap-x-1 items-center'>
+      {props.finalized ? (
+        <>
+          <IconFinalizedCheck />
+          <TextMedium>Finalized</TextMedium>
+        </>
+      ) : (
+        <>
+          <IconConfirmedCheck />
+          <TextMedium>Confirmed</TextMedium>
+        </>
+      )}
     </div>
   );
 }

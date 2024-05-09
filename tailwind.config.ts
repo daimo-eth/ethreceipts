@@ -9,7 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'light-gray': '#939598',
+        white: '#FFFFFF',
+        gray1: '#F3F3F3',
+        gray2: '#D6D6D6',
+        gray3: '#AAAAAA',
+        gray4: '#777777',
+        gray5: '#535353',
       },
       fontFamily: {
         sans: ['var(--font-SF-Pro-Display)'],

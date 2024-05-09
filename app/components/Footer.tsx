@@ -1,14 +1,14 @@
-import { EthLogo } from '@/public/icons';
+import { IconEthLogo } from '@/public/icons';
 import { Daimo } from '@/public/profileIcons/Daimo';
 import { TextFooter } from './typography';
 
 /** Footer component for Eth Receipts */
 export default function Footer() {
   return (
-    <div className='max-w-screen-sm py-10 px-2 m-auto'>
+    <div className='max-w-screen-sm py-10 px-12 m-auto'>
       <div className='flex flex-row flex-wrap w-full items-center justify-between min-w-fit'>
         <div className='flex flex-row items-center gap-x-1 p-2 w-40'>
-          <EthLogo />
+          <IconEthLogo />
           <TextFooter>Powered by Ethereum</TextFooter>
         </div>
         <a href='https://github.com/daimo-eth/eth-receipt' className='p-2'>

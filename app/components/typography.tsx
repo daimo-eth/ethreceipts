@@ -55,29 +55,18 @@ export function TextInitial({ children }: { children: React.ReactNode }) {
 }
 
 // Light text.
-export function TextLight({ children }: { children: React.ReactNode }) {
+export function TextMedium({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[14px] leading-[16.8px] tracking-[-0.03em] font-light text-light-gray'>
+    <p className='text-[14px] leading-[16.8px] tracking-[-0.03em] font-medium text-gray4'>
       {children}
     </p>
   );
 }
 
-// Link for text.
-export function LinkLight({ href, children }: { href: string; children: React.ReactNode }) {
+// Small, bold header.
+export function TextSmallHeader({ children }: { children: React.ReactNode }) {
   return (
-    <a href={href} target='_blank'>
-      <TextLight>{children}</TextLight>
-    </a>
-  );
-}
-
-// Header for Eth Receipts.
-export function Header({ children }: { children: React.ReactNode }) {
-  return (
-    <p className='sm:text-[24px] text-[20px] leading-[28px] tracking-[2px] font-semibold bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
-      {children}
-    </p>
+    <p className='text-[10px] leading-none tracking-widest font-bold text-gray3'>{children}</p>
   );
 }
 

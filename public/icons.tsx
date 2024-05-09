@@ -1,108 +1,55 @@
 import Image from 'next/image';
-export function ExternalLink() {
+
+export function IconExternalLink() {
   return (
-    <svg
-      width='16px'
-      height='16px'
-      viewBox='0 0 24 24'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
-      <defs>
-        <linearGradient id='gradient' x1='0%' y1='0%' x2='0%' y2='100%'>
-          <stop offset='0%' stopColor='#D6D6D6' />
-          <stop offset='100%' stopColor='#AAAAAA' />
-        </linearGradient>
-      </defs>
-      <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
-      <g id='SVGRepo_tracerCarrier' strokeLinecap='round' strokeLinejoin='round'></g>
-      <g id='Interface / External_Link'>
-        <path
-          id='Vector'
-          d='M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11'
-          stroke='url(#gradient)' // Apply the gradient here
-          strokeWidth='2'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        ></path>
-      </g>
+    <svg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'>
+      <path
+        d='M13 5V1M13 1H9M13 1L7.66667 6.33333M5.66667 2.33333H4.2C3.07989 2.33333 2.51984 2.33333 2.09202 2.55132C1.71569 2.74307 1.40973 3.04903 1.21799 3.42535C1 3.85317 1 4.41323 1 5.53333V9.8C1 10.9201 1 11.4801 1.21799 11.908C1.40973 12.2843 1.71569 12.5903 2.09202 12.782C2.51984 13 3.07989 13 4.2 13H8.46667C9.5868 13 10.1468 13 10.5747 12.782C10.951 12.5903 11.2569 12.2843 11.4487 11.908C11.6667 11.4801 11.6667 10.9201 11.6667 9.8V8.33333'
+        stroke='#777777'
+        stroke-width='1.33333'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
     </svg>
   );
 }
 
-export function FinalizedCheck() {
+export function IconFinalizedCheck() {
   return (
     <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
-        d='M18.3333 6L10.1667 14.1667L7 11'
-        stroke='url(#paint0_linear_29_393)'
-        strokeWidth='1.66667'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+        d='M18.3333 6L10.1667 14.1667L7.5 11.5'
+        stroke='#0CA01B'
+        stroke-width='1.66667'
+        stroke-linecap='round'
+        stroke-linejoin='round'
       />
       <path
-        d='M14.6673 3L5.50065 12.1667L1.33398 8'
-        stroke='url(#paint1_linear_29_393)'
-        strokeWidth='1.66667'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+        d='M13.3333 5L5.16667 13.1667L2 10'
+        stroke='#0CA01B'
+        stroke-width='1.66667'
+        stroke-linecap='round'
+        stroke-linejoin='round'
       />
-      <defs>
-        <linearGradient
-          id='paint0_linear_29_393'
-          x1='12.6667'
-          y1='5'
-          x2='12.6667'
-          y2='14.1667'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='#D6D6D6' />
-          <stop offset='1' stopColor='#AAAAAA' />
-        </linearGradient>
-        <linearGradient
-          id='paint1_linear_29_393'
-          x1='8.00065'
-          y1='3'
-          x2='8.00065'
-          y2='12.1667'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='#D6D6D6' />
-          <stop offset='1' stopColor='#AAAAAA' />
-        </linearGradient>
-      </defs>
     </svg>
   );
 }
 
-export function ConfirmedCheck() {
+export function IconConfirmedCheck() {
   return (
     <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
-        d='M16.6668 5L7.50016 14.1667L3.3335 10'
-        stroke='url(#paint0_linear_5_437)'
-        strokeWidth='1.66667'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+        d='M16.3333 6L8.16667 14.1667L5 11'
+        stroke='#0CA01B'
+        stroke-width='1.66667'
+        stroke-linecap='round'
+        stroke-linejoin='round'
       />
-      <defs>
-        <linearGradient
-          id='paint0_linear_5_437'
-          x1='10.0002'
-          y1='5'
-          x2='10.0002'
-          y2='14.1667'
-          gradientUnits='userSpaceOnUse'
-        >
-          <stop stopColor='#D6D6D6' />
-          <stop offset='1' stopColor='#AAAAAA' />
-        </linearGradient>
-      </defs>
     </svg>
   );
 }
 
-export function Arrow() {
+export function IconArrow() {
   return (
     <svg
       width='20px'
@@ -132,7 +79,7 @@ export function Arrow() {
   );
 }
 
-export function EthLogo() {
+export function IconEthLogo() {
   return (
     <Image
       width={20}
@@ -143,7 +90,7 @@ export function EthLogo() {
   );
 }
 
-export function Link() {
+export function IconLink() {
   return (
     <svg
       width='13.5px'
@@ -170,7 +117,7 @@ export function Link() {
   );
 }
 
-export function Warning() {
+export function IconWarning() {
   return (
     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
