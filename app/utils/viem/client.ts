@@ -1,5 +1,6 @@
 import { createPublicClient, http, Chain, extractChain } from 'viem';
 import { SupportedChainId, supportedChains, supportedChainNames } from '../types';
+import { getEnvVars } from '@/app/env';
 
 /** Get chain name in Alchemy format for API. */
 function getAlchemyNetworkById(chainId: Number): string | null {
@@ -26,13 +27,14 @@ export function createViemClient(chainId: number) {
   if (!network) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
-  const ALCHEMY_RPC_URL: string = `https://${network}.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
+  const alchemyApiKey = getEnvVars().ALCHEMY_API_KEY;
+  const alchemyRpcUrl = `https://${network}.g.alchemy.com/v2/${alchemyApiKey}`;
   const chain: Chain = getViemChainById(chainId as SupportedChainId);
 
   // Create Viem client with correct chain and RPC.
   return createPublicClient({
     chain: chain,
-    transport: http(ALCHEMY_RPC_URL),
+    transport: http(alchemyApiKey),
     cacheTime: 3600,
   });
 }

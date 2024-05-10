@@ -1,8 +1,9 @@
+import { getEnvVars } from '@/app/env';
 import { ClientConfig, Pool, PoolConfig } from 'pg';
 
-/** Credentials come from env.PGURL, defaults to localhost & no auth. */
+/** Credentials default to localhost & no auth. */
 const dbConfig: ClientConfig = {
-  connectionString: process.env.DB_URL,
+  connectionString: getEnvVars().SHOVEL_DB_URL,
   connectionTimeoutMillis: 5000,
   query_timeout: 5000,
   statement_timeout: 5000,

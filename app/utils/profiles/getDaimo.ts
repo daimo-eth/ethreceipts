@@ -1,6 +1,7 @@
+import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { Address } from 'viem';
-import { AccountTypeStr, Account } from '../types';
-import { trpc } from '@/app/trpc';
+import { Account, AccountTypeStr } from '../types';
+import { getEnvVars } from '@/app/env';
 
 /** Retreve Daimo profile if exists */
 export async function tryGetDaimoProfile(accountAddress: Address): Promise<Account | null> {
@@ -22,3 +23,8 @@ export async function tryGetDaimoProfile(accountAddress: Address): Promise<Accou
     return null;
   }
 }
+
+// TODO: replace type with AppRouter from @daimo/api when it's available.
+export const daimoRpc = createTRPCClient<any>({
+  links: [httpBatchLink({ url: getEnvVars().DAIMO_API_URL_WITH_CHAIN })],
+});

@@ -4,8 +4,6 @@ import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
 import { Wiggle } from '@/app/components/shared/Wiggle';
 import Image from 'next/image';
 
-const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
-
 /**
  * Fetch log data from API.
  *
@@ -17,7 +15,7 @@ const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
 async function getLogData(chainId: string, blockNumber: string, logIndex: string) {
   // Revalidate every 10 minutes.
   const res = await fetch(
-    `${apiUrl}/api/${chainId}/${blockNumber}/${logIndex}`,
+    `/api/${chainId}/${blockNumber}/${logIndex}`,
     // { next: { revalidate: 600 } },
   );
   if (!res.ok) {

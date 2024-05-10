@@ -1,5 +1,5 @@
 import { Hex } from 'viem';
-import { trpc } from '../trpc';
+import { trpc } from '../daimoRpc';
 
 /** Retrieve Daimo memo if exists */
 export async function tryGetDaimoMemo(txHash: Hex, logIndex: number): Promise<string | undefined> {

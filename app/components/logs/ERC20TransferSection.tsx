@@ -11,6 +11,7 @@ import TransferArrow from '../shared/TransferArrow';
 import { TextHeader, TextMemo, TextValue } from '../typography';
 import { useMemo } from 'react';
 import { Wiggle } from '../shared/Wiggle';
+import { getEnvVars } from '@/app/env';
 
 /**
  * Body for an ERC20 Transfer card.
@@ -63,7 +64,8 @@ function AmountRow({
   eventLogData: EventLog;
 }) {
   const { chainId, blockNumber, logIndex } = eventLogData;
-  const link = `https://${process.env.ETH_RECEIPT_DOMAIN}/l/${chainId}/${blockNumber}/${logIndex}`;
+  const domain = getEnvVars().ETH_RECEIPTS_DOMAIN;
+  const link = `https://${domain}/l/${chainId}/${blockNumber}/${logIndex}`;
 
   const { memo } = transferData;
 
