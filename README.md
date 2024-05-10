@@ -1,21 +1,29 @@
-# Eth Receipts
+<img width="1289" alt="Screenshot" src="https://github.com/daimo-eth/ethreceipts/assets/169280/5d9eed5e-aeb8-4875-84fd-daa66f964295">
 
-Today, the only way to show someone you paid them onchain is by linking to a transaction on Etherscan. While Etherscan is an extremely useful developer tool, it is not always the most user-friendly way to show someone you paid them onchain.
+**Ethreceipts shows Ethereum events, such as ERC-20 transfers, in a clean and friendly way.**
 
-The goal of Eth Receipts is to show ERC-20 transfers in a clean and extensible way. No information overload, no noise. Just a simple receipt.
+Today, the way to show someone you paid them onchain is by linking to a transaction on Etherscan. While Etherscan is a useful developer tool, it's too cluttered for wider use.
 
+Our goal is simplicity. No information overload, no noise. Just a receipt.
+ 
 ## Usage
 
 To see a receipt of an ERC-20 transfer, specify the chain ID, block number, and log index in the following format:
 `https://ethreceipt.org/l/<chainId>/<blockNumber>/<logIndex>`
 
-**Examples**: [https://ethreceipt.org/l/8453/12320223/94](https://ethreceipt.org/l/8453/12320223/94) specifies Base chain (8453), a block number (12320223) and a log index (94). [https://www.ethreceipt.org/l/1/14648578/431](https://www.ethreceipt.org/l/1/14648578/431) specifies Ethereum (1), a block number (14648578) and a log index (431).
+**Examples**: https://ethreceipt.org/l/8453/12320223/94 specifies Base chain (8453), block #12320223 and log index 94. [https://www.ethreceipt.org/l/1/14648578/431](https://www.ethreceipt.org/l/1/14648578/431) specifies Ethereum L1 (1), block #14648578 and a log index 431.
 
-Today, Eth Receipts supports Base (8453) and Ethereum (1).
 
 ## Contributing
 
-We built Eth Receipts to be easy to extend and contribute to. Currently, the project supports address bubbles for Daimo, ENS, and Farcaster accounts but can easily be extended to other address profiles.
+**We built ethreceipts to be easy to extend and contribute to.** Here are our general guidelines.
+
+**File an issue first.** Proposal discussed in an issue, PR to follow. **Keep it simple.** We already have lots of maximalist block explorers geared toward Ethereum developers. Ethreceipts is minimalist. **We welcome all kinds of contributions. Here are the two main ones:**
+
+- **Rich address information.** A bare `0x...` address is not very informative. We show a rich display when available. Today, that's addresses with a reverse ENS lookup, Daimo addresses, and Farcaster connected addresses. Help us add more.
+- **Better transfer display.** Today, we have a great display for standalone ERC-20 Transfer events. But what about a transfer that settles a Bountycaster bounty? A transfer that's one leg of a Uniswap swap? An ETH transfer? (That last one is deceptively hard, since ETH transfers do not produce any logs.) Help us add all of this and more.
+
+In the future, we may add direct support for other kinds of logs (beyond ERC-20 Transfer) too.
 
 <details open>
 <summary><strong>Add a new address profile bubble</strong></summary>
@@ -31,15 +39,10 @@ To add a new address profile bubble, you must:
 
 ## Development
 
-Eth Receipt is a project supported and built by [Daimo](https://daimo.com).
-
-<details open>
-<summary><strong>Dev quickstart</strong></summary>
-<br>
+Quick start:
 
 ```sh
 pnpm install
 pnpm run dev
 ```
 
-</details>
