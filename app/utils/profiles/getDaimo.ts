@@ -7,10 +7,8 @@ export async function tryGetDaimoProfile(accountAddress: Address): Promise<Accou
   try {
     // @ts-ignore
     const res = await trpc.getEthereumAccount.query({ addr: accountAddress });
-    if (!res.name) {
-      console.log(`No Daimo profile found for ${accountAddress}`);
-      return null;
-    }
+    console.log(`[ADDR] fetched Daimo profile for ${accountAddress}: ${res.name || 'not found'}`);
+    if (!res.name) return null;
 
     const daimoAccount: Account = {
       type: AccountTypeStr.DAIMO,
@@ -20,7 +18,7 @@ export async function tryGetDaimoProfile(accountAddress: Address): Promise<Accou
     };
     return daimoAccount;
   } catch (e) {
-    console.log(`No Daimo profile found for ${accountAddress}`);
+    console.log(`[ADDR] No Daimo profile found for ${accountAddress}`);
     return null;
   }
 }

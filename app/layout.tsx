@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <body className={sfPro.className}>
+      <body className={`${sfPro.className} overflow-x-hidden`}>
         {children}
         <Footer />
       </body>

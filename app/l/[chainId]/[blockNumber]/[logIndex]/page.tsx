@@ -43,13 +43,13 @@ export default async function Page({
   const logData = await getLogData(chainId, blockNumber, logIndex);
 
   return (
-    <div className='flex flex-col items-center justify-center max-w-fit m-auto'>
-      <div className='flex flex-row justify-center pt-8 pb-8 sm:pb-14'>
+    <div className='flex flex-col items-center justify-center m-auto px-4'>
+      <div className='flex flex-row justify-center pt-4 pb-4 sm:pt-8 sm:pb-8'>
         <Image
           width={414}
           height={214}
           src={'/assets/eth-receipts-header.png'}
-          className='w-[138px] h-[71px] sm:w-[207px] sm:h-[107px]'
+          className='w-[103px] h-[53px] sm:w-[138px] sm:h-[71px]'
           alt='ETH RECEIPTS'
         />
       </div>

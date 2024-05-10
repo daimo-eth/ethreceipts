@@ -28,15 +28,15 @@ export default function EventLogCard(
   const transactionLink = `${explorerUrl}/tx/${transactionHash}`;
 
   return (
-    <div className='w-full pt-8 pb-12 px-16 flex flex-row justify-between'>
-      <div className='flex flex-row gap-9'>
+    <div className='pt-8 pb-12 px-16 flex flex-col gap-8 sm:flex-row sm:justify-between'>
+      <div className='flex flex-row flex-wrap gap-x-9 gap-y-6'>
         <KV k='CHAIN' v={chainFormatted} />
         <KV k='BLOCK' v={'' + blockNumber} />
         <KV k='LOG' v={'#' + logIndex} />
         <KV k='LOG TYPE' v='ERC-20 Transfer' />
       </div>
-      <div className='flex flex-col gap-1 items-end'>
-        <a href={transactionLink} target='_blank' className='flex flex-row gap-1'>
+      <div className='flex flex-col gap-1 items-start sm:items-end'>
+        <a href={transactionLink} target='_blank' className='flex flex-row gap-1 hover:opacity-80'>
           <TextMedium>{dateDifferenceStr}</TextMedium>
           <IconExternalLink />
         </a>
@@ -61,12 +61,12 @@ function TxStatus(props: Readonly<{ finalized: boolean }>) {
       {props.finalized ? (
         <>
           <IconFinalizedCheck />
-          <TextMedium>Finalized</TextMedium>
+          <TextMedium textStyle='text-positiveGreen'>Finalized</TextMedium>
         </>
       ) : (
         <>
           <IconConfirmedCheck />
-          <TextMedium>Confirmed</TextMedium>
+          <TextMedium textStyle='text-positiveGreen'>Confirmed</TextMedium>
         </>
       )}
     </div>

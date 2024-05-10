@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 export function IconExternalLink() {
   return (
@@ -6,9 +7,9 @@ export function IconExternalLink() {
       <path
         d='M13 5V1M13 1H9M13 1L7.66667 6.33333M5.66667 2.33333H4.2C3.07989 2.33333 2.51984 2.33333 2.09202 2.55132C1.71569 2.74307 1.40973 3.04903 1.21799 3.42535C1 3.85317 1 4.41323 1 5.53333V9.8C1 10.9201 1 11.4801 1.21799 11.908C1.40973 12.2843 1.71569 12.5903 2.09202 12.782C2.51984 13 3.07989 13 4.2 13H8.46667C9.5868 13 10.1468 13 10.5747 12.782C10.951 12.5903 11.2569 12.2843 11.4487 11.908C11.6667 11.4801 11.6667 10.9201 11.6667 9.8V8.33333'
         stroke='#777777'
-        stroke-width='1.33333'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.33333'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -18,18 +19,18 @@ export function IconFinalizedCheck() {
   return (
     <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
-        d='M18.3333 6L10.1667 14.1667L7.5 11.5'
+        d='M18.3333 6L10.1667 14.1667L8 12'
         stroke='#0CA01B'
-        stroke-width='1.66667'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.66667'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
       <path
-        d='M13.3333 5L5.16667 13.1667L2 10'
+        d='M13.3333 6L5.16667 14.1667L2 11'
         stroke='#0CA01B'
-        stroke-width='1.66667'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.66667'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -41,9 +42,9 @@ export function IconConfirmedCheck() {
       <path
         d='M16.3333 6L8.16667 14.1667L5 11'
         stroke='#0CA01B'
-        stroke-width='1.66667'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.66667'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -86,6 +87,7 @@ export function IconEthLogo() {
       height={20}
       src='data:image/png;base64,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'
       alt='Etheruem'
+      style={useMemo(() => ({ opacity: 0.6 }), [])}
     />
   );
 }

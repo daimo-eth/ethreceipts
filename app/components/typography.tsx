@@ -12,7 +12,7 @@ export function AccountName({ children }: { children: React.ReactNode }) {
 // Address of an account.
 export function AccountAddress({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[16px] leading-[19px] tracking-[-0.025em] font-light bg-gradient-to-b from-[#AAAAAA] to-[#777777] bg-clip-text text-transparent'>
+    <p className='text-[16px] leading-[19px] tracking-[-0.025em] font-light bg-gradient-to-b from-gray3 to-gray4 bg-clip-text text-transparent'>
       {children}
     </p>
   );
@@ -21,7 +21,7 @@ export function AccountAddress({ children }: { children: React.ReactNode }) {
 // From and To.
 export function TextHeader({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[12px] leading-[14.5px] tracking-[2px] font-semibold bg-gradient-to-b from-[#D6D6D6] to-[#AAAAAA] bg-clip-text text-transparent'>
+    <p className='text-[12px] leading-[14.5px] tracking-[2px] font-semibold text-transparen text-gray4'>
       {children}
     </p>
   );
@@ -30,7 +30,7 @@ export function TextHeader({ children }: { children: React.ReactNode }) {
 // Value of transfer.
 export function TextValue({ children }: { children: React.ReactNode }) {
   return (
-    <p className='font-mono sm:text-[36px] text-[32px] leading-[36px] tracking-[-0.02em] font-medium bg-gradient-to-b from-[#535353] to-[#000000] bg-clip-text text-transparent'>
+    <p className='font-mono sm:text-[36px] text-[32px] leading-[36px] tracking-[-0.02em] font-medium bg-gradient-to-b from-gray5 to-[#000000] bg-clip-text text-transparent'>
       {children}
     </p>
   );
@@ -39,7 +39,7 @@ export function TextValue({ children }: { children: React.ReactNode }) {
 // Memo of transfer.
 export function TextMemo({ children }: { children: React.ReactNode }) {
   return (
-    <p className='sm:text-[20px] text-[16px] leading-[23px] tracking-[-0.03em] font-light bg-gradient-to-b from-[#AAAAAA] to-[#777777] bg-clip-text text-transparent'>
+    <p className='sm:text-[20px] text-[16px] leading-[23px] tracking-[-0.03em] font-light bg-gradient-to-b from-gray3 to-gray4 bg-clip-text text-transparent'>
       {children}
     </p>
   );
@@ -48,16 +48,23 @@ export function TextMemo({ children }: { children: React.ReactNode }) {
 // Initial for profile bubble.
 export function TextInitial({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[24px] leading-[28px] tracking-[0.5px] font-medium bg-gradient-to-b from-[#535353] to-[#111111] bg-clip-text text-transparent'>
+    <p className='text-[24px] leading-[28px] tracking-[0.5px] font-medium bg-gradient-to-b from-gray5 to-[#111111] bg-clip-text text-transparent'>
       {children}
     </p>
   );
 }
 
 // Light text.
-export function TextMedium({ children }: { children: React.ReactNode }) {
+export function TextMedium({
+  textStyle,
+  children,
+}: {
+  textStyle?: string;
+  children: React.ReactNode;
+}) {
+  if (textStyle == null) textStyle = 'text-gray4';
   return (
-    <p className='text-[14px] leading-[16.8px] tracking-[-0.03em] font-medium text-gray4'>
+    <p className={`text-[14px] leading-[16.8px] tracking-[-0.03em] font-medium ${textStyle}`}>
       {children}
     </p>
   );
@@ -73,7 +80,7 @@ export function TextSmallHeader({ children }: { children: React.ReactNode }) {
 // Text for footer.
 export function TextFooter({ children }: { children: React.ReactNode }) {
   return (
-    <p className='sm:text-[14px] text-[10px] leading-[16.8px] tracking-[-0.025em] font-light color-[#AAAAAA] opacity-70'>
+    <p className='text-[12px] leading-[16px] tracking-[-0.025em] font-light text-gray4 sm:text-[14px]'>
       {children}
     </p>
   );

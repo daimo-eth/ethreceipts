@@ -4,8 +4,8 @@ import { IconArrow } from '@/public/icons';
 export default function TransferArrow() {
   return (
     <div
-      className='flex w-[64px] h-16 rounded-[50%] border-[1px] border-[#F3F3F3] items-center justify-center
-    drop-shadow-[0px_4px_8px_rgb(243,243,243)] bg-white sm:rotate-0 rotate-90'
+      className='flex w-12 h-12 rounded-full border border-gray1 items-center justify-center
+     bg-white sm:rotate-0 rotate-90'
     >
       <IconArrow />
     </div>

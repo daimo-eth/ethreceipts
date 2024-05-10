@@ -15,13 +15,14 @@ const config: Config = {
         gray3: '#AAAAAA',
         gray4: '#777777',
         gray5: '#535353',
+        positiveGreen: '#0CA01B',
       },
       fontFamily: {
         sans: ['var(--font-SF-Pro-Display)'],
         mono: ['var(--font-NeueMontreal)'],
       },
       dropShadow: {
-        '3xl': '10 0px 4px #F3F3F3',
+        card: '0 4px 4px #F3F3F3',
       },
     },
   },
