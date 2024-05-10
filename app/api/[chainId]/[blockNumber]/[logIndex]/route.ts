@@ -9,19 +9,14 @@ import { tryGetDaimoMemo } from '@/app/utils/getDaimoMemo';
 import { DB } from '@/src/db/db';
 import { getTokenDetails } from '@/app/utils/getTokenDetails';
 import { getBlockFromViem } from '@/app/utils/getBlock';
+import { z } from 'zod';
 
-/**
- * Fetch transfer from Viem.
- */
-async function fetchTransferFromViem(
-  chainId: string,
-  blockNum: string,
-  logIdx: string,
+async function fetchEventLogFromViem(
+  chainId: number,
+  blockNumber: bigint,
+  logIndex: number,
   publicClient: PublicClient,
-): Promise<{ erc20TransferData: Transfer; eventLogData: Partial<EventLog> }> {
-  const blockNumber = BigInt(blockNum);
-  const logIndex = Number(logIdx);
-
+): Promise<EventLog> {
   // Fetch logs at block number.
   const logs: Log[] = await publicClient.getLogs({
     fromBlock: blockNumber,
@@ -30,19 +25,36 @@ async function fetchTransferFromViem(
 
   // Type Log reference: https://github.com/wevm/viem/blob/main/src/types/log.ts.
   const log: Log = logs[logIndex];
+  if (log.blockNumber !== blockNumber || log.logIndex !== logIndex) {
+    throw new Error('Log not found, wrong blockNumber or logIndex');
+  }
+  if (log.transactionHash === null) {
+    throw new Error('Block not confirmed');
+  }
 
-  if (log.blockNumber !== blockNumber || log.logIndex !== logIndex)
-    throw new Error('Log not found');
-  if (log.transactionHash === null) throw new Error('Block not finalized');
+  // Fetch block from Viem to retrieve timestamp.
+  const block: Block = await getBlockFromViem(blockNumber, publicClient);
 
   // Format event log data.
-  const eventLogData: Partial<EventLog> = {
+  if (log.topics.length !== 2) {
+    throw new Error('Invalid log, missing topic0');
+  }
+  const eventLog: EventLog = {
+    address: log.address,
+    data: log.data,
+    topics: log.topics,
+    chainId: chainId,
     blockNumber: blockNumber,
-    logIndex: log.logIndex,
+    logIndex: logIndex,
     transactionHash: log.transactionHash,
-    chainId: Number(chainId),
+    chainName: getChainNameById(chainId as SupportedChainId),
+    timestamp: block.timestamp,
   };
 
+  return eventLog;
+}
+
+async function fetchTransferFromViem(log: EventLog, publicClient: PublicClient): Promise<Transfer> {
   // Decode ERC20 transfer event data.
   let erc20EventLogData;
   try {
@@ -62,7 +74,7 @@ async function fetchTransferFromViem(
   const memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
 
   // Format ERC20 transfer event data.
-  const erc20TransferData: Transfer = {
+  return {
     from: erc20EventLogData.args.from,
     to: erc20EventLogData.args.to,
     value: erc20EventLogData.args.value,
@@ -70,12 +82,6 @@ async function fetchTransferFromViem(
     tokenDecimal: tokenDecimal,
     tokenSymbol: tokenSymbol,
     memo: memo,
-  };
-
-  console.log('[API] fetched from Viem');
-  return {
-    erc20TransferData,
-    eventLogData,
   };
 }
 
@@ -89,8 +95,9 @@ async function fetchTransferFromDB(
 ): Promise<{ erc20TransferData: Partial<Transfer>; eventLogData: Partial<EventLog> }> {
   const db = new DB();
   const transfers = await db.getTransfer(chainId, blockNumber, logIndex);
-  if (transfers === null || transfers?.rowCount === 0 || transfers === undefined)
+  if (transfers === null || transfers?.rowCount === 0 || transfers === undefined) {
     throw new Error('Transfer not found in DB');
+  }
 
   const transfer = transfers.rows[0];
   const txHash = `0x${transfer.tx_hash.toString('hex')}` as Hex;
@@ -136,75 +143,68 @@ export async function GET(
   req: Request,
   { params }: { params: { chainId: string; blockNumber: string; logIndex: string } },
 ) {
-  const publicClient = createViemClient(params.chainId);
+  // Validate inputs
+  const chainId = z.number().int().positive().parse(Number(params.chainId));
+  const blockNumber = BigInt(z.number().int().positive().parse(Number(params.blockNumber)));
+  const logIndex = z.number().int().nonnegative().parse(Number(params.logIndex));
 
-  // Get transfer from DB or Viem (whichever resolves first).
-  const startTime = Date.now();
-  const res = await Promise.any([
-    fetchTransferFromDB(
-      Number(params.chainId),
-      BigInt(params.blockNumber),
-      Number(params.logIndex),
-    ),
-    fetchTransferFromViem(params.chainId, params.blockNumber, params.logIndex, publicClient),
-  ]).then((res) => {
-    return res;
-  });
-  const endTime = Date.now();
-  const timeTaken = endTime - startTime;
-  console.log(`[API] fetched in ${timeTaken}ms`);
-
-  if (res instanceof Error) return Response.json(res, { status: 404 });
-  const { erc20TransferData, eventLogData } = res;
-
-  // Fetch block from Viem to retrieve timestamp.
-  try {
-    const block: Block = await getBlockFromViem(BigInt(params.blockNumber), publicClient);
-    eventLogData.timestamp = block.timestamp;
-  } catch (e) {
-    return Response.json(`Block ${params.blockNumber} not found`, { status: 404 });
-  }
-
-  // Error handling for missing fields.
-  if (
-    erc20TransferData.contractAddress === undefined ||
-    erc20TransferData.from === undefined ||
-    erc20TransferData.to === undefined
-  )
-    return Response.json('Contract address, from address, or to address not found', {
-      status: 404,
-    });
-
-  // Fetch token details.
-  const { tokenDecimal, tokenSymbol } = await getTokenDetails(
-    erc20TransferData.contractAddress,
-    publicClient,
-  );
-  erc20TransferData.tokenDecimal = tokenDecimal;
-  erc20TransferData.tokenSymbol = tokenSymbol;
-
-  const chainName = getChainNameById(Number(params.chainId) as SupportedChainId);
-  eventLogData.chainName = chainName;
-
-  // Check whether the block is finalized.
+  // Get latest finalized block
+  const publicClient = createViemClient(chainId);
   const latestFinalizedBlock = await publicClient.getBlock({
     blockTag: 'finalized',
   });
 
+  // Get event log
+  const startTime = Date.now();
+  const log = await fetchEventLogFromViem(chainId, blockNumber, logIndex, publicClient);
+  console.log(`[API] fetched event log in ${Date.now() - startTime}ms`);
+
+  let erc20Transfer: Transfer;
+  try {
+    erc20Transfer = await fetchTransferFromViem(log, publicClient);
+    console.log(`[API] fetched transfer in ${Date.now() - startTime}ms`);
+  } catch (e) {
+    console.log(`[API] failed to fetch transfer: ${e}`);
+    return Response.json({
+      latestFinalizedBlockNumber: latestFinalizedBlock.number,
+      eventLogData: log,
+    });
+  }
+
+  // Error handling for missing fields.
+  if (
+    erc20Transfer.contractAddress === undefined ||
+    erc20Transfer.from === undefined ||
+    erc20Transfer.to === undefined
+  ) {
+    return Response.json('Contract, from, or to address not found', { status: 404 });
+  }
+
+  // Fetch token details.
+  const { tokenDecimal, tokenSymbol } = await getTokenDetails(
+    erc20Transfer.contractAddress,
+    publicClient,
+  );
+  erc20Transfer.tokenDecimal = tokenDecimal;
+  erc20Transfer.tokenSymbol = tokenSymbol;
+
+  const chainName = getChainNameById(Number(params.chainId) as SupportedChainId);
+  log.chainName = chainName;
+
   // Get address profiles for from and to addresses.
   const { fromAccount, toAccount }: { fromAccount: AddressProfile; toAccount: AddressProfile } =
     await Promise.all([
-      resolveAccountForAddress(erc20TransferData.from, Number(params.chainId), publicClient),
-      resolveAccountForAddress(erc20TransferData.to, Number(params.chainId), publicClient),
+      resolveAccountForAddress(erc20Transfer.from, Number(params.chainId), publicClient),
+      resolveAccountForAddress(erc20Transfer.to, Number(params.chainId), publicClient),
     ]).then(([fromAccount, toAccount]) => {
       return { fromAccount, toAccount };
     });
 
   return Response.json({
-    transferData: erc20TransferData,
-    eventLogData: eventLogData,
+    latestFinalizedBlockNumber: latestFinalizedBlock.number,
+    eventLogData: log,
+    transferData: erc20Transfer,
     fromAccountProfile: fromAccount,
     toAccountProfile: toAccount,
-    latestFinalizedBlockNumber: latestFinalizedBlock.number,
   });
 }

@@ -1,6 +1,6 @@
 import { IconEthLogo } from '@/public/icons';
 import { Daimo } from '@/public/profileIcons/Daimo';
-import { TextFooter } from './typography';
+import { TextFooter } from '../typography';
 
 /** Footer component for Eth Receipts */
 export default function Footer() {

@@ -1,10 +1,10 @@
 import { AccountTypeStr, AddressProfile } from '@/app/utils/types';
 import Image from 'next/image';
-import { truncateAddress } from '../utils/formatting';
-import { TextInitial } from './typography';
+import { truncateAddress } from '../../utils/formatting';
+import { TextInitial } from '../typography';
 import { AccountIcon } from '@/public/profileIcons/profileIcons';
-import { AccountAddress, AccountName } from './typography';
-import { getProfileLink } from '../utils/profiles/getProfileLink';
+import { AccountAddress, AccountName } from '../typography';
+import { getProfileLink } from '../../utils/profiles/getProfileLink';
 import { Farcaster } from '@/public/profileIcons/Farcaster';
 
 /** Header-value React component field for Address Bubble */

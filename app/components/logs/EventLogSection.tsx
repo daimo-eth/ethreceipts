@@ -1,8 +1,8 @@
 import { IconConfirmedCheck, IconExternalLink, IconFinalizedCheck } from '@/public/icons';
-import { getDateDifference } from '../utils/formatting';
-import { getChainExplorerByChainId } from '../utils/getExplorerURL';
-import { EventLog, Transfer } from '../utils/types';
-import { TextMedium, TextSmallHeader } from './typography';
+import { getDateDifference } from '../../utils/formatting';
+import { getChainExplorerByChainId } from '../../utils/getExplorerURL';
+import { EventLog, Transfer } from '../../utils/types';
+import { TextMedium, TextSmallHeader } from '../typography';
 
 /**
  * Represents a card component for displaying event log data.
@@ -12,8 +12,8 @@ import { TextMedium, TextSmallHeader } from './typography';
  * @param {EventLog} props.eventLog - The event log data.
  * @returns {React.ReactElement} An event log card component.
  */
-export default function EventLogCard(
-  props: Readonly<{ eventLogData: EventLog; finalized: boolean }>,
+export default function EventLogSection(
+  props: Readonly<{ eventLogData: EventLog; logType: string; finalized: boolean }>,
 ) {
   const { timestamp, blockNumber, logIndex, chainId, transactionHash, chainName } =
     props.eventLogData;
@@ -33,7 +33,7 @@ export default function EventLogCard(
         <KV k='CHAIN' v={chainFormatted} />
         <KV k='BLOCK' v={'' + blockNumber} />
         <KV k='LOG' v={'#' + logIndex} />
-        <KV k='LOG TYPE' v='ERC-20 Transfer' />
+        <KV k='LOG TYPE' v={props.logType} />
       </div>
       <div className='flex flex-col gap-1 items-start sm:items-end'>
         <a href={transactionLink} target='_blank' className='flex flex-row gap-1 hover:opacity-80'>

@@ -1,5 +1,7 @@
-import LogNotFound from '@/app/components/LogNotFound';
-import TransferCard from '@/app/components/TransferCard';
+import EventLogSection from '@/app/components/logs/EventLogSection';
+import UnsupportedLogSection from '@/app/components/logs/UnsupportedLogSection';
+import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
+import { Wiggle } from '@/app/components/shared/Wiggle';
 import Image from 'next/image';
 
 const apiUrl = process.env.ETH_RECEIPTS_DOMAIN || 'http://localhost:3000';
@@ -19,7 +21,7 @@ async function getLogData(chainId: string, blockNumber: string, logIndex: string
     // { next: { revalidate: 600 } },
   );
   if (!res.ok) {
-    console.error('Failed to fetch log');
+    console.error('Failed to fetch log', res.status);
     return null;
   }
   return res.json();
@@ -53,17 +55,28 @@ export default async function Page({
           alt='ETH RECEIPTS'
         />
       </div>
-      {logData ? (
-        <TransferCard
-          transferData={logData.transferData}
-          addressProfileFrom={logData.fromAccountProfile}
-          addressProfileTo={logData.toAccountProfile}
-          eventLogData={logData.eventLogData}
-          latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
-        />
-      ) : (
-        <LogNotFound />
-      )}
+
+      <div className='rounded-[24px] flex flex-col m-auto bg-gradient-to-b from-gray1 to-[#E7E7E7] p-[1px] drop-shadow-card'>
+        <div className='flex flex-col bg-white rounded-[23px]'>
+          {logData.transferData ? (
+            <ERC20TransferSection
+              transferData={logData.transferData}
+              addressProfileFrom={logData.fromAccountProfile}
+              addressProfileTo={logData.toAccountProfile}
+              eventLogData={logData.eventLogData}
+              latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
+            />
+          ) : (
+            <UnsupportedLogSection />
+          )}
+          <Wiggle />
+          <EventLogSection
+            eventLogData={logData.eventLogData}
+            logType={logData.transferData ? 'ERC-20 Transfer' : 'Unknown'}
+            finalized={logData.latestFinalizedBlockNumber >= logData.eventLogData.blockNumber}
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { sfPro } from '@/public/fonts';
 import './globals.css';
-import Footer from './components/Footer';
+import Footer from './components/shared/Footer';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

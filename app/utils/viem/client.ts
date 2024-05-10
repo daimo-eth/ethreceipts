@@ -21,13 +21,13 @@ export function getChainNameById(chainId: SupportedChainId): string {
  * Create Viem client connected to chainID.
  * Uses private Alchemy API key.
  */
-export function createViemClient(chainId: string) {
-  const network = getAlchemyNetworkById(Number(chainId));
+export function createViemClient(chainId: number) {
+  const network = getAlchemyNetworkById(chainId);
   if (!network) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
   const ALCHEMY_RPC_URL: string = `https://${network}.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
-  const chain: Chain = getViemChainById(Number(chainId) as SupportedChainId);
+  const chain: Chain = getViemChainById(chainId as SupportedChainId);
 
   // Create Viem client with correct chain and RPC.
   return createPublicClient({

@@ -1,15 +1,15 @@
-import { Address } from 'viem';
+import { Address, Hex } from 'viem';
 import {
   arbitrum,
   arbitrumSepolia,
+  base,
+  baseSepolia,
   mainnet,
+  optimism,
+  optimismSepolia,
   polygon,
   polygonMumbai,
   sepolia,
-  base,
-  baseSepolia,
-  optimism,
-  optimismSepolia,
 } from 'viem/chains';
 
 /** ERC20 Transaction Data */
@@ -28,9 +28,14 @@ export type EventLog = {
   timestamp: bigint;
   blockNumber: bigint;
   logIndex: number;
-  transactionHash: string;
+  transactionHash: Hex;
   chainId: number;
   chainName: string;
+
+  // Contract address that emitted the event.
+  address: Address;
+  topics: [signature: Hex, ...args: Hex[]];
+  data: Hex;
 };
 
 /** Address Profile */
