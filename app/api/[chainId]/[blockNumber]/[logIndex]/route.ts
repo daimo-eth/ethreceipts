@@ -1,15 +1,14 @@
+import { getBlockFromViem } from '@/app/utils/getBlock';
+import { getTokenDetails } from '@/app/utils/getTokenDetails';
+import { tryGetDaimoMemo } from '@/app/utils/profiles/getDaimo';
+import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
+import { AddressProfile, EventLog, SupportedChainId, Transfer } from '@/app/utils/types';
 import { erc20Abi } from '@/app/utils/viem/abi';
 import { createViemClient, getChainNameById } from '@/app/utils/viem/client';
-import { Block, Hex, Log, PublicClient, decodeEventLog } from 'viem';
-import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
-import { Transfer, EventLog, SupportedChainId } from '@/app/utils/types';
-import { AddressProfile } from '@/app/utils/types';
-import { resolveAccountForAddress } from '../../../../utils/profiles';
-import { tryGetDaimoMemo } from '@/app/utils/getDaimoMemo';
 import { DB } from '@/src/db/db';
-import { getTokenDetails } from '@/app/utils/getTokenDetails';
-import { getBlockFromViem } from '@/app/utils/getBlock';
+import { Block, Hex, Log, PublicClient, decodeEventLog } from 'viem';
 import { z } from 'zod';
+import { resolveAccountForAddress } from '../../../../utils/profiles';
 
 async function fetchEventLogFromViem(
   chainId: number,
@@ -36,13 +35,13 @@ async function fetchEventLogFromViem(
   const block: Block = await getBlockFromViem(blockNumber, publicClient);
 
   // Format event log data.
-  if (log.topics.length !== 2) {
-    throw new Error('Invalid log, missing topic0');
+  if (log.topics.length === 0) {
+    throw new Error(`Invalid log, missing signature: ${JSON.stringify(log)}`);
   }
   const eventLog: EventLog = {
     address: log.address,
     data: log.data,
-    topics: log.topics,
+    topics: log.topics as [Hex, ...Hex[]],
     chainId: chainId,
     blockNumber: blockNumber,
     logIndex: logIndex,
@@ -143,6 +142,14 @@ export async function GET(
   req: Request,
   { params }: { params: { chainId: string; blockNumber: string; logIndex: string } },
 ) {
+  return apiGetLog(params);
+}
+
+export async function apiGetLog(params: {
+  chainId: string;
+  blockNumber: string;
+  logIndex: string;
+}) {
   // Validate inputs
   const chainId = z.number().int().positive().parse(Number(params.chainId));
   const blockNumber = BigInt(z.number().int().positive().parse(Number(params.blockNumber)));
@@ -188,14 +195,14 @@ export async function GET(
   erc20Transfer.tokenDecimal = tokenDecimal;
   erc20Transfer.tokenSymbol = tokenSymbol;
 
-  const chainName = getChainNameById(Number(params.chainId) as SupportedChainId);
+  const chainName = getChainNameById(chainId as SupportedChainId);
   log.chainName = chainName;
 
   // Get address profiles for from and to addresses.
   const { fromAccount, toAccount }: { fromAccount: AddressProfile; toAccount: AddressProfile } =
     await Promise.all([
-      resolveAccountForAddress(erc20Transfer.from, Number(params.chainId), publicClient),
-      resolveAccountForAddress(erc20Transfer.to, Number(params.chainId), publicClient),
+      resolveAccountForAddress(erc20Transfer.from, chainId, publicClient),
+      resolveAccountForAddress(erc20Transfer.to, chainId, publicClient),
     ]).then(([fromAccount, toAccount]) => {
       return { fromAccount, toAccount };
     });

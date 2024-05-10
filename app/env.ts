@@ -7,12 +7,13 @@ export function getEnvVars() {
 }
 
 function loadEnv() {
-  return {
+  const ret = {
     DAIMO_API_URL_WITH_CHAIN: loadReq('DAIMO_API_URL_WITH_CHAIN'),
     ALCHEMY_API_KEY: loadReq('ALCHEMY_API_KEY'),
-    ETH_RECEIPTS_DOMAIN: loadReq('ETH_RECEIPTS_DOMAIN'),
     SHOVEL_DB_URL: loadOptional('SHOVEL_DB_URL'),
   };
+  console.log('[ENV] loaded env vars: ', ret);
+  return ret;
 }
 
 function loadOptional(key: string) {

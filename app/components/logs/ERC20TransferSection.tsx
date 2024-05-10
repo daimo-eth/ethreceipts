@@ -1,17 +1,17 @@
+'use client';
+
 import { NeueMontreal } from '@/public/fonts';
 import { IconLink } from '@/public/icons';
+import { useState } from 'react';
 import { formatValue } from '../../utils/formatting';
 import stablecoinsAddresses from '../../utils/tokens/stablecoins';
 import { checkTokenWhitelist } from '../../utils/tokens/tokenWhitelist';
 import { AddressProfile, EventLog, Transfer } from '../../utils/types';
 import AddressBubble from '../shared/AddressBubble';
-import EventLogSection from './EventLogSection';
 import TokenWarning from '../shared/TokenWarning';
 import TransferArrow from '../shared/TransferArrow';
-import { TextHeader, TextMemo, TextValue } from '../typography';
-import { useMemo } from 'react';
 import { Wiggle } from '../shared/Wiggle';
-import { getEnvVars } from '@/app/env';
+import { TextHeader, TextMedium, TextMemo, TextValue } from '../typography';
 
 /**
  * Body for an ERC20 Transfer card.
@@ -64,8 +64,16 @@ function AmountRow({
   eventLogData: EventLog;
 }) {
   const { chainId, blockNumber, logIndex } = eventLogData;
-  const domain = getEnvVars().ETH_RECEIPTS_DOMAIN;
-  const link = `https://${domain}/l/${chainId}/${blockNumber}/${logIndex}`;
+
+  const [copied, setCopied] = useState(false);
+
+  // Copies link to clipboard.
+  const copyLink = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
+    const link = `https://${window.location.hostname}/l/${chainId}/${blockNumber}/${logIndex}`;
+    navigator.clipboard.writeText(link);
+  };
 
   const { memo } = transferData;
 
@@ -74,8 +82,14 @@ function AmountRow({
       <div className='flex flex-row justify-between items-center'>
         <div className='w-12'>&nbsp; {/* placeholder for centering */}</div>
         <AmountToken transferData={transferData} eventLogData={eventLogData} />
-        <a href={link} target='_blank' className='block w-12 hover:opacity-80 p-4'>
-          <IconLink />
+        <a
+          href='#'
+          onClick={copyLink}
+          target='_blank'
+          className={'block w-12 p-4' + (copied ? '' : ' hover:opacity-80')}
+        >
+          {copied && <TextMedium>Copied</TextMedium>}
+          {!copied && <IconLink />}
         </a>
       </div>
       {memo && (

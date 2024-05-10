@@ -34,7 +34,7 @@ export function createViemClient(chainId: number) {
   // Create Viem client with correct chain and RPC.
   return createPublicClient({
     chain: chain,
-    transport: http(alchemyApiKey),
+    transport: http(alchemyRpcUrl),
     cacheTime: 3600,
   });
 }

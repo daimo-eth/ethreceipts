@@ -3,6 +3,7 @@ import UnsupportedLogSection from '@/app/components/logs/UnsupportedLogSection';
 import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
 import { Wiggle } from '@/app/components/shared/Wiggle';
 import Image from 'next/image';
+import { apiGetLog } from '@/app/api/[chainId]/[blockNumber]/[logIndex]/route';
 
 /**
  * Fetch log data from API.
@@ -14,10 +15,7 @@ import Image from 'next/image';
  */
 async function getLogData(chainId: string, blockNumber: string, logIndex: string) {
   // Revalidate every 10 minutes.
-  const res = await fetch(
-    `/api/${chainId}/${blockNumber}/${logIndex}`,
-    // { next: { revalidate: 600 } },
-  );
+  const res = await apiGetLog({ chainId, blockNumber, logIndex });
   if (!res.ok) {
     console.error('Failed to fetch log', res.status);
     return null;
