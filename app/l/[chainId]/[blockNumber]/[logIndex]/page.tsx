@@ -1,9 +1,9 @@
+import { apiGetLog } from '@/app/api/[chainId]/[blockNumber]/[logIndex]/route';
+import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
 import EventLogSection from '@/app/components/logs/EventLogSection';
 import UnsupportedLogSection from '@/app/components/logs/UnsupportedLogSection';
-import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
+import { Header } from '@/app/components/shared/Header';
 import { Wiggle } from '@/app/components/shared/Wiggle';
-import Image from 'next/image';
-import { apiGetLog } from '@/app/api/[chainId]/[blockNumber]/[logIndex]/route';
 
 /**
  * Fetch log data from API.
@@ -41,18 +41,8 @@ export default async function Page({
   const logData = await getLogData(chainId, blockNumber, logIndex);
 
   return (
-    <div className='flex flex-col items-center justify-center m-auto px-4'>
-      <div className='flex flex-row justify-center pt-4 pb-4 sm:pt-8 sm:pb-8'>
-        <Image
-          width={414}
-          height={214}
-          src={'/assets/eth-receipts-header.png'}
-          className='w-[103px] h-[53px] sm:w-[138px] sm:h-[71px]'
-          alt='ETH RECEIPTS'
-        />
-      </div>
-
-      <div className='rounded-[24px] flex flex-col m-auto bg-gradient-to-b from-gray1 to-[#E7E7E7] p-[1px] drop-shadow-card'>
+    <div className='flex flex-col m-auto'>
+      <div className='sm:w-[640px] rounded-[24px] flex flex-col m-auto bg-gradient-to-b from-gray1 to-[#E7E7E7] p-[1px] drop-shadow-card'>
         <div className='flex flex-col bg-white rounded-[23px]'>
           {logData.transferData ? (
             <ERC20TransferSection

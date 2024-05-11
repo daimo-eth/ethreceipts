@@ -1,13 +1,23 @@
 /* TODO: MAKE THIS PRETTY */
 export default function Home() {
   return (
-    <div>
-      <div className='flex flex-col items-center justify-center w-full h-full'>
-        <div>
-          The goal of Eth Receipts is to show ERC-20 transfers in a clean and extensible way. No
-          information overload, no noise. Just a simple receipt.
-        </div>
-        <div>Go to /l/[chainId]/[blockNumber]/[logIndex] to see the log page for a log.</div>
+    <div className='max-w-screen-sm px-4 m-auto'>
+      <div className='px-16 pt-12 pb-16 rounded-xl bg-white border border-gray1'>
+        <p className='font-medium'>Show them it&apos;s sent.</p>
+        <div className='h-4' />
+        <p>
+          You can link to any asset ERC-20 asset transfer.{' '}
+          <a className='text-gray4' href='/l/8453/12320223/94'>
+            Here&apos;s an example.
+          </a>
+        </p>
+        <div className='h-4' />
+        <p>
+          Ethreceipts is fast and extensible.{' '}
+          <a className='text-gray4' href='https://github.com/daimo-eth/ethreceipts'>
+            Learn more on our Github.
+          </a>
+        </p>
       </div>
     </div>
   );

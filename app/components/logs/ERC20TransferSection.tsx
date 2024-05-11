@@ -46,8 +46,8 @@ export default function ERC20TransferSection(
 }
 
 function LabelAddr({ label, addrProfile }: { label: 'FROM' | 'TO'; addrProfile: AddressProfile }) {
-  const border = label === 'FROM' ? '' : 'border-t sm:border-l sm:border-t-[0px]';
-  const style = `flex w-full flex-col px-16 pt-10 pb-12 gap-y-2 border-gray1 sm:w-1/2 sm:pt-6 sm:pb-12 ${border}`;
+  const border = label === 'FROM' ? '' : 'border-gray1 border-t sm:border-l sm:border-t-[0px]';
+  const style = `w-full overflow-hidden flex flex-col gap-y-2 pl-16 pt-6 pb-12 ${border}`;
   return (
     <div className={style}>
       <TextHeader>{label}</TextHeader>
@@ -78,19 +78,17 @@ function AmountRow({
   const { memo } = transferData;
 
   return (
-    <div className='w-full sm:px-10 px-8 sm:py-8 pt-8 pb-8'>
-      <div className='flex flex-row justify-between items-center'>
-        <div className='w-12'>&nbsp; {/* placeholder for centering */}</div>
+    <div className='w-full px-8 pt-12 pb-8 sm:px-10'>
+      <div className='flex flex-row justify-between items-center h-8'>
+        <div className='w-16'>&nbsp; {/* placeholder for centering */}</div>
         <AmountToken transferData={transferData} eventLogData={eventLogData} />
-        <a
-          href='#'
+        <button
           onClick={copyLink}
-          target='_blank'
-          className={'block w-12 p-4' + (copied ? '' : ' hover:opacity-80')}
+          className={'flex justify-center w-16 p-4 ' + (copied ? '' : ' hover:opacity-80')}
         >
           {copied && <TextMedium>Copied</TextMedium>}
           {!copied && <IconLink />}
-        </a>
+        </button>
       </div>
       {memo && (
         <div className='flex flex-row justify-center pt-3'>

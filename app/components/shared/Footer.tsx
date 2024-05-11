@@ -5,7 +5,7 @@ import { TextFooter } from '../typography';
 /** Footer component for Eth Receipts */
 export default function Footer() {
   return (
-    <div className='max-w-screen-sm py-10 pl-9 pr-11 m-auto'>
+    <div className='max-w-screen-sm py-10 pl-12 pr-14 m-auto'>
       <div className='flex flex-row items-center justify-between'>
         <div className='flex flex-row items-center gap-x-1 p-2 w-40'>
           <IconEthLogo />
