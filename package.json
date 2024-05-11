@@ -1,7 +1,7 @@
 {
   "name": "eth-receipts",
   "version": "0.1.0",
-  "private": true,
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

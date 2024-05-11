@@ -13,7 +13,7 @@ export default function Home() {
         </p>
         <div className='h-4' />
         <p>
-          Ethreceipts is fast and extensible.{' '}
+          Ethreceipts is open source and extensible.{' '}
           <a className='text-gray4' href='https://github.com/daimo-eth/ethreceipts'>
             Learn more on our Github.
           </a>
