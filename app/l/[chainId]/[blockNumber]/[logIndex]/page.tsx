@@ -1,8 +1,7 @@
-import { apiGetLog } from '@/app/api/[chainId]/[blockNumber]/[logIndex]/route';
+import { apiGetLog } from '@/app/api/[chainId]/[blockNumber]/[logIndex]/apiGetLog';
 import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
 import EventLogSection from '@/app/components/logs/EventLogSection';
 import UnsupportedLogSection from '@/app/components/logs/UnsupportedLogSection';
-import { Header } from '@/app/components/shared/Header';
 import { Wiggle } from '@/app/components/shared/Wiggle';
 
 /**
