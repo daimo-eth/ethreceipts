@@ -46,8 +46,8 @@ export default async function Page({
           {logData.transferData ? (
             <ERC20TransferSection
               transferData={logData.transferData}
-              addressProfileFrom={logData.fromAccountProfile}
-              addressProfileTo={logData.toAccountProfile}
+              addressProfileFrom={logData.fromAddressProfile}
+              addressProfileTo={logData.toAddressProfile}
               eventLogData={logData.eventLogData}
               latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
             />

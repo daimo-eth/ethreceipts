@@ -1,4 +1,4 @@
-import { createPublicClient, http, Chain, extractChain } from 'viem';
+import { createPublicClient, http, Chain, extractChain, PublicClient } from 'viem';
 import { SupportedChainId, supportedChains, supportedChainNames } from '../types';
 import { getEnvVars } from '@/app/env';
 
@@ -18,11 +18,20 @@ export function getChainNameById(chainId: SupportedChainId): string {
   return chain.name;
 }
 
+const clients = new Map<number, PublicClient>();
+
 /**
  * Create Viem client connected to chainID.
  * Uses private Alchemy API key.
  */
-export function createViemClient(chainId: number) {
+export function getViemClient(chainId: number) {
+  if (!clients.has(chainId)) {
+    clients.set(chainId, createViemClient(chainId));
+  }
+  return clients.get(chainId)!;
+}
+
+function createViemClient(chainId: number) {
   const network = getAlchemyNetworkById(chainId);
   if (!network) {
     throw new Error(`Invalid chainId: ${chainId}`);

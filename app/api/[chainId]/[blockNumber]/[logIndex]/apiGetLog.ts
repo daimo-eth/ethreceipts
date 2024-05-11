@@ -4,7 +4,7 @@ import { tryGetDaimoMemo } from '@/app/utils/profiles/getDaimo';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { AddressProfile, EventLog, SupportedChainId, Transfer } from '@/app/utils/types';
 import { erc20Abi } from '@/app/utils/viem/abi';
-import { createViemClient, getChainNameById } from '@/app/utils/viem/client';
+import { getChainNameById, getViemClient } from '@/app/utils/viem/client';
 import { DB } from '@/src/db/db';
 import { Block, Hex, Log, PublicClient, decodeEventLog } from 'viem';
 import { z } from 'zod';
@@ -21,7 +21,7 @@ export async function apiGetLog(params: {
   const logIndex = z.number().int().nonnegative().parse(Number(params.logIndex));
 
   // Get latest finalized block
-  const publicClient = createViemClient(chainId);
+  const publicClient = getViemClient(chainId);
   const latestFinalizedBlock = await publicClient.getBlock({
     blockTag: 'finalized',
   });
@@ -31,53 +31,21 @@ export async function apiGetLog(params: {
   const log = await fetchEventLogFromViem(chainId, blockNumber, logIndex, publicClient);
   console.log(`[API] fetched event log in ${Date.now() - startTime}ms`);
 
-  let erc20Transfer: Transfer;
-  try {
-    erc20Transfer = await fetchTransferFromViem(log, publicClient);
-    console.log(`[API] fetched transfer in ${Date.now() - startTime}ms`);
-  } catch (e) {
-    console.log(`[API] failed to fetch transfer: ${e}`);
-    return Response.json({
-      latestFinalizedBlockNumber: latestFinalizedBlock.number,
-      eventLogData: log,
-    });
-  }
-
-  // Error handling for missing fields.
-  if (
-    erc20Transfer.contractAddress === undefined ||
-    erc20Transfer.from === undefined ||
-    erc20Transfer.to === undefined
-  ) {
-    return Response.json('Contract, from, or to address not found', { status: 404 });
-  }
-
-  // Fetch token details.
-  const { tokenDecimal, tokenSymbol } = await getTokenDetails(
-    erc20Transfer.contractAddress,
-    publicClient,
-  );
-  erc20Transfer.tokenDecimal = tokenDecimal;
-  erc20Transfer.tokenSymbol = tokenSymbol;
-
-  const chainName = getChainNameById(chainId as SupportedChainId);
-  log.chainName = chainName;
-
-  // Get address profiles for from and to addresses.
-  const { fromAccount, toAccount }: { fromAccount: AddressProfile; toAccount: AddressProfile } =
-    await Promise.all([
-      resolveAccountForAddress(erc20Transfer.from, chainId, publicClient),
-      resolveAccountForAddress(erc20Transfer.to, chainId, publicClient),
-    ]).then(([fromAccount, toAccount]) => {
-      return { fromAccount, toAccount };
-    });
+  // Get details for specific events.
+  const signature = log.topics[0];
+  const details = (function () {
+    switch (signature) {
+      case '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef':
+        return fetchErc20TransferDetails(log, chainId, publicClient);
+      default:
+        return {};
+    }
+  })();
 
   return Response.json({
     latestFinalizedBlockNumber: latestFinalizedBlock.number,
     eventLogData: log,
-    transferData: erc20Transfer,
-    fromAccountProfile: fromAccount,
-    toAccountProfile: toAccount,
+    ...details,
   });
 }
 
@@ -122,6 +90,44 @@ async function fetchEventLogFromViem(
   };
 
   return eventLog;
+}
+
+async function fetchErc20TransferDetails(
+  log: EventLog,
+  chainId: number,
+  publicClient: PublicClient,
+) {
+  const startTime = Date.now();
+  const transferData = await fetchTransferFromViem(log, publicClient);
+  console.log(`[API] fetched transfer in ${Date.now() - startTime}ms`);
+
+  // Error handling for missing fields.
+  if (
+    transferData.contractAddress === undefined ||
+    transferData.from === undefined ||
+    transferData.to === undefined
+  ) {
+    throw new Error('Contract, from, or to address not found');
+  }
+
+  // Fetch token details.
+  const { tokenDecimal, tokenSymbol } = await getTokenDetails(
+    transferData.contractAddress,
+    publicClient,
+  );
+  transferData.tokenDecimal = tokenDecimal;
+  transferData.tokenSymbol = tokenSymbol;
+
+  const chainName = getChainNameById(chainId as SupportedChainId);
+  log.chainName = chainName;
+
+  // Get address profiles for from and to addresses.
+  const [fromAddressProfile, toAddressProfile] = await Promise.all([
+    resolveAccountForAddress(transferData.from, chainId, publicClient),
+    resolveAccountForAddress(transferData.to, chainId, publicClient),
+  ]);
+
+  return { transferData, fromAddressProfile, toAddressProfile };
 }
 
 async function fetchTransferFromViem(log: EventLog, publicClient: PublicClient): Promise<Transfer> {
