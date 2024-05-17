@@ -78,13 +78,13 @@ function AmountRow({
   const { memo } = transferData;
 
   return (
-    <div className='w-full px-8 pt-12 pb-8 sm:px-10'>
-      <div className='flex flex-row justify-between items-center h-8'>
-        <div className='w-16'>&nbsp; {/* placeholder for centering */}</div>
+    <div className='w-full px-6 pt-12 pb-8 sm:px-10'>
+      <div className='flex flex-row justifyitems-center h-8'>
+        <div className='w-14'>&nbsp; {/* placeholder for centering */}</div>
         <AmountToken transferData={transferData} eventLogData={eventLogData} />
         <button
           onClick={copyLink}
-          className={'flex justify-center w-16 p-4 ' + (copied ? '' : ' hover:opacity-80')}
+          className={'flex justify-center w-14 p-4 ' + (copied ? '' : ' hover:opacity-80')}
         >
           {copied && <TextMedium>Copied</TextMedium>}
           {!copied && <IconLink />}
@@ -106,26 +106,24 @@ function AmountToken({
   transferData: Transfer;
   eventLogData: EventLog;
 }) {
-  const value = formatValue(
-    Number(transferData.value) / Number(10 ** Number(transferData.tokenDecimal)),
-  );
+  const { tokenSymbol, tokenDecimal, value: tokenValue } = transferData;
+  const value = formatValue(Number(tokenValue) / Number(10 ** Number(tokenDecimal)));
 
   const isStablecoin = stablecoinsAddresses.includes(transferData.contractAddress);
   const isWhitelistedToken = checkTokenWhitelist(
     transferData.contractAddress,
     eventLogData.chainId,
   );
-  const amountTokenStr = `${isStablecoin ? '$' : ''}${value} ${transferData.tokenSymbol}`;
+  const amountStr = `${isStablecoin ? '$' : ''}${value}`;
 
   return (
     <div className={NeueMontreal.className}>
-      <div className='flex flex-row flex-start gap-x-1'>
-        <TextValue>{amountTokenStr}</TextValue>
-        {!isWhitelistedToken && (
-          <div className='flex py-1 px-2'>
-            <TokenWarning />
-          </div>
-        )}
+      <div className='flex-grow-0 flex flex-row flex-wrap justify-center gap-x-2'>
+        <TextValue>{amountStr}</TextValue>
+        <div className='flex flex-row justify-center gap-x-3'>
+          <TextValue>{tokenSymbol}</TextValue>
+          {!isWhitelistedToken && <TokenWarning />}
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { TextFooter } from '../typography';
 /** Footer component for Eth Receipts */
 export default function Footer() {
   return (
-    <div className='max-w-screen-sm py-10 pl-12 pr-14 m-auto'>
+    <div className='m-auto max-w-screen-sm py-10 px-8 sm:px-12'>
       <div className='flex flex-row items-center justify-between'>
         <div className='flex flex-row items-center gap-x-1 p-2 w-40'>
           <IconEthLogo />
@@ -21,7 +21,7 @@ export default function Footer() {
         <a
           href='https://daimo.com'
           target='_blank'
-          className='flex flex-row items-center justify-end gap-x-2 p-2 w-40 hover:opacity-80'
+          className='flex flex-row items-center justify-end gap-x-2 p-2 pr-4 w-40 hover:opacity-80'
         >
           <Daimo />
           <TextFooter>Built by Daimo</TextFooter>
