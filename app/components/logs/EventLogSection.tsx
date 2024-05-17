@@ -28,7 +28,7 @@ export default function EventLogSection(
   const transactionLink = `${explorerUrl}/tx/${transactionHash}`;
 
   return (
-    <div className='pt-8 pb-12 px-16 flex flex-col gap-8 sm:flex-row sm:justify-between'>
+    <div className='flex flex-col gap-8 px-16 pt-6 pb-10 sm:pt-8 sm:pb-12 sm:flex-row sm:justify-between'>
       <div className='flex flex-row flex-wrap gap-x-9 gap-y-6'>
         <KV k='CHAIN' v={chainFormatted} />
         <KV k='BLOCK' v={'' + blockNumber} />

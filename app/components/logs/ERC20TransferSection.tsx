@@ -47,9 +47,10 @@ export default function ERC20TransferSection(
 
 function LabelAddr({ label, addrProfile }: { label: 'FROM' | 'TO'; addrProfile: AddressProfile }) {
   const border = label === 'FROM' ? '' : 'border-gray1 border-t sm:border-l sm:border-t-[0px]';
-  const style = `w-full overflow-hidden flex flex-col gap-y-2 pl-16 pt-6 pb-12 ${border}`;
   return (
-    <div className={style}>
+    <div
+      className={`w-full overflow-hidden flex flex-col gap-y-2 pl-16 pt-6 pb-8 sm:pb-12 ${border}`}
+    >
       <TextHeader>{label}</TextHeader>
       <AddressBubble addressProfile={addrProfile} />
     </div>
@@ -78,13 +79,16 @@ function AmountRow({
   const { memo } = transferData;
 
   return (
-    <div className='w-full px-6 pt-12 pb-8 sm:px-10'>
-      <div className='flex flex-row justifyitems-center h-8'>
+    <div className='w-full px-6 py-8 sm:pt-12 sm:pb-8 sm:px-10'>
+      <div className='flex flex-row items-center justify-between'>
         <div className='w-14'>&nbsp; {/* placeholder for centering */}</div>
         <AmountToken transferData={transferData} eventLogData={eventLogData} />
         <button
           onClick={copyLink}
-          className={'flex justify-center w-14 p-4 ' + (copied ? '' : ' hover:opacity-80')}
+          className={
+            'flex justify-center w-14 h-4 overflow-hidden px-4 ' +
+            (copied ? '' : ' hover:opacity-80')
+          }
         >
           {copied && <TextMedium>Copied</TextMedium>}
           {!copied && <IconLink />}

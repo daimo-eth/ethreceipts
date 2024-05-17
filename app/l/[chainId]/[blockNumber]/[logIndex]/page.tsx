@@ -40,7 +40,7 @@ export default async function Page({
   const logData = await getLogData(chainId, blockNumber, logIndex);
 
   return (
-    <div className='flex flex-col m-auto px-4'>
+    <div className='flex flex-col m-auto px-8'>
       <div className='sm:w-[640px] rounded-[24px] flex flex-col m-auto bg-gradient-to-b from-gray1 to-[#E7E7E7] p-[1px] drop-shadow-card'>
         <div className='flex flex-col bg-white rounded-[23px]'>
           {logData.transferData ? (

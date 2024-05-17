@@ -80,7 +80,7 @@ export function TextSmallHeader({ children }: { children: React.ReactNode }) {
 // Text for footer.
 export function TextFooter({ children }: { children: React.ReactNode }) {
   return (
-    <p className='text-[12px] leading-[16px] tracking-[-0.025em] font-light text-gray4 sm:text-[14px]'>
+    <p className='text-[12px] leading-[16px] tracking-[-0.025em] font-normal text-gray3 sm:text-[14px]'>
       {children}
     </p>
   );
