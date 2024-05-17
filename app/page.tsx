@@ -6,7 +6,7 @@ export default function Home() {
         <p className='font-medium'>Show them it&apos;s sent.</p>
         <div className='h-4' />
         <p>
-          You can link to any asset ERC-20 asset transfer.{' '}
+          You can link to any ERC-20 asset transfer.{' '}
           <a className='text-gray4' href='/l/8453/12320223/94'>
             Here&apos;s an example.
           </a>

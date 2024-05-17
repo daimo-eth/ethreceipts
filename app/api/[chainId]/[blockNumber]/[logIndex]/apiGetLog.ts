@@ -33,7 +33,7 @@ export async function apiGetLog(params: {
 
   // Get details for specific events.
   const signature = log.topics[0];
-  const details = (function () {
+  const details = await (async function () {
     switch (signature) {
       case '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef':
         return fetchErc20TransferDetails(log, chainId, publicClient);
@@ -42,11 +42,14 @@ export async function apiGetLog(params: {
     }
   })();
 
-  return Response.json({
+  const ret = {
     latestFinalizedBlockNumber: latestFinalizedBlock.number,
     eventLogData: log,
+    signature,
     ...details,
-  });
+  };
+  console.log(`[API] loaded log ${chainId}/${blockNumber}/${logIndex}: ${JSON.stringify(ret)}`);
+  return Response.json(ret);
 }
 
 async function fetchEventLogFromViem(
@@ -99,7 +102,7 @@ async function fetchErc20TransferDetails(
 ) {
   const startTime = Date.now();
   const transferData = await fetchTransferFromViem(log, publicClient);
-  console.log(`[API] fetched transfer in ${Date.now() - startTime}ms`);
+  console.log(`[API] fetched ERC-20 transfer in ${Date.now() - startTime}ms`);
 
   // Error handling for missing fields.
   if (
