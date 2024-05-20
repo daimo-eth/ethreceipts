@@ -10,7 +10,7 @@ async function getAccountType(
 ): Promise<Account> {
   // Fetch profile on each supported account type.
   const profileFunctions = getProfileFunctions(chainId);
-  const accountResults = await Promise.all(profileFunctions.map((fn) => fn(address, viemClient)));
+  const accountResults = await Promise.all(profileFunctions.map((fn) => fn(address)));
   return accountResults.find((account) => account !== null) || { type: AccountTypeStr.UNKNOWN };
 }
 

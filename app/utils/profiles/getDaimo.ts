@@ -8,8 +8,8 @@ export async function tryGetDaimoProfile(accountAddress: Address): Promise<Accou
   try {
     // @ts-ignore
     const res = await daimoRpc.getEthereumAccount.query({ addr: accountAddress });
-    console.log(`[ADDR] fetched Daimo profile for ${accountAddress}: ${res.name || res.label || res.ensName || 'not found'}`);
-    if (!res.name && !res.label && !res.ensName) return null;
+    console.log(`[ADDR] fetched Daimo profile for ${accountAddress}: ${res.name || 'not found'}`);
+    if (!res.name) return null;
 
     const daimoAccount: Account = {
       type: AccountTypeStr.DAIMO,

@@ -11,6 +11,8 @@ export function AccountIcon({ accountType }: { accountType: AccountTypeStr }) {
       return <ENS />;
     case AccountTypeStr.FARCASTER:
       return <Farcaster />;
+    case AccountTypeStr.SPECIAL_ADDRESS:
+      return null;
     default:
       return null;
   }

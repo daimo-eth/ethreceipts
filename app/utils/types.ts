@@ -49,6 +49,7 @@ export enum AccountTypeStr {
   ENS = 'ENS',
   DAIMO = 'DAIMO',
   FARCASTER = 'FARCASTER',
+  SPECIAL_ADDRESS = "SPECIAL_ADDRESS",
   UNKNOWN = 'Unknown',
 }
 
