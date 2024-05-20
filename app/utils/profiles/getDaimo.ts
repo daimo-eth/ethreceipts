@@ -13,7 +13,7 @@ export async function tryGetDaimoProfile(accountAddress: Address): Promise<Accou
 
     const daimoAccount: Account = {
       type: AccountTypeStr.DAIMO,
-      name: res.name || res.label || res.ensName || null,
+      name: res.name,
       avatar: res.profilePicture || null,
       url: `https://daimo.com/l/account/${res.name}`,
     };
