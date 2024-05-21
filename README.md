@@ -1,4 +1,4 @@
-<img width="1289" alt="Screenshot" src="https://github.com/daimo-eth/ethreceipts/assets/169280/5d9eed5e-aeb8-4875-84fd-daa66f964295">
+<img width="966" alt="image" src="https://github.com/daimo-eth/ethreceipts/assets/169280/0c637eeb-d81b-4c59-9166-7a6a8d890852">
 
 **Ethreceipts shows Ethereum events, such as ERC-20 transfers, in a clean and friendly way.**
 
