@@ -1,17 +1,22 @@
 <img width="966" alt="image" src="https://github.com/daimo-eth/ethreceipts/assets/169280/0c637eeb-d81b-4c59-9166-7a6a8d890852">
 
+**https://ethreceipts.org/l/8453/14733195/34**
+
 **Ethreceipts shows Ethereum events, such as ERC-20 transfers, in a clean and friendly way.**
 
 Today, the way to show someone you paid them onchain is by linking to a transaction on Etherscan. While Etherscan is a useful developer tool, it's too cluttered for wider use.
 
-Our goal is simplicity. No information overload, no noise. Just a receipt.
+Our goal is simplicity. "Perfection is achieved not when there's nothing left to add, but when there's nothing left to remove."
  
 ## Usage
 
 To see a receipt of an ERC-20 transfer, specify the chain ID, block number, and log index in the following format:
 `https://ethreceipt.org/l/<chainId>/<blockNumber>/<logIndex>`
 
-**Examples**: https://ethreceipt.org/l/8453/12320223/94 specifies Base chain (8453), block #12320223 and log index 94. [https://www.ethreceipt.org/l/1/14648578/431](https://www.ethreceipt.org/l/1/14648578/431) specifies Ethereum L1 (1), block #14648578 and a log index 431.
+### Examples
+
+- https://ethreceipts.org/l/8453/12320223/94 specifies Base chain (8453), block #12320223 and log index 94.
+- https://ethreceipts.org/l/1/19914207/347 specifies Ethereum L1 (1), block #19914207 and a log index 347.
 
 
 ## Contributing
