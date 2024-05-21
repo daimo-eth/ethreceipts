@@ -1,12 +1,14 @@
-import { Address, PublicClient, isAddress } from 'viem';
+import { Address, isAddress } from 'viem';
 import { normalize } from 'viem/ens';
 import { AccountTypeStr, Account } from '../types';
+import { getViemClient } from '../viem/client';
 
 /** Attempt to get ENS name */
-async function tryGetEnsName(accountAddress: Address, viemClient: PublicClient) {
+async function tryGetEnsName(accountAddress: Address) {
   if (!isAddress(accountAddress)) return null;
+  const l1Client = getViemClient(1);
   try {
-    return await viemClient.getEnsName({
+    return await l1Client.getEnsName({
       address: accountAddress,
     });
   } catch (e) {
@@ -16,9 +18,10 @@ async function tryGetEnsName(accountAddress: Address, viemClient: PublicClient) 
 }
 
 /** Attempt to get ENS avatar via ENS name */
-async function tryGetEnsAvatar(ensName: string, viemClient: PublicClient) {
+async function tryGetEnsAvatar(ensName: string) {
+  const l1Client = getViemClient(1);
   try {
-    return await viemClient.getEnsAvatar({
+    return await l1Client.getEnsAvatar({
       name: normalize(ensName),
     });
   } catch (e) {
@@ -31,15 +34,15 @@ async function tryGetEnsAvatar(ensName: string, viemClient: PublicClient) {
  * Retrieve ENS profile for account address.
  *
  * @param {string} accountAddress - The account address for the desired ENS profile.
- * @returns {AccountProfile} - The ENS profile for the account address.
+ * @returns {Account} - The ENS profile for the account address.
  */
 export async function tryGetEnsProfile(
   accountAddress: Address,
-  viemClient: PublicClient,
 ): Promise<Account | null> {
-  const ensName = await tryGetEnsName(accountAddress, viemClient);
+  const ensName = await tryGetEnsName(accountAddress);
+  console.log(`[ADDR] fetched ENS profile for ${accountAddress}: ${ensName || 'not found'}`);
   if (!ensName) return null;
-  const ensAvatar = await tryGetEnsAvatar(ensName, viemClient);
+  const ensAvatar = await tryGetEnsAvatar(ensName);
 
   const ensProfile: Account = {
     type: AccountTypeStr.ENS,
