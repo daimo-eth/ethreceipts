@@ -12,15 +12,24 @@ function fetchWhitelist(chainId: number) {
   }
 }
 
+interface Token {
+  chainId: number;
+  address: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  logoURI: string;
+}
+
 /** Check if token is whitelisted. */
-export function checkTokenWhitelist(tokenAddress: string, chainId: number): boolean {
+export function fetchTokenFromWhitelist(tokenAddress: string, chainId: number): Token | null {
   const whitelist = fetchWhitelist(chainId);
-  if (!whitelist) return false;
+  if (!whitelist) return null;
 
   for (const token of whitelist['tokens']) {
     if (token.address === tokenAddress) {
-      return true;
+      return token;
     }
   }
-  return false;
+  return null;
 }

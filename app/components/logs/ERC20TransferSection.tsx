@@ -5,7 +5,7 @@ import { IconLink } from '@/public/icons';
 import { useState } from 'react';
 import { formatValue } from '../../utils/formatting';
 import stablecoinsAddresses from '../../utils/tokens/stablecoins';
-import { checkTokenWhitelist } from '../../utils/tokens/tokenWhitelist';
+import { fetchTokenFromWhitelist } from '../../utils/tokens/tokenWhitelist';
 import { AddressProfile, EventLog, Transfer } from '../../utils/types';
 import AddressBubble from '../shared/AddressBubble';
 import TokenWarning from '../shared/TokenWarning';
@@ -114,10 +114,8 @@ function AmountToken({
   const value = formatValue(Number(tokenValue) / Number(10 ** Number(tokenDecimal)));
 
   const isStablecoin = stablecoinsAddresses.includes(transferData.contractAddress);
-  const isWhitelistedToken = checkTokenWhitelist(
-    transferData.contractAddress,
-    eventLogData.chainId,
-  );
+  const isWhitelistedToken =
+    fetchTokenFromWhitelist(transferData.contractAddress, eventLogData.chainId) !== null;
   const amountStr = `${isStablecoin ? '$' : ''}${value}`;
 
   return (
