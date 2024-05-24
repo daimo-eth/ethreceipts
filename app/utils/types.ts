@@ -25,7 +25,7 @@ export type Transfer = {
 
 /** Event Log Data */
 export type EventLog = {
-  timestamp: bigint;
+  timestamp: number;
   blockNumber: bigint;
   logIndex: number;
   transactionHash: Hex;
@@ -49,7 +49,7 @@ export enum AccountTypeStr {
   ENS = 'ENS',
   DAIMO = 'DAIMO',
   FARCASTER = 'FARCASTER',
-  SPECIAL_ADDRESS = "SPECIAL_ADDRESS",
+  SPECIAL_ADDRESS = 'SPECIAL_ADDRESS',
   UNKNOWN = 'Unknown',
 }
 

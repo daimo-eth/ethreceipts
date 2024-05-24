@@ -1,5 +1,6 @@
 import { getEnvVars } from '@/app/env';
 import { ClientConfig, Pool, PoolConfig } from 'pg';
+import { Hex } from 'viem';
 
 /** Credentials default to localhost & no auth. */
 const dbConfig: ClientConfig = {
@@ -15,7 +16,7 @@ const poolConfig: PoolConfig = {
   idleTimeoutMillis: 60000,
 };
 
-export class DB {
+class DB {
   private pool: Pool;
 
   constructor() {
@@ -31,12 +32,10 @@ export class DB {
     };
   }
 
-  // Attempt to get transfers given a chainId, blockNumber, and logIndex.
-  async getTransfer(chainId: Number, blockNumber: bigint, logIndex: Number) {
-    console.log(`[DB] getting transfer(${chainId}, ${blockNumber}, ${logIndex})`);
-    try {
-      const res = await this.pool.query(
-        `select
+  async getBestTransferByTxHash(txHash: Hex) {
+    console.log(`[DB] getting transfer(${txHash})`);
+    const res = await this.pool.query(
+      `select
         chain_id,
         block_num,
         block_hash,
@@ -48,19 +47,23 @@ export class DB {
         v as "value",
         src_name,
         log_idx
-      from transfers
+      from erc20_transfers
       where (
-        chain_id = $1 AND
-        block_num = $2 AND
-        log_idx = $3
-      );
+        tx_hash = $1
+      ) ORDER BY v DESC LIMIT 1;
     `,
-        [chainId, blockNumber, logIndex],
-      );
-      return res;
-    } catch (e) {
-      console.log(`[DB] error getting transfer(${chainId}, ${blockNumber}, ${logIndex})`);
-      return null;
-    }
+      [txHash.replace('0x', '\\x')],
+    );
+    return res.rows.length > 0 ? res.rows[0] : null;
   }
+}
+
+const globalForDB = globalThis as unknown as {
+  db: DB | undefined;
+};
+
+export const db = globalForDB.db ?? new DB();
+
+if (globalForDB.db === undefined) {
+  globalForDB.db = db;
 }

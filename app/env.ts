@@ -1,5 +1,3 @@
-import { DB } from '@/src/db/db';
-
 const env = loadEnv();
 
 export function getEnvVars() {

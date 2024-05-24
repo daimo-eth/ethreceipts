@@ -1,11 +1,10 @@
-import { getBlockFromViem } from '@/app/utils/getBlock';
+import { getBlockTimestamp } from '@/app/utils/getBlock';
 import { getTokenDetails } from '@/app/utils/getTokenDetails';
 import { tryGetDaimoMemo } from '@/app/utils/profiles/getDaimo';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { AddressProfile, EventLog, SupportedChainId, Transfer } from '@/app/utils/types';
 import { erc20Abi } from '@/app/utils/viem/abi';
 import { getChainNameById, getViemClient } from '@/app/utils/viem/client';
-import { DB } from '@/src/db/db';
 import { Block, Hex, Log, PublicClient, decodeEventLog } from 'viem';
 import { z } from 'zod';
 import { resolveAccountForAddress } from '../../../../utils/profiles';
@@ -73,9 +72,6 @@ async function fetchEventLogFromViem(
     throw new Error('Block not confirmed');
   }
 
-  // Fetch block from Viem to retrieve timestamp.
-  const block: Block = await getBlockFromViem(blockNumber, publicClient);
-
   // Format event log data.
   if (log.topics.length === 0) {
     throw new Error(`Invalid log, missing signature: ${JSON.stringify(log)}`);
@@ -89,7 +85,7 @@ async function fetchEventLogFromViem(
     logIndex: logIndex,
     transactionHash: log.transactionHash,
     chainName: getChainNameById(chainId as SupportedChainId),
-    timestamp: block.timestamp,
+    timestamp: await getBlockTimestamp(blockNumber, publicClient),
   };
 
   return eventLog;
@@ -161,49 +157,5 @@ async function fetchTransferFromViem(log: EventLog, publicClient: PublicClient):
     tokenDecimal: tokenDecimal,
     tokenSymbol: tokenSymbol,
     memo: memo,
-  };
-}
-
-/**
- * Fetch transfer from DB.
- */
-async function fetchTransferFromDB(
-  chainId: number,
-  blockNumber: bigint,
-  logIndex: number,
-): Promise<{ erc20TransferData: Partial<Transfer>; eventLogData: Partial<EventLog> }> {
-  const db = new DB();
-  const transfers = await db.getTransfer(chainId, blockNumber, logIndex);
-  if (transfers === null || transfers?.rowCount === 0 || transfers === undefined) {
-    throw new Error('Transfer not found in DB');
-  }
-
-  const transfer = transfers.rows[0];
-  const txHash = `0x${transfer.tx_hash.toString('hex')}` as Hex;
-  const logAddress = `0x${transfer.log_addr.toString('hex')}` as Hex;
-
-  const memo = await tryGetDaimoMemo(txHash, logIndex);
-
-  // Format event log data.
-  const eventLogData: Partial<EventLog> = {
-    blockNumber: blockNumber,
-    logIndex: logIndex,
-    transactionHash: txHash,
-    chainId: chainId,
-  };
-
-  // Format ERC20 transfer event data.
-  const erc20TransferData: Partial<Transfer> = {
-    from: `0x${transfer.from.toString('hex')}`,
-    to: `0x${transfer.to.toString('hex')}`,
-    value: transfer.value.toString(),
-    contractAddress: logAddress,
-    memo: memo,
-  };
-
-  console.log('[API] fetched from DB');
-  return {
-    erc20TransferData,
-    eventLogData,
   };
 }
