@@ -17,6 +17,7 @@
     "@trpc/next": "11.0.0-rc.330",
     "@trpc/react-query": "11.0.0-rc.330",
     "@trpc/server": "11.0.0-rc.330",
+    "@vercel/og": "^0.6.2",
     "add": "^2.0.6",
     "next": "14.1.4",
     "pg": "^8.11.5",

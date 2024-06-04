@@ -1,25 +1,13 @@
-import { apiGetLog } from '@/app/api/[chainId]/[blockNumber]/[logIndex]/apiGetLog';
 import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
 import EventLogSection from '@/app/components/logs/EventLogSection';
 import UnsupportedLogSection from '@/app/components/logs/UnsupportedLogSection';
 import { Wiggle } from '@/app/components/shared/Wiggle';
+import { getLogData, LogData } from '@/app/utils/getLogData';
+import { createMetadataForTransfer } from '@/app/utils/linkMetaTags';
+import { Metadata } from 'next';
 
-/**
- * Fetch log data from API.
- *
- * @param {string} chainId - The chain ID.
- * @param {string} blockNumber - The block number.
- * @param {string} logIndex - The log index.
- * @returns {Object} The result from API fetch.
- */
-async function getLogData(chainId: string, blockNumber: string, logIndex: string) {
-  // Revalidate every 10 minutes.
-  const res = await apiGetLog({ chainId, blockNumber, logIndex });
-  if (!res.ok) {
-    console.error('Failed to fetch log', res.status);
-    return null;
-  }
-  return res.json();
+interface LinkProps {
+  params: { chainId: string; blockNumber: string; logIndex: string };
 }
 
 /**
@@ -37,7 +25,7 @@ export default async function Page({
   params: { chainId: string; blockNumber: string; logIndex: string };
 }) {
   console.log(`[LOG PAGE] chainId: ${chainId}, blockNumber: ${blockNumber}, logIndex: ${logIndex}`);
-  const logData = await getLogData(chainId, blockNumber, logIndex);
+  const logData: LogData = await getLogData(chainId, blockNumber, logIndex);
 
   return (
     <div className='flex flex-col m-auto px-8'>
@@ -64,4 +52,12 @@ export default async function Page({
       </div>
     </div>
   );
+}
+
+// Generate metadata for a transfer log.
+export async function generateMetadata(props: LinkProps): Promise<Metadata> {
+  const { chainId, blockNumber, logIndex } = props.params;
+  const logData: LogData = await getLogData(chainId, blockNumber, logIndex);
+  const metadata = createMetadataForTransfer(logData);
+  return metadata;
 }

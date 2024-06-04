@@ -10,3 +10,7 @@ interface BigInt {
 BigInt.prototype.toJSON = function () {
   return this.toString();
 };
+
+(BigInt.prototype as any).toJSON = function () {
+  return this.toString();
+};
