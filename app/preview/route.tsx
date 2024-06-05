@@ -27,7 +27,6 @@ export async function GET(request: Request) {
   const logData = await getLogData(chainId, blockNumber, logIndex);
   if (!logData) {
     console.log('Transfer log not found');
-    // TODO: show transfer log not found page.
   }
 
   return new ImageResponse(

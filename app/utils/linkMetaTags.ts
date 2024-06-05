@@ -48,9 +48,6 @@ function createMetadata(title: string, description: string, previewUrl: string):
   return {
     title,
     description,
-    icons: {
-      icon: '/logo-web-favicon.png', // TODO: change to icon
-    },
     openGraph: {
       title,
       description,
