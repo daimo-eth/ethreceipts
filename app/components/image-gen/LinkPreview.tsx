@@ -1,7 +1,9 @@
-import { formatValue, truncateAddress } from '@/app/utils/formatting';
+/* eslint-disable @next/next/no-img-element */
+import { formatValue, getDateDifference, truncateAddress } from '@/app/utils/formatting';
 import { getAbsoluteUrl } from '@/app/utils/getAbsoluteUrl';
 import stablecoinsAddresses from '@/app/utils/tokens/stablecoins';
 import { AddressProfile, EventLog, Transfer } from '@/app/utils/types';
+import { UserBubble } from './UserBubble';
 
 export function LinkPreviewImg({
   transferData,
@@ -16,26 +18,29 @@ export function LinkPreviewImg({
   eventLogData: EventLog;
   latestFinalizedBlockNumber: number;
 }) {
-  console.log(`[LINK PREVIEW] ${JSON.stringify(addressProfileFrom)}`);
   return (
     <div
       style={{
-        backgroundColor: 'white',
+        backgroundColor: '#F3F3F3',
         height: '100%',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center',
         flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '40px',
       }}
     >
       <div
         style={{
-          backgroundImage: `url(${getAbsoluteUrl('/assets/eth-receipts-header.png')}")`,
-          height: '100%',
-          width: '100%',
           display: 'flex',
-          justifyContent: 'space-between',
           flexDirection: 'column',
+          gap: '8px',
+          backgroundColor: 'white',
+          borderRadius: '24px',
+          paddingTop: '40px',
+          paddingBottom: '20px',
+          border: '1px solid #EEEEEE',
         }}
       >
         <Content
@@ -47,6 +52,13 @@ export function LinkPreviewImg({
           eventLogData={eventLogData}
           latestFinalizedBlockNumber={latestFinalizedBlockNumber}
         />
+      </div>
+      <div style={{ display: 'flex' }}>
+        <img
+          src={`${getAbsoluteUrl('/assets/eth-receipts-one-liner.png')}`}
+          alt={'Profile'}
+          width={'20%'}
+        ></img>
       </div>
     </div>
   );
@@ -68,14 +80,71 @@ function Content({
   const isStablecoin = stablecoinsAddresses.includes(transferData.contractAddress);
   const amountStr = `${isStablecoin ? '$' : ''}${value}`;
 
-  // Format addresses
-  const sender =
-    addressProfileFrom.account?.name || truncateAddress(addressProfileFrom.accountAddress);
-  const receiver =
-    addressProfileTo.account?.name || truncateAddress(addressProfileTo.accountAddress);
+  const memo = transferData.memo ?? '';
 
-  const text = `${sender} sent ${amountStr} ${tokenSymbol} to ${receiver}`;
-  return <div>{text}</div>;
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        gap: '10px',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <span style={{ fontSize: '54px', fontWeight: 'bold' }}>
+          {amountStr} {tokenSymbol}
+        </span>
+        <span style={{ fontSize: '24px', color: '#AAAAAA' }}>{memo}</span>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          marginTop: '20px',
+          marginBottom: '12px',
+          width: '100%',
+          borderBottom: '1px solid #EEEEEE',
+          borderTop: '1px solid #EEEEEE',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            padding: '30px 50px',
+          }}
+        >
+          <span style={{ fontSize: '18px', color: '#777777' }}>FROM</span>
+          <UserBubble addressProfile={addressProfileFrom} />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            padding: '30px 50px',
+            borderLeft: '1px solid #EEEEEE',
+          }}
+        >
+          <span style={{ fontSize: '18px', color: '#777777' }}>TO</span>
+          <UserBubble addressProfile={addressProfileTo} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function Footer({
@@ -85,22 +154,25 @@ function Footer({
   eventLogData: EventLog;
   latestFinalizedBlockNumber: number;
 }) {
-  const isFinalized = eventLogData.blockNumber <= latestFinalizedBlockNumber;
-  const status = isFinalized ? 'FINALIZED' : 'NOT FINALIZED';
-  const chain = eventLogData.chainId;
+  const time = new Date(Number(eventLogData.timestamp) * 1000);
+  const dateDifferenceStr = getDateDifference(time);
+
+  const chain = eventLogData.chainName;
+  const chainName = chain[0].toUpperCase() + chain.slice(1);
+
   return (
     <div
       style={{
-        height: '10%',
-        width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         justifyItems: 'center',
-        marginBottom: '48px',
+        color: '#AAAAAA',
+        fontSize: '18px',
+        fontWeight: 'lighter',
       }}
     >
-      CHAIN: {chain} | STATUS: {status}
+      {dateDifferenceStr} on {chainName}
     </div>
   );
 }
