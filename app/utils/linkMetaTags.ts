@@ -36,9 +36,9 @@ export function createMetadataForTransfer(logData: LogData): Metadata {
 
   // Create preview URL
   const previewUrl = getPreviewURL(
-    eventLogData?.chainId.toString() ?? undefined,
-    eventLogData?.blockNumber.toString() ?? undefined,
-    eventLogData?.logIndex.toString() ?? undefined,
+    eventLogData.chainId.toString() ?? undefined,
+    eventLogData.blockNumber.toString() ?? undefined,
+    eventLogData.logIndex.toString() ?? undefined,
   );
 
   // Create metadata
@@ -79,7 +79,7 @@ function getPreviewURL(
     return `${getAbsoluteUrl('/assets/eth-receipts-header.png')}`;
   }
 
-  let previewUrl = `/preview?chainId${chainId}`;
+  let previewUrl = `/preview?chainId=${chainId}`;
   if (blockNumber) {
     previewUrl += `&blockNumber=${blockNumber}`;
   }
