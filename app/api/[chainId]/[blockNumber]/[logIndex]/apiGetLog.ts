@@ -48,7 +48,7 @@ export async function apiGetLog(params: {
     ...details,
   };
   console.log(`[API] loaded log ${chainId}/${blockNumber}/${logIndex}: ${JSON.stringify(ret)}`);
-  return Response.json(ret);
+  return new Response(JSON.stringify(ret));
 }
 
 async function fetchEventLogFromViem(
