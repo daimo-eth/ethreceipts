@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
-import { getChainExplorerByChainId } from './getExplorerURL';
 import stablecoinsAddresses from './tokens/stablecoins';
 import { getAbsoluteUrl } from './getAbsoluteUrl';
 import { formatValue, truncateAddress } from './formatting';
 import { LogData } from './getLogData';
+import { getChainNameById } from './viem/client';
+import { SupportedChainId } from './types';
 
 // Creates a metadata object for a transfer log.
 export function createMetadataForTransfer(logData: LogData): Metadata {
@@ -24,7 +25,8 @@ export function createMetadataForTransfer(logData: LogData): Metadata {
   const receiver =
     toAddressProfile.account?.name || truncateAddress(toAddressProfile.accountAddress);
 
-  const chainName = getChainExplorerByChainId(eventLogData.chainId) ?? eventLogData.chainId;
+  const chainName =
+    getChainNameById(eventLogData.chainId as SupportedChainId) ?? eventLogData.chainId;
   const status = latestFinalizedBlockNumber >= eventLogData?.blockNumber ? 'Finalized' : 'Pending';
 
   const { tokenSymbol, tokenDecimal, value: tokenValue } = transferData;

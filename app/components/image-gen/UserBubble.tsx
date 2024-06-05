@@ -23,8 +23,8 @@ export function UserBubble({ addressProfile }: { addressProfile: AddressProfile 
           gap: '2px',
         }}
       >
-        {name && <div style={{ color: '#323232', fontSize: '28px' }}>{name}</div>}
-        {<div style={{ color: '#AAAAAA', fontWeight: 'lighter', fontSize: '20px' }}>{address}</div>}
+        {name && <div style={{ color: '#323232', fontSize: '32px' }}>{name}</div>}
+        {<div style={{ color: '#AAAAAA', fontWeight: 'lighter', fontSize: '26px' }}>{address}</div>}
       </div>
     </div>
   );
@@ -37,8 +37,8 @@ function UserProfilePicture({ name }: { name: string | undefined }) {
     <div
       style={{
         display: 'flex',
-        width: '84px',
-        height: '84px',
+        width: '100px',
+        height: '100px',
         borderRadius: '9999px',
         backgroundColor: 'white',
         border: '0.5px solid #535353',
@@ -50,7 +50,7 @@ function UserProfilePicture({ name }: { name: string | undefined }) {
       <div
         style={{
           color: '#535353',
-          fontSize: '40px',
+          fontSize: '48px',
           fontWeight: 'bold',
           textAlign: 'center',
           lineHeight: '100px',

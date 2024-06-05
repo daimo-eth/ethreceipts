@@ -39,7 +39,7 @@ export function LinkPreviewImg({
           backgroundColor: 'white',
           borderRadius: '24px',
           paddingTop: '40px',
-          paddingBottom: '20px',
+          paddingBottom: '22px',
           border: '1px solid #EEEEEE',
         }}
       >
@@ -102,10 +102,10 @@ function Content({
           width: '100%',
         }}
       >
-        <span style={{ fontSize: '54px', fontWeight: 'bold' }}>
+        <span style={{ fontSize: '62px', fontWeight: 'bold' }}>
           {amountStr} {tokenSymbol}
         </span>
-        <span style={{ fontSize: '24px', color: '#AAAAAA' }}>{memo}</span>
+        <span style={{ fontSize: '30px', color: '#AAAAAA' }}>{memo}</span>
       </div>
 
       <div
@@ -124,10 +124,10 @@ function Content({
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
-            padding: '30px 50px',
+            padding: '30px 68px',
           }}
         >
-          <span style={{ fontSize: '18px', color: '#777777' }}>FROM</span>
+          <span style={{ fontSize: '24px', color: '#777777' }}>FROM</span>
           <UserBubble addressProfile={addressProfileFrom} />
         </div>
         <div
@@ -135,11 +135,11 @@ function Content({
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
-            padding: '30px 50px',
+            padding: '30px 68px',
             borderLeft: '1px solid #EEEEEE',
           }}
         >
-          <span style={{ fontSize: '18px', color: '#777777' }}>TO</span>
+          <span style={{ fontSize: '24px', color: '#777777' }}>TO</span>
           <UserBubble addressProfile={addressProfileTo} />
         </div>
       </div>
@@ -168,7 +168,7 @@ function Footer({
         justifyContent: 'center',
         justifyItems: 'center',
         color: '#AAAAAA',
-        fontSize: '18px',
+        fontSize: '24px',
         fontWeight: 'lighter',
       }}
     >
