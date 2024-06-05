@@ -53,6 +53,9 @@ function createMetadata(title: string, description: string, previewUrl: string):
   return {
     title,
     description,
+    icons: {
+      icon: '/receipt-logo.png',
+    },
     openGraph: {
       title,
       description,
