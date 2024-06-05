@@ -39,7 +39,7 @@ export function LinkPreviewImg({
           backgroundColor: 'white',
           borderRadius: '24px',
           paddingTop: '40px',
-          paddingBottom: '20px',
+          paddingBottom: '22px',
           border: '1px solid #EEEEEE',
         }}
       >
@@ -124,7 +124,7 @@ function Content({
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
-            padding: '30px 50px',
+            padding: '30px 64px',
           }}
         >
           <span style={{ fontSize: '18px', color: '#777777' }}>FROM</span>
@@ -135,7 +135,7 @@ function Content({
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
-            padding: '30px 50px',
+            padding: '30px 64px',
             borderLeft: '1px solid #EEEEEE',
           }}
         >
