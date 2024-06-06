@@ -5,7 +5,6 @@ import { TextInitial } from '../typography';
 import { AccountIcon } from '@/public/profileIcons/profileIcons';
 import { AccountAddress, AccountName } from '../typography';
 import { getProfileLink } from '../../utils/profiles/getProfileLink';
-import { Farcaster } from '@/public/profileIcons/Farcaster';
 
 /** Header-value React component field for Address Bubble */
 function AddressField(props: { name: string; address: string; accountType: AccountTypeStr }) {
@@ -30,7 +29,9 @@ export default function AddressBubble(props: Readonly<{ addressProfile: AddressP
 
   // Get profile link for an account name.
   const accountType = props.addressProfile.account?.type;
-  const profileLink = getProfileLink(name, accountType);
+  const profileLink =
+    getProfileLink(name, accountType) ??
+    `https://basescan.org/address/${props.addressProfile.accountAddress}`;
 
   return (
     <a

@@ -130,13 +130,15 @@ function Content({
           <span style={{ fontSize: '24px', color: '#777777' }}>FROM</span>
           <UserBubble addressProfile={addressProfileFrom} />
         </div>
+        <div style={{ display: 'flex', alignItems: 'center', fontSize: '72px', color: '#777777' }}>
+          →
+        </div>
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
             padding: '30px 68px',
-            borderLeft: '1px solid #EEEEEE',
           }}
         >
           <span style={{ fontSize: '24px', color: '#777777' }}>TO</span>
