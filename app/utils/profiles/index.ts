@@ -3,11 +3,7 @@ import { Account, AccountTypeStr, AddressProfile } from '@/app/utils/types';
 import { getProfileFunctions } from '@/app/utils/profiles/profileFunctions';
 
 /** Get account type given an address */
-async function getAccountType(
-  address: Address,
-  chainId: number,
-  viemClient: PublicClient,
-): Promise<Account> {
+async function getAccountType(address: Address, chainId: number): Promise<Account> {
   // Fetch profile on each supported account type.
   const profileFunctions = getProfileFunctions(chainId);
   const accountResults = await Promise.all(profileFunctions.map((fn) => fn(address)));
@@ -18,8 +14,7 @@ async function getAccountType(
 export async function resolveAccountForAddress(
   address: Address,
   chainId: number,
-  viemClient: PublicClient,
 ): Promise<AddressProfile> {
-  const account: Account = await getAccountType(address, chainId, viemClient);
+  const account: Account = await getAccountType(address, chainId);
   return { accountAddress: address, account: account };
 }

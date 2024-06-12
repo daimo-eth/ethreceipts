@@ -5,6 +5,7 @@ import { TextInitial } from '../typography';
 import { AccountIcon } from '@/public/profileIcons/profileIcons';
 import { AccountAddress, AccountName } from '../typography';
 import { getProfileLink } from '../../utils/profiles/getProfileLink';
+import { getChainExplorerByChainId } from '@/app/utils/getExplorerURL';
 
 /** Header-value React component field for Address Bubble */
 function AddressField(props: { name: string; address: string; accountType: AccountTypeStr }) {
@@ -21,7 +22,9 @@ function AddressField(props: { name: string; address: string; accountType: Accou
 }
 
 /** Represents an address bubble component given an address profile*/
-export default function AddressBubble(props: Readonly<{ addressProfile: AddressProfile }>) {
+export default function AddressBubble(
+  props: Readonly<{ addressProfile: AddressProfile; chainId: number }>,
+) {
   const address = truncateAddress(props.addressProfile.accountAddress);
   const pfp = props.addressProfile.account?.avatar ?? null;
   const name = props.addressProfile.account?.name || '';
@@ -31,7 +34,7 @@ export default function AddressBubble(props: Readonly<{ addressProfile: AddressP
   const accountType = props.addressProfile.account?.type;
   const profileLink =
     getProfileLink(name, accountType) ??
-    `https://basescan.org/address/${props.addressProfile.accountAddress}`;
+    `${getChainExplorerByChainId(props.chainId)}/address/${address}`;
 
   return (
     <a

@@ -30,29 +30,38 @@ export default function ERC20TransferSection(
     latestFinalizedBlockNumber: number;
   }>,
 ) {
+  const chainId = props.eventLogData.chainId;
   return (
     <>
       <AmountRow transferData={props.transferData} eventLogData={props.eventLogData} />
       <Wiggle />
       <div className='flex flex-col container sm:flex-row'>
-        <LabelAddr label='FROM' addrProfile={props.addressProfileFrom} />
+        <LabelAddr label='FROM' addrProfile={props.addressProfileFrom} chainId={chainId} />
         <div className='flex items-center overlay-component'>
           <TransferArrow />
         </div>
-        <LabelAddr label='TO' addrProfile={props.addressProfileTo} />
+        <LabelAddr label='TO' addrProfile={props.addressProfileTo} chainId={chainId} />
       </div>
     </>
   );
 }
 
-function LabelAddr({ label, addrProfile }: { label: 'FROM' | 'TO'; addrProfile: AddressProfile }) {
+function LabelAddr({
+  label,
+  addrProfile,
+  chainId,
+}: {
+  label: 'FROM' | 'TO';
+  addrProfile: AddressProfile;
+  chainId: number;
+}) {
   const border = label === 'FROM' ? '' : 'border-gray1 border-t sm:border-l sm:border-t-[0px]';
   return (
     <div
       className={`w-full overflow-hidden flex flex-col gap-y-2 pl-16 pt-6 pb-8 sm:pb-12 ${border}`}
     >
       <TextHeader>{label}</TextHeader>
-      <AddressBubble addressProfile={addrProfile} />
+      <AddressBubble addressProfile={addrProfile} chainId={chainId} />
     </div>
   );
 }

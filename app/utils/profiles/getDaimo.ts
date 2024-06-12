@@ -1,7 +1,7 @@
 import { getEnvVars } from '@/app/env';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { Address, Hex } from 'viem';
-import { Account, AccountTypeStr } from '../types';
+import { Account, AccountTypeStr, DaimoChains, supportedChains } from '../types';
 
 /** Retreve Daimo profile if exists */
 export async function tryGetDaimoProfile(accountAddress: Address): Promise<Account | null> {
@@ -45,3 +45,8 @@ export async function tryGetDaimoMemo(txHash: Hex, logIndex: number): Promise<st
 const daimoRpc = createTRPCClient<any>({
   links: [httpBatchLink({ url: getEnvVars().DAIMO_API_URL_WITH_CHAIN })],
 });
+
+/** Is a Daimo chain */
+export function isDaimoChain(chainId: number): boolean {
+  return chainId in DaimoChains;
+}
