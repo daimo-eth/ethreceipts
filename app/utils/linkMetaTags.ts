@@ -18,6 +18,15 @@ export function createMetadataForTransfer(logData: LogData): Metadata {
 
   // Create title
   const title = `Eth Receipts Transaction Receipt`;
+  if (!fromAddressProfile || !toAddressProfile) {
+    return {
+      title,
+      description: 'Log is not a transaction.',
+      icons: {
+        icon: '/receipt-logo.png',
+      },
+    };
+  }
 
   // Create description
   const sender =
@@ -27,7 +36,6 @@ export function createMetadataForTransfer(logData: LogData): Metadata {
 
   const chainName =
     getChainNameById(eventLogData.chainId as SupportedChainId) ?? eventLogData.chainId;
-  const status = latestFinalizedBlockNumber >= eventLogData?.blockNumber ? 'Finalized' : 'Pending';
 
   const { tokenSymbol, tokenDecimal, value: tokenValue } = transferData;
   const value = formatValue(Number(tokenValue) / Number(10 ** Number(tokenDecimal)));

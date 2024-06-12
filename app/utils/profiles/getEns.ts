@@ -36,9 +36,7 @@ async function tryGetEnsAvatar(ensName: string) {
  * @param {string} accountAddress - The account address for the desired ENS profile.
  * @returns {Account} - The ENS profile for the account address.
  */
-export async function tryGetEnsProfile(
-  accountAddress: Address,
-): Promise<Account | null> {
+export async function tryGetEnsProfile(accountAddress: Address): Promise<Account | null> {
   const ensName = await tryGetEnsName(accountAddress);
   console.log(`[ADDR] fetched ENS profile for ${accountAddress}: ${ensName || 'not found'}`);
   if (!ensName) return null;
@@ -47,7 +45,7 @@ export async function tryGetEnsProfile(
   const ensProfile: Account = {
     type: AccountTypeStr.ENS,
     name: ensName,
-    avatar: ensAvatar,
+    avatar: ensAvatar || null,
     url: null, // TODO: add link to ens name
   };
   return ensProfile;

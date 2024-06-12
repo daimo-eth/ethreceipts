@@ -1,6 +1,6 @@
 import { getBlockTimestamp } from '@/app/utils/getBlock';
 import { getTokenDetails } from '@/app/utils/getTokenDetails';
-import { tryGetDaimoMemo } from '@/app/utils/profiles/getDaimo';
+import { isDaimoChain, tryGetDaimoMemo } from '@/app/utils/profiles/getDaimo';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
 import { AddressProfile, EventLog, SupportedChainId, Transfer } from '@/app/utils/types';
 import { erc20Abi } from '@/app/utils/viem/abi';
@@ -122,8 +122,8 @@ async function fetchErc20TransferDetails(
 
   // Get address profiles for from and to addresses.
   const [fromAddressProfile, toAddressProfile] = await Promise.all([
-    resolveAccountForAddress(transferData.from, chainId, publicClient),
-    resolveAccountForAddress(transferData.to, chainId, publicClient),
+    resolveAccountForAddress(transferData.from, chainId),
+    resolveAccountForAddress(transferData.to, chainId),
   ]);
 
   return { transferData, fromAddressProfile, toAddressProfile };
@@ -146,7 +146,10 @@ async function fetchTransferFromViem(log: EventLog, publicClient: PublicClient):
   const { tokenDecimal, tokenSymbol } = await getTokenDetails(log.address, publicClient);
 
   // Get Daimo memo if exists.
-  const memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
+  let memo;
+  if (isDaimoChain(log.chainId)) {
+    memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
+  }
 
   // Format ERC20 transfer event data.
   return {

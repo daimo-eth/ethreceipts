@@ -9,6 +9,8 @@ export function getChainExplorerByChainId(chainId: number): string | undefined {
       return 'https://kovan.etherscan.io';
     case 8453:
       return 'https://basescan.org';
+    case 84532:
+      return 'https://sepolia.basescan.org/';
     default:
       return undefined;
   }

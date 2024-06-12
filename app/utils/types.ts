@@ -91,3 +91,5 @@ export const supportedChainNames = {
 
 /** Type for Alchemy chain ID */
 export type SupportedChainId = keyof typeof supportedChainNames;
+
+export const DaimoChains = [base.id, baseSepolia.id];

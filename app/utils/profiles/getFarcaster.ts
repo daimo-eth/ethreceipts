@@ -7,7 +7,7 @@ export async function tryGetFarcasterProfile(accountAddress: Address) {
       `https://searchcaster.xyz/api/profiles?connected_address=${accountAddress}`,
     ).then((res) => res.json());
     if (res.length === 0) {
-      console.log(`No Farcaster profile found for ${accountAddress}`);
+      console.log(`[ADDR] No Farcaster profile found for ${accountAddress}`);
       return null;
     }
     const farcasterProfile: Account = {
