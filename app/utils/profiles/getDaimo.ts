@@ -47,8 +47,3 @@ export async function tryGetDaimoMemo(txHash: Hex, logIndex: number): Promise<st
 const daimoRpc = createTRPCClient<any>({
   links: [httpBatchLink({ url: getEnvVars().DAIMO_API_URL_WITH_CHAIN })],
 });
-
-/** Is a Daimo chain */
-export function isDaimoChain(chainId: number): boolean {
-  return chainId in DaimoChains;
-}

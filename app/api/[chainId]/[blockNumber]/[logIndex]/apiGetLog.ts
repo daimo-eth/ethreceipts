@@ -1,11 +1,11 @@
 import { getBlockTimestamp } from '@/app/utils/getBlock';
 import { getTokenDetails } from '@/app/utils/getTokenDetails';
-import { isDaimoChain, tryGetDaimoMemo } from '@/app/utils/profiles/getDaimo';
+import { tryGetDaimoMemo } from '@/app/utils/profiles/getDaimo';
 import '@/app/utils/serialization'; // Note: needed for BigInt serialization.
-import { AddressProfile, EventLog, SupportedChainId, Transfer } from '@/app/utils/types';
+import { EventLog, SupportedChainId, Transfer } from '@/app/utils/types';
 import { erc20Abi } from '@/app/utils/viem/abi';
 import { getChainNameById, getViemClient } from '@/app/utils/viem/client';
-import { Block, Hex, Log, PublicClient, decodeEventLog } from 'viem';
+import { Hex, Log, PublicClient, decodeEventLog } from 'viem';
 import { z } from 'zod';
 import { resolveAccountForAddress } from '../../../../utils/profiles';
 
@@ -142,12 +142,10 @@ async function fetchTransferFromViem(log: EventLog, publicClient: PublicClient):
     console.log(`[ERROR] Failed to decode event log: ${e}`);
     throw new Error('Inputted log is not an ERC-20 transfer event');
   }
+
   // Get Daimo memo if exists
   console.log(`[apiGetLog] decoded ${log.chainId}/${log.blockNumber}/${log.logIndex}, fetch info`);
-  let memo: string | undefined;
-  if (isDaimoChain(Number(log.chainId))) {
-    memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
-  }
+  const memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
 
   // Get token info for amount display
   const { tokenDecimal, tokenSymbol } = await getTokenDetails(log.address, publicClient);
