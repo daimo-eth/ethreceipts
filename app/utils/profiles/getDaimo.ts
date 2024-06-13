@@ -8,7 +8,9 @@ export async function tryGetDaimoProfile(accountAddress: Address): Promise<Accou
   try {
     // @ts-ignore
     const res = await daimoRpc.getEthereumAccount.query({ addr: accountAddress });
-    console.log(`[ADDR] fetched Daimo profile for ${accountAddress}: ${res.name || 'not found'}`);
+    console.log(
+      `[getDaimo] fetched Daimo profile for ${accountAddress}: ${res.name || 'not found'}`,
+    );
     if (!res.name) return null;
 
     const daimoAccount: Account = {
@@ -19,7 +21,7 @@ export async function tryGetDaimoProfile(accountAddress: Address): Promise<Accou
     };
     return daimoAccount;
   } catch (e) {
-    console.log(`[ADDR] No Daimo profile found for ${accountAddress}`);
+    console.log(`[getDaimo] No Daimo profile found for ${accountAddress}`);
     return null;
   }
 }
@@ -30,13 +32,13 @@ export async function tryGetDaimoMemo(txHash: Hex, logIndex: number): Promise<st
     // @ts-ignore
     const memo = await daimoRpc.getMemo.query({ txHash, logIndex });
     if (memo?.memo == undefined) {
-      console.log(`No Daimo memo found for tx ${txHash} / logIndex ${logIndex}`);
+      console.log(`[getDaimo] no Daimo memo found for tx ${txHash} / logIndex ${logIndex}`);
       return undefined;
     }
-    console.log(`Daimo memo found for tx ${txHash}: ${memo.memo}`);
+    console.log(`[getDaimo] daimo memo found for tx ${txHash}: ${memo.memo}`);
     return memo.memo;
   } catch (e) {
-    console.log(`Error fetching Daimo memo found for tx ${txHash} / logIndex ${logIndex}`);
+    console.log(`[getDaimo] error fetching Daimo memo for tx ${txHash} / logIndex ${logIndex}`, e);
     return undefined;
   }
 }

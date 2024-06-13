@@ -142,14 +142,15 @@ async function fetchTransferFromViem(log: EventLog, publicClient: PublicClient):
     console.log(`[ERROR] Failed to decode event log: ${e}`);
     throw new Error('Inputted log is not an ERC-20 transfer event');
   }
-
-  const { tokenDecimal, tokenSymbol } = await getTokenDetails(log.address, publicClient);
-
-  // Get Daimo memo if exists.
-  let memo;
-  if (isDaimoChain(log.chainId)) {
+  // Get Daimo memo if exists
+  console.log(`[apiGetLog] decoded ${log.chainId}/${log.blockNumber}/${log.logIndex}, fetch info`);
+  let memo: string | undefined;
+  if (isDaimoChain(Number(log.chainId))) {
     memo = await tryGetDaimoMemo(log.transactionHash, log.logIndex);
   }
+
+  // Get token info for amount display
+  const { tokenDecimal, tokenSymbol } = await getTokenDetails(log.address, publicClient);
 
   // Format ERC20 transfer event data.
   return {
