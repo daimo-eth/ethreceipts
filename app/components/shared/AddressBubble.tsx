@@ -25,7 +25,8 @@ function AddressField(props: { name: string; address: string; accountType: Accou
 export default function AddressBubble(
   props: Readonly<{ addressProfile: AddressProfile; chainId: number }>,
 ) {
-  const address = truncateAddress(props.addressProfile.accountAddress);
+  const address = props.addressProfile.accountAddress;
+  const truncatedAddress = truncateAddress(address);
   const pfp = props.addressProfile.account?.avatar ?? null;
   const name = props.addressProfile.account?.name || '';
   const nameInitial = name ? name[0].toUpperCase() : '0x';
@@ -56,7 +57,7 @@ export default function AddressBubble(
         )}
       </div>
       <div className='flex flex-row gap-x-1 items-center justify-start'>
-        <AddressField name={name} address={address} accountType={accountType} />
+        <AddressField name={name} address={truncatedAddress} accountType={accountType} />
       </div>
     </a>
   );
