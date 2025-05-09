@@ -11,6 +11,8 @@ export function getChainExplorerByChainId(chainId: number): string | undefined {
       return 'https://basescan.org';
     case 84532:
       return 'https://sepolia.basescan.org/';
+    case 42220:
+      return 'https://celoscan.io';
     default:
       return undefined;
   }

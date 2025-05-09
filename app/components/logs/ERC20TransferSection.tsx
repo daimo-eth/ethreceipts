@@ -125,6 +125,9 @@ function AmountToken({
   const isStablecoin = stablecoinsAddresses.includes(transferData.contractAddress);
   const isWhitelistedToken =
     fetchTokenFromWhitelist(transferData.contractAddress, eventLogData.chainId) !== null;
+  console.log(
+    `[ERC20TransferSection] isWhitelistedToken: ${isWhitelistedToken} for token ${transferData.contractAddress} on chain ${eventLogData.chainId}`,
+  );
   const amountStr = `${isStablecoin ? '$' : ''}${value}`;
 
   return (

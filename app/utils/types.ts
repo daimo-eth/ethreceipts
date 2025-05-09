@@ -10,6 +10,8 @@ import {
   polygon,
   polygonMumbai,
   sepolia,
+  celo,
+  linea,
 } from 'viem/chains';
 
 /** ERC20 Transaction Data */
@@ -73,6 +75,8 @@ export const supportedChains = [
   baseSepolia,
   optimism,
   optimismSepolia,
+  celo,
+  linea,
 ];
 
 /** Mapping of chainID to Alchemy network name */
@@ -87,6 +91,8 @@ export const supportedChainNames = {
   [baseSepolia.id]: 'base-sepolia',
   [optimism.id]: 'opt-mainnet',
   [optimismSepolia.id]: 'opt-sepolia',
+  [celo.id]: 'celo-mainnet',
+  [linea.id]: 'linea-mainnet',
 };
 
 /** Type for Alchemy chain ID */
