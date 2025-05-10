@@ -24,8 +24,6 @@ export const specialAddrLabels: { [_: Address]: AddrLabel } = {
   '0x594bc666500fAeD35DC741F45a35C571399560d8': AddrLabel.PaymentLink,
   '0xfBdb4f1172AaDADdFe4233550e9cD5E4aA1Dae00': AddrLabel.PaymentLink,
   '0xf823d42B543ec9785f973E9Aa3187E42248F4874': AddrLabel.PaymentLink,
-  // CELO MINIPAY payment link
-  '0x0000000000000000000000000000000000000000': AddrLabel.PaymentLink,
   // All historical paymaster addresses
   '0x13f490FafBb206440F25760A10C21A6220017fFa': AddrLabel.Paymaster,
   '0x939263eAFE57038a072cb4edD6B25dd81A8A6c56': AddrLabel.Paymaster,
