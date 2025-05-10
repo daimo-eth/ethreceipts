@@ -31,7 +31,6 @@ export function fetchTokenFromWhitelist(tokenAddress: string, chainId: number): 
     return null;
   }
   for (const token of whitelist['tokens']) {
-    console.log(`[TOKEN WHITELIST] Checking token ${token.address} against ${tokenAddress}`);
     if (token.address.toLowerCase() === tokenAddress.toLowerCase()) {
       return token;
     }
