@@ -1,3 +1,8 @@
+import { getAddress } from 'viem';
+import { decodeEventLog, DecodeEventLogReturnType, ContractEventName } from 'viem';
+import { daimoPayAbi, daimoPayAddress } from '...'; // Update with your actual import path
+import { TransactionReceipt } from 'viem';
+
 const stablecoinsAddresses = [
   // usdc
   '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -15,8 +20,6 @@ const stablecoinsAddresses = [
   '0x48065fbbe25f71c9282ddf5e1cd6d6a887483d5e',
   // usdc on celo
   '0xceba9300f2b948710d2653dd7b07f33a8b32118c',
-  // celo on celo
-  '0x471ece3750da237f93b8e339c536989b8978a438',
   // cusd on celo
   '0x765de816845861e75a25fca122bb6898b8b1282a',
 ];
