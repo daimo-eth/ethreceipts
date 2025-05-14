@@ -7,6 +7,8 @@ function fetchWhitelist(chainId: number) {
       return require('./ethWhitelist.json');
     case 8453:
       return require('./baseWhitelist.json');
+    case 42220:
+      return require('./celoWhitelist.json');
     default:
       return null;
   }
@@ -24,10 +26,12 @@ interface Token {
 /** Check if token is whitelisted. */
 export function fetchTokenFromWhitelist(tokenAddress: string, chainId: number): Token | null {
   const whitelist = fetchWhitelist(chainId);
-  if (!whitelist) return null;
-
+  if (!whitelist) {
+    console.error(`[TOKEN WHITELIST] No whitelist found for chainId ${chainId}`);
+    return null;
+  }
   for (const token of whitelist['tokens']) {
-    if (token.address === tokenAddress) {
+    if (token.address.toLowerCase() === tokenAddress.toLowerCase()) {
       return token;
     }
   }

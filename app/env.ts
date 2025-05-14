@@ -8,7 +8,6 @@ function loadEnv() {
   const ret = {
     DAIMO_API_URL_WITH_CHAIN: loadReq('DAIMO_API_URL_WITH_CHAIN'),
     ALCHEMY_API_KEY: loadReq('ALCHEMY_API_KEY'),
-    SHOVEL_DB_URL: loadOptional('SHOVEL_DB_URL'),
   };
   console.log('[ENV] loaded env vars: ', ret);
   return ret;

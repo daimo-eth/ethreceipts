@@ -1,0 +1,41 @@
+{
+  "name": "CoinGecko",
+  "logoURI": "https://static.coingecko.com/s/thumbnail-007177f3eca19695592f0b8b0eabbdae282b54154e1be912285c9034ea6cbaf2.png",
+  "keywords": ["defi"],
+  "timestamp": "2024-04-12T23:01:06.935+00:00",
+  "tokens": [
+    {
+      "chainId": 42220,
+      "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+      "name": "USDC",
+      "symbol": "USDC",
+      "decimals": 6,
+      "logoURI": "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694"
+    },
+    {
+      "chainId": 42220,
+      "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+      "name": "CELO",
+      "symbol": "CELO",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/11090/standard/InjXBNx9_400x400.jpg?1696511031"
+    },
+    {
+      "chainId": 42220,
+      "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+      "name": "USDT",
+      "symbol": "USDT",
+      "decimals": 6,
+      "logoURI": "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661"
+    },
+    {
+      "chainId": 42220,
+      "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+      "name": "CUSD",
+      "symbol": "CUSD",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/13161/standard/icon-celo-dollar-color-1000-circle-cropped.png?1696512945"
+    }
+  ],
+  "version": { "major": 1, "minor": 7, "patch": 0 }
+}
