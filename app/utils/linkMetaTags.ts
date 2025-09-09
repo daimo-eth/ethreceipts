@@ -8,13 +8,7 @@ import { SupportedChainId } from './types';
 
 // Creates a metadata object for a transfer log.
 export function createMetadataForTransfer(logData: LogData): Metadata {
-  const {
-    transferData,
-    fromAddressProfile,
-    toAddressProfile,
-    eventLogData,
-    latestFinalizedBlockNumber,
-  } = logData;
+  const { transferData, fromAddressProfile, toAddressProfile, eventLogData } = logData;
 
   // Create title
   const title = `Eth Receipts Transaction Receipt`;
@@ -38,7 +32,7 @@ export function createMetadataForTransfer(logData: LogData): Metadata {
     getChainNameById(eventLogData.chainId as SupportedChainId) ?? eventLogData.chainId;
 
   const { tokenSymbol, tokenDecimal, value: tokenValue } = transferData;
-  const value = formatValue(Number(tokenValue) / Number(10 ** Number(tokenDecimal)));
+  const value = formatValue(tokenValue, Number(tokenDecimal), 2);
   const isStablecoin = stablecoinsAddresses.includes(transferData.contractAddress);
   const amountStr = `${isStablecoin ? '$' : ''}${value}`;
 
