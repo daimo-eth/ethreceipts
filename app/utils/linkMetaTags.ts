@@ -32,7 +32,7 @@ export function createMetadataForTransfer(logData: LogData): Metadata {
     getChainNameById(eventLogData.chainId as SupportedChainId) ?? eventLogData.chainId;
 
   const { tokenSymbol, tokenDecimal, value: tokenValue } = transferData;
-  const value = formatValue(tokenValue, Number(tokenDecimal), 2);
+  const value = formatValue(Number(tokenValue) / Number(10 ** Number(tokenDecimal)));
   const isStablecoin = stablecoinsAddresses.includes(transferData.contractAddress);
   const amountStr = `${isStablecoin ? '$' : ''}${value}`;
 
