@@ -56,6 +56,7 @@ export default async function Page({
               addressProfileTo={logData.toAddressProfile}
               eventLogData={logData.eventLogData}
               latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
+              context='tx'
             />
           ) : (
             <UnsupportedLogSection />

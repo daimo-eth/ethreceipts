@@ -28,12 +28,17 @@ export default function ERC20TransferSection(
     addressProfileTo: AddressProfile;
     eventLogData: EventLog;
     latestFinalizedBlockNumber: number;
+    context?: 'log' | 'tx';
   }>,
 ) {
   const chainId = props.eventLogData.chainId;
   return (
     <>
-      <AmountRow transferData={props.transferData} eventLogData={props.eventLogData} />
+      <AmountRow
+        transferData={props.transferData}
+        eventLogData={props.eventLogData}
+        context={props.context}
+      />
       <Wiggle />
       <div className='flex flex-col container sm:flex-row'>
         <LabelAddr label='FROM' addrProfile={props.addressProfileFrom} chainId={chainId} />
@@ -69,9 +74,11 @@ function LabelAddr({
 function AmountRow({
   transferData,
   eventLogData,
+  context = 'log',
 }: {
   transferData: Transfer;
   eventLogData: EventLog;
+  context?: 'log' | 'tx';
 }) {
   const { chainId, blockNumber, logIndex } = eventLogData;
 
@@ -81,7 +88,12 @@ function AmountRow({
   const copyLink = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 1000);
-    const link = `https://${window.location.hostname}/l/${chainId}/${blockNumber}/${logIndex}`;
+    const origin = window.location.origin;
+    const txHash = eventLogData.transactionHash;
+    const link =
+      context === 'tx'
+        ? `${origin}/tx/${chainId}/${txHash}/${logIndex}`
+        : `${origin}/l/${chainId}/${blockNumber}/${logIndex}`;
     navigator.clipboard.writeText(link);
   };
 

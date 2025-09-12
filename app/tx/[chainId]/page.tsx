@@ -48,6 +48,7 @@ export default async function Page({ params: { chainId } }: { params: { chainId:
               addressProfileTo={logData.toAddressProfile}
               eventLogData={logData.eventLogData}
               latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
+              context='tx'
             />
           ) : (
             <UnsupportedLogSection />

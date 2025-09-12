@@ -51,6 +51,7 @@ export default async function Page({
               addressProfileTo={logData.toAddressProfile}
               eventLogData={logData.eventLogData}
               latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
+              context='tx'
             />
           ) : (
             <UnsupportedLogSection />
@@ -60,6 +61,7 @@ export default async function Page({
             eventLogData={logData.eventLogData}
             logType={logData.transferData ? 'ERC-20 Transfer' : 'Unknown'}
             finalized={logData.latestFinalizedBlockNumber >= logData.eventLogData.blockNumber}
+            context='tx'
           />
         </div>
       </div>
