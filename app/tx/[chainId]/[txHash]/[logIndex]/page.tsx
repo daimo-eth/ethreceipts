@@ -2,6 +2,7 @@ import ERC20TransferSection from '@/app/components/logs/ERC20TransferSection';
 import EventLogSection from '@/app/components/logs/EventLogSection';
 import UnsupportedLogSection from '@/app/components/logs/UnsupportedLogSection';
 import { Wiggle } from '@/app/components/shared/Wiggle';
+import Card from '@/app/components/shared/Card';
 import { getLogData, LogData } from '@/app/utils/getLogData';
 import { createMetadataForTransfer } from '@/app/utils/linkMetaTags';
 import { getViemClient } from '@/app/utils/viem/client';
@@ -42,29 +43,27 @@ export default async function Page({
 
   return (
     <div className='flex flex-col m-auto px-8'>
-      <div className='sm:w-[640px] rounded-[24px] flex flex-col m-auto bg-gradient-to-b from-gray1 to-[#E7E7E7] p-[1px] drop-shadow-card'>
-        <div className='flex flex-col bg-white rounded-[23px]'>
-          {logData.transferData ? (
-            <ERC20TransferSection
-              transferData={logData.transferData}
-              addressProfileFrom={logData.fromAddressProfile}
-              addressProfileTo={logData.toAddressProfile}
-              eventLogData={logData.eventLogData}
-              latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
-              context='tx'
-            />
-          ) : (
-            <UnsupportedLogSection />
-          )}
-          <Wiggle />
-          <EventLogSection
+      <Card>
+        {logData.transferData ? (
+          <ERC20TransferSection
+            transferData={logData.transferData}
+            addressProfileFrom={logData.fromAddressProfile}
+            addressProfileTo={logData.toAddressProfile}
             eventLogData={logData.eventLogData}
-            logType={logData.transferData ? 'ERC-20 Transfer' : 'Unknown'}
-            finalized={logData.latestFinalizedBlockNumber >= logData.eventLogData.blockNumber}
+            latestFinalizedBlockNumber={logData.latestFinalizedBlockNumber}
             context='tx'
           />
-        </div>
-      </div>
+        ) : (
+          <UnsupportedLogSection />
+        )}
+        <Wiggle />
+        <EventLogSection
+          eventLogData={logData.eventLogData}
+          logType={logData.transferData ? 'ERC-20 Transfer' : 'Unknown'}
+          finalized={logData.latestFinalizedBlockNumber >= logData.eventLogData.blockNumber}
+          context='tx'
+        />
+      </Card>
     </div>
   );
 }

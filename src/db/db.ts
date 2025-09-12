@@ -1,21 +1,9 @@
-import { getEnvVars } from '@/app/env';
-import { SupportedChainId, supportedChainNames } from '@/app/utils/types';
 import { getViemClient } from '@/app/utils/viem/client';
-import { Hex } from 'viem';
+import { Hex, hexToBytes } from 'viem';
 import { base } from 'viem/chains';
 import { fetchTokenFromWhitelist } from '@/app/utils/tokens/tokenWhitelist';
 
 class DB {
-  constructor() {}
-
-  getStatus() {
-    return {
-      idleCount: 0,
-      totalCount: 0,
-      waitingCount: 0,
-    };
-  }
-
   async getBestTransferByTxHash(txHash: Hex, chainId?: number) {
     // Default to Base chain if no chainId is provided
     const chainToCheck = chainId || base.id;
@@ -35,23 +23,15 @@ class DB {
         const transferLogs = receipt.logs.filter(
           (log) =>
             log.topics.length >= 3 &&
-            log.topics[0] === '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+            log.topics[0] ===
+              '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' &&
+            //Exclude ERC-721 transfer events
+            hexToBytes(log.data).length > 0,
         );
 
-        // Only consider logs with both from and to topics present
-        const candidateLogs = transferLogs.filter((log) => log.topics[1] && log.topics[2]);
-        const nonZeroCandidates = candidateLogs.filter((log) => {
-          try {
-            return BigInt(log.data) > BigInt(0);
-          } catch {
-            return false;
-          }
-        });
-
-        if (candidateLogs.length > 0) {
+        if (transferLogs.length > 0) {
           // Select the transfer with the highest normalized value (by token decimals if known)
-          const logsToScan = nonZeroCandidates.length > 0 ? nonZeroCandidates : candidateLogs;
-          const transferLog = logsToScan.reduce((maxLog, currentLog) => {
+          const transferLog = transferLogs.reduce((maxLog, currentLog) => {
             const maxRaw = BigInt(maxLog.data);
             const curRaw = BigInt(currentLog.data);
 
@@ -86,7 +66,7 @@ class DB {
             const curScaled = scaleUp(curRaw, curDecimals);
 
             return curScaled > maxScaled ? currentLog : maxLog;
-          }, logsToScan[0]);
+          }, transferLogs[0]);
 
           // Return in format matching the DB query result
           const fromTopic = transferLog.topics[1]!;
