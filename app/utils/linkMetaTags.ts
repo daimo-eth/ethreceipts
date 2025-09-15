@@ -8,13 +8,7 @@ import { SupportedChainId } from './types';
 
 // Creates a metadata object for a transfer log.
 export function createMetadataForTransfer(logData: LogData): Metadata {
-  const {
-    transferData,
-    fromAddressProfile,
-    toAddressProfile,
-    eventLogData,
-    latestFinalizedBlockNumber,
-  } = logData;
+  const { transferData, fromAddressProfile, toAddressProfile, eventLogData } = logData;
 
   // Create title
   const title = `Eth Receipts Transaction Receipt`;

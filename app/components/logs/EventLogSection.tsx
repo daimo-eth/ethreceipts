@@ -1,5 +1,5 @@
 import { IconConfirmedCheck, IconExternalLink, IconFinalizedCheck } from '@/public/icons';
-import { getDateDifference } from '../../utils/formatting';
+import { getDateDifference, truncateAddress } from '../../utils/formatting';
 import { getChainExplorerByChainId } from '../../utils/getExplorerURL';
 import { EventLog, Transfer } from '../../utils/types';
 import { TextMedium, TextSmallHeader } from '../typography';
@@ -13,10 +13,16 @@ import { TextMedium, TextSmallHeader } from '../typography';
  * @returns {React.ReactElement} An event log card component.
  */
 export default function EventLogSection(
-  props: Readonly<{ eventLogData: EventLog; logType: string; finalized: boolean }>,
+  props: Readonly<{
+    eventLogData: EventLog;
+    logType: string;
+    finalized: boolean;
+    context?: 'log' | 'tx';
+  }>,
 ) {
   const { timestamp, blockNumber, logIndex, chainId, transactionHash, chainName } =
     props.eventLogData;
+  const context = props.context ?? 'log';
 
   const time = new Date(Number(timestamp) * 1000);
   const dateDifferenceStr = getDateDifference(time);
@@ -31,9 +37,15 @@ export default function EventLogSection(
     <div className='flex flex-col gap-8 px-16 pt-6 pb-10 sm:pt-8 sm:pb-12 sm:flex-row sm:justify-between'>
       <div className='flex flex-row flex-wrap gap-x-9 gap-y-6'>
         <KV k='CHAIN' v={chainFormatted} />
-        <KV k='BLOCK' v={'' + blockNumber} />
-        <KV k='LOG' v={'#' + logIndex} />
         <KV k='LOG TYPE' v={props.logType} />
+        {context === 'log' ? (
+          <>
+            <KV k='BLOCK' v={'' + blockNumber} />
+            <KV k='LOG' v={'#' + logIndex} />
+          </>
+        ) : (
+          <KV k='TXHASH' v={truncateAddress(transactionHash, 10)} />
+        )}
       </div>
       <div className='flex flex-col gap-1 items-start sm:items-end'>
         <a href={transactionLink} target='_blank' className='flex flex-row gap-1 hover:opacity-80'>
